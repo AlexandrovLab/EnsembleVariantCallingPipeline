@@ -23,6 +23,6 @@ sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-~/EnsembleVaraintCallingPipeline/coclean_template.sh $email $sample $ref $knownIndels $out; done
+~/EnsembleVaraintCallingPipeline/IDtargetInterval.sh $email $sample $ref $out $knownindels; done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
