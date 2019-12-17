@@ -16,8 +16,8 @@ if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ]
 then printf "$USAGE"
 else
 cd $out
-mkdir -p jobs/align
-mkdir -p jobs/refine
+mkdir -p ${out}/jobs/align
+mkdir -p ${out}/jobs/refine
 cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
