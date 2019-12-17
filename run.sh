@@ -22,7 +22,7 @@ cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
-./align_template.sh $email $sample $tumor $normal $ref $path $out
-./coclean_template.sh $email $sample $ref $knownIndels $out; done
+~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
+~/EnsembleVaraintCallingPipeline/coclean_template.sh $email $sample $ref $knownIndels $out; done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
