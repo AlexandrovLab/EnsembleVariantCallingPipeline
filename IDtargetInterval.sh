@@ -44,7 +44,7 @@ echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/refine/${sample}_NI
 echo 'targetS=$SECONDS'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
 echo 'targetS=$SECONDS'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
 echo ${RTC_t}>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
-echo ${RTC_n}>>jobs/v/${sample}_NIDtargetInterval_2.pbs
+echo ${RTC_n}>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
 echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
 echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
 echo 'echo target interval creation took $targetT seconds'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
