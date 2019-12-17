@@ -35,8 +35,10 @@ echo source ~/.bashrc>>jobs/IDtargetInterval/${sample}_TIDtargetInterval_2.pbs
 echo source activate evc_py3>>jobs/IDtargetInterval/${sample}_TIDtargetInterval_2.pbs
 echo source ~/.bashrc>>jobs/IDtargetInterval/${sample}_NIDtargetInterval_2.pbs
 echo source activate evc_py3>>jobs/IDtargetInterval/${sample}_NIDtargetInterval_2.pbs
+
 echo cd ${out}/${sample}_talign/>>jobs/IDtargetInterval/${sample}_TIDtargetInterval_2.pbs
 echo cd ${out}/${sample}_nalign/>>jobs/IDtargetInterval/${sample}_NIDtargetInterval_2.pbs
+
 echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/IDtargetInterval/${sample}_TIDtargetInterval_2.pbs
 echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/IDtargetInterval/${sample}_NIDtargetInterval_2.pbs
 echo 'targetS=$SECONDS'>>jobs/IDtargetInterval/${sample}_TIDtargetInterval_2.pbs
