@@ -5,7 +5,7 @@ path=$1
 out=$2
 sampleF=$3
 knownIndels=/restricted/alexandrov-group/shared/Reference_Genomes/known_indels/resources_broad_hg38_v0_Homo_sapiens_assembly38.known_indels.vcf
-#dbSNP=
+dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 USAGE="\nMissing input arguments..\n
 USAGE:\trun.sh \\
 	path/to/project \\
@@ -23,7 +23,7 @@ sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-~/EnsembleVaraintCallingPipeline/IDtargetInterval.sh $email $sample $ref $out $knownindels; done
+~/EnsembleVaraintCallingPipeline/IDtargetInterval.sh $email $sample $ref $out $knownindels
 ~/EnsembleVaraintCallingPipeline/IDRA_BRC.sh $email $sample $ref $out $knownindels $dbSNP; done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
