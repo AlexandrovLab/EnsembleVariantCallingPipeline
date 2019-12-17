@@ -2,8 +2,8 @@
 email=$1
 sample=$2
 ref=$3
-knownIndels=$4
-out=$5
+out=$4
+knownIndels=$5
 
 header="#!/bin/bash
 #PBS -q home-alexandrov
