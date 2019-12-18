@@ -30,7 +30,7 @@ echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 
 echo 'echo starting strelka at $(date)'>>jobs/strelka/${sample}_strelka.pbs
 echo 'strelkaConfigS=$SECONDS'>>jobs/strelka/${sample}_strelka.pbs
-if [ type = "exome" ]
+if [ $type = "exome" ]
 then echo ${strelka_config_exome}>>jobs/strelka/${sample}_strelka.pbs
 else echo ${strelka_config_genome}>>jobs/strelka/${sample}_strelka.pbs
 fi
