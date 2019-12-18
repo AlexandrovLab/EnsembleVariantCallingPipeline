@@ -13,8 +13,8 @@ header="#!/bin/bash
 #PBS -M ${email}
 #PBS -V
 #PBS -N EVC_targetInterval_${sample}
-#PBS -e ${sample}_Trefine_2.e
-#PBS -o ${sample}_Trefine_2.o
+#PBS -e ${sample}_targetInterval.e
+#PBS -o ${sample}_targetInterval.o
 "
 
 
