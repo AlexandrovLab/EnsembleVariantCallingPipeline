@@ -43,10 +43,6 @@ echo source activate evc_py3>>jobs/refine/${sample}_Nrefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 
-
-echo ": <<'END'">>jobs/refine/${sample}_Trefine_2.pbs
-echo ": <<'END'">>jobs/refine/${sample}_Nrefine_2.pbs
-
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
@@ -58,9 +54,6 @@ echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
 
-
-echo "END">>jobs/refine/${sample}_Trefine_2.pbs
-echo "END">>jobs/refine/${sample}_Nrefine_2.pbs
 
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
