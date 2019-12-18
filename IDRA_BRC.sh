@@ -40,8 +40,8 @@ echo source ~/.bashrc>>jobs/refine/${sample}_Trefine_2.pbs
 echo source activate evc_py3>>jobs/refine/${sample}_Trefine_2.pbs
 echo source ~/.bashrc>>jobs/refine/${sample}_Nrefine_2.pbs
 echo source activate evc_py3>>jobs/refine/${sample}_Nrefine_2.pbs
-echo cd ${out}/${sample}_talign/>>jobs/refine/${sample}_Trefine_2.pbs
-echo cd ${out}/${sample}_nalign/>>jobs/refine/${sample}_Nrefine_2.pbs
+echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
+echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
