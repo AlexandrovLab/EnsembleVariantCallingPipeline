@@ -29,8 +29,8 @@ IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(
 BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
-PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR bqsr.grp -o ${sample}_tumor_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR bqsr.grp -o ${sample}_normal_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
 printf "$header">jobs/refine/${sample}_Trefine_2.pbs
 printf "${Tjobname}">>jobs/refine/${sample}_Trefine_2.pbs
@@ -44,6 +44,9 @@ echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 
 
+echo ": <<'END'">>jobs/refine/${sample}_Trefine_2.pbs
+echo ": <<'END'">>jobs/refine/${sample}_Nrefine_2.pbs
+
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
@@ -55,8 +58,9 @@ echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
 
-echo ": <<'END'">>jobs/refine/${sample}_Trefine_2.pbs
-echo ": <<'END'">>jobs/refine/${sample}_Nrefine_2.pbs
+
+echo "END">>jobs/refine/${sample}_Trefine_2.pbs
+echo "END">>jobs/refine/${sample}_Nrefine_2.pbs
 
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
@@ -81,5 +85,3 @@ echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
 
-echo "END">>jobs/refine/${sample}_Trefine_2.pbs
-echo "END">>jobs/refine/${sample}_Nrefine_2.pbs
