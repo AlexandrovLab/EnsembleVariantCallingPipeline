@@ -30,3 +30,7 @@ echo 'targetS=$SECONDS'>>jobs/refine/${sample}_targetInterval.pbs
 echo $RTC>>jobs/refine/${sample}_targetInterval.pbs
 echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_targetInterval.pbs
 echo 'echo target interval creation took $targetT seconds'>>jobs/refine/${sample}_targetInterval.pbs
+
+echo cd ${out}/jobs/refine/>>jobs/refine/${sample}_targetInterval.pbs
+echo qsub ${sample}_Nrefine_2.pbs>>jobs/refine/${sample}_targetInterval.pbs
+echo qsub ${sample}_Trefine_2.pbs>>jobs/refine/${sample}_targetInterval.pbs
