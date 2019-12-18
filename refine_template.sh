@@ -26,11 +26,11 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_union_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_union_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
-BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print $4}')"
-BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print $4}')"
+BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
-PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR bqsr.grp -o ${sample}_tumor_final.bam -Xmx\$(free -h| grep Mem | awk '{print $4}')"
-PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR bqsr.grp -o ${sample}_normal_final.bam -Xmx\$(free -h| grep Mem | awk '{print $4}')"
+PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR bqsr.grp -o ${sample}_tumor_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR bqsr.grp -o ${sample}_normal_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
 printf "$header">jobs/refine/${sample}_Trefine_2.pbs
 printf "${Tjobname}">>jobs/refine/${sample}_Trefine_2.pbs
