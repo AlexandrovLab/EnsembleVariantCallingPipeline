@@ -17,13 +17,16 @@ then printf "$USAGE"
 else
 mkdir -p ${out}/jobs/align
 mkdir -p ${out}/jobs/refine
+mkdir -p ${out}/jobs/pon
 cd $out
 cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
-~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownIndels
-~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownIndels $dbSNP; done
+#~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
+#~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownIndels
+#~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownIndels $dbSNP
+~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
+done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
