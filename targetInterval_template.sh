@@ -18,7 +18,7 @@ header="#!/bin/bash
 "
 
 
-RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam ${sample}_normal_mkdp.bam --known ${knownIndels} -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam --known ${knownIndels} -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 printf "$header">jobs/refine/${sample}_targetInterval.pbs
 
 echo source ~/.bashrc>>jobs/refine/${sample}_targetInterval.pbs
