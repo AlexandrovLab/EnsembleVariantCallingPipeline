@@ -32,8 +32,8 @@ Njobname="#PBS -N EVC_align_${sample}_normal
 #PBS -o ${sample}_Nalign_1.o
 #PBS -e ${sample}_Nalign_1.e
 "
-alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}_tumor\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_tumor_raw.bam"
-alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}_normal\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_normal_raw.bam"
+alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_tumor_raw.bam"
+alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_normal_raw.bam"
 
 mkdpTumor="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$(free -h|grep Mem|awk '{print \$4}') VALIDATION_STRINGENCY=STRICT I=${sample}_tumor_raw.bam O=${sample}_tumor_mkdp.bam M=${sample}_tumor_markDuplicates_Matrix.txt"
 mkdpNormal="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$(free -h|grep Mem|awk '{print \$4}') VALIDATION_STRINGENCY=STRICT I=${sample}_normal_raw.bam O=${sample}_normal_mkdp.bam M=${sample}_normal_markDuplicates_Matrix.txt"
@@ -50,10 +50,10 @@ echo 'echo job starts at $(date)'>>jobs/align/${sample}_Talign_1.pbs
 echo 'echo job starts at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo cd $output>>jobs/align/${sample}_Talign_1.pbs
 echo cd $output>>jobs/align/${sample}_Nalign_1.pbs
-echo mkdir ${sample}_talign>>jobs/align/${sample}_Talign_1.pbs
-echo mkdir ${sample}_nalign>>jobs/align/${sample}_Nalign_1.pbs
-echo cd ${sample}_talign>>jobs/align/${sample}_Talign_1.pbs
-echo cd ${sample}_nalign>>jobs/align/${sample}_Nalign_1.pbs
+echo mkdir -p ${sample}>>jobs/align/${sample}_Talign_1.pbs
+echo mkdir -p ${sample}>>jobs/align/${sample}_Nalign_1.pbs
+echo cd ${sample}>>jobs/align/${sample}_Talign_1.pbs
+echo cd ${sample}>>jobs/align/${sample}_Nalign_1.pbs
 echo 'echo starting aligning tumor at $(date)'>>jobs/align/${sample}_Talign_1.pbs
 echo 'alignS=$SECONDS'>>jobs/align/${sample}_Talign_1.pbs
 echo 'alignS=$SECONDS'>>jobs/align/${sample}_Nalign_1.pbs
