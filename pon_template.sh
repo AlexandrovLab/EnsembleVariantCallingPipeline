@@ -26,6 +26,6 @@ echo cd ${out}/${sample}/>>jobs/pon/${sample}_pon_3.pbs
 
 echo 'echo starting PanelOfNormals at $(date)'>>jobs/pon/${sample}_pon_3.pbs
 echo 'ponS=$SECONDS'>>jobs/pon/${sample}_pon_3.pbs
-echo ${pon_1}>>jobs/refine/${sample}_Trefine_2.pbs
+echo ${pon_1}>>jobs/pon/${sample}_pon_3.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/pon/${sample}_pon_3.pbs
 echo 'echo generating PON vcf took $ponT seconds'>>jobs/pon/${sample}_pon_3.pbs
