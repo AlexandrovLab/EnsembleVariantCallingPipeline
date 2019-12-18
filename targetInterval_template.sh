@@ -40,4 +40,7 @@ echo 'echo target interval creation took $targetN seconds for normal'>>jobs/refi
 
 echo source ~/.bashrc>>jobs/refine/${sample}_targetInterval.pbs
 echo source activate cvc_py3>>jobs/refine/${sample}_targetInterval.pbs
-echo 'echo target interval creation took $targetT seconds for tumor'>>jobs/refine/${sample}_targetInterval.pbs
+echo 'unionS=$SECONDS'>>jobs/refine/${sample}_targetInterval.pbs
+echo ${RTC_union}>>jobs/refine/${sample}_targetInterval.pbs
+echo 'unionT=$(($SECONDS - $unionS))'>>jobs/refine/${sample}_targetInterval.pbs
+echo 'echo generating union of target intervals took $unionT seconds for tumor'>>jobs/refine/${sample}_targetInterval.pbs
