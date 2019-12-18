@@ -15,9 +15,9 @@ USAGE:\trun.sh \\
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ]
 then printf "$USAGE"
 else
-cd $out
 mkdir -p ${out}/jobs/align
 mkdir -p ${out}/jobs/refine
+cd $out
 cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
