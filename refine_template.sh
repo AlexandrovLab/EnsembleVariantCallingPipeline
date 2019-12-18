@@ -23,8 +23,8 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 #PBS -o ${sample}_Nrefine_2.o
 "
 
-IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_union_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_union_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 
 BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
