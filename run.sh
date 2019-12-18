@@ -23,6 +23,7 @@ sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
+~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownindels $dbSNP
 ~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownindels $dbSNP; done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
