@@ -18,14 +18,15 @@ header="#!/bin/bash
 #PBS -o ${sample}_strelka.o
 "
 
-strelka_config_exome="configureStrelkaSomaticWorkflow.py --exome --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir %s"
-strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir %s"
+strelka_config_exome="configureStrelkaSomaticWorkflow.py --exome --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
+strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
 #runstrelka="python2 %s -m local -j $(nproc)"
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
 echo source activate cvc_py2>>jobs/strelka/${sample}_strelka.pbs
-echo cd ${out}/${sample}/>>jobs/strelka/${sample}_strelka.pbs
+echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
+echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 
 echo 'echo starting strelka at $(date)'>>jobs/strelka/${sample}_strelka.pbs
 echo 'strelkaConfigS=$SECONDS'>>jobs/strelka/${sample}_strelka.pbs
