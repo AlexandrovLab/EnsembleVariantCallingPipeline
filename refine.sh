@@ -22,9 +22,12 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 #PBS -e ${sample}_Nrefine_2.e
 #PBS -o ${sample}_Nrefine_2.o
 "
+
+RTC_t="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam --known ${knownIndels} -o ${sample}_tumor_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+RTC_n="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_normal_mkdp.bam --known ${knownIndels} -o ${sample}_normal_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+
 IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_tumor_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_normal_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-
 
 BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print $4}')"
 BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print $4}')"
@@ -43,6 +46,20 @@ echo source activate evc_py3>>jobs/refine/${sample}_Nrefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 
+
+
+echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
+echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
+echo 'targetS=$SECONDS'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
+echo 'targetS=$SECONDS'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
+echo ${RTC_t}>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
+echo ${RTC_n}>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
+echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
+echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
+echo 'echo target interval creation took $targetT seconds'>>jobs/refine/${sample}_TIDtargetInterval_2.pbs
+echo 'echo target interval creation took $targetT seconds'>>jobs/refine/${sample}_NIDtargetInterval_2.pbs
+
+
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
@@ -54,6 +71,8 @@ echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo indel alignemnt took $idraT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
 
+echo ": <<'END'">>jobs/refine/${sample}_Trefine_2.pbs
+echo ": <<'END'">>jobs/refine/${sample}_Nrefine_2.pbs
 
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
@@ -77,3 +96,6 @@ echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
+
+echo "END">>jobs/refine/${sample}_Trefine_2.pbs
+echo "END">>jobs/refine/${sample}_Nrefine_2.pbs
