@@ -30,7 +30,7 @@ template="#!/bin/bash
 #PBS -e ${sample}_varscan.e
 #PBS -o ${sample}_varscan.o
 #VarScan parameters
-vs_tumor_purity=0.8 #80% purity (tumor content)
+vs_tumor_purity=0.8
 vs_min_converage=10
 vs_min_alt_reads=3
 vs_min_aaf=0.2
