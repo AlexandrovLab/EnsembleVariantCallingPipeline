@@ -3,7 +3,7 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-type=$5
+#type=$5
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 header="#!/bin/bash
@@ -13,9 +13,9 @@ header="#!/bin/bash
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V
-#PBS -N EVC_strelka_${sample}
-#PBS -e ${sample}_strelka.e
-#PBS -o ${sample}_strelka.o
+#PBS -N EVC_mutect_${sample}
+#PBS -e ${sample}_mutect.e
+#PBS -o ${sample}_mutect.o
 "
 
 strelka_config_exome="configureStrelkaSomaticWorkflow.py --exome --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
