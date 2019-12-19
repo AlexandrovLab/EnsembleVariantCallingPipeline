@@ -29,7 +29,8 @@ template="#!/bin/bash
 #PBS -N EVC_varscan_${sample}
 #PBS -e ${sample}_varscan.e
 #PBS -o ${sample}_varscan.o
-\n
+"
+: <<'END
 #VarScan parameters
 vs_tumor_purity = 0.8 #80% purity (tumor content)
 vs_min_converage = 10
@@ -78,7 +79,7 @@ ${varscan_processSomatic_indel_cmd}
 varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))
 echo INDEL processSomatic took $varscanINDELprocessSomaticT seconds
 \n"
-#echo job finished at $(date)"
-
+#echo job finished at $(date)
+END
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
