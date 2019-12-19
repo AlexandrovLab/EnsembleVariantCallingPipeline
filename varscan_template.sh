@@ -43,13 +43,16 @@ source activate cvc_py3
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
 cd ${out}/${sample}/varscan"
-: <<'END'
+
 echo starting mpileup....
 mpileupS=$SECONDS
 ${mpileup_nt_cmd}
 mpileupT=$(($SECONDS - $mpileupS))
 echo mpileup took $mpileupT seconds
-\n
+
+"
+
+: <<'END'
 echo starting varscan vcf....
 varscanvcfS=$SECONDS
 ${varscan_vcf_cmd}
