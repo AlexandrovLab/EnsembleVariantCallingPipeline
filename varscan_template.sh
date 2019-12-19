@@ -11,10 +11,10 @@ varscanOutput=${out}/${sample}/varscan
 
 
 
-mpileup_nt_cmd="samtools mpileup --input-fmt-option nthreads=$(nproc) -f $ref -q 1 -B $normal $tumor > $mpileup"
+mpileup_nt_cmd="samtools mpileup --input-fmt-option nthreads=\$(nproc) -f $ref -q 1 -B $normal $tumor > $mpileup"
 varscan_vcf_cmd="varscan somatic $mpileup ${varscanOutput}/${sample} --mpileup 1 --output-vcf --tumor-purity vs_tumor_purity"
-varscan_filter_snp_cmd="varscan somaticFilter ${varscanOutput}/${sample}.snp.vcf --min-coverage $vs_min_converage --min-reads2 $vs_min_alt_reads --min-var-freq $vs_min_aaf"
-varscan_filter_indel_cmd="varscan somaticFilter ${varscanOutput}/${sample}.indel.vcf --min-coverage $vs_min_converage --min-reads2 $vs_min_alt_reads --min-var-freq $vs_min_aaf"
+varscan_filter_snp_cmd="varscan somaticFilter ${varscanOutput}/${sample}.snp.vcf --min-coverage vs_min_converage --min-reads2 vs_min_alt_reads --min-var-freq vs_min_aaf"
+varscan_filter_indel_cmd="varscan somaticFilter ${varscanOutput}/${sample}.indel.vcf --min-coverage vs_min_converage --min-reads2 vs_min_alt_reads --min-var-freq vs_min_aaf"
 varscan_processSomatic_snp_cmd="varscan processSomatic ${varscanOutput}/${sample}.snp.vcf"
 varscan_processSomatic_indel_cmd="varscan processSomatic ${varscanOutput}/${sample}.indel.vcf"
 
