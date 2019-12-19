@@ -16,7 +16,7 @@ header="#!/bin/bash
 #PBS -o ${sample}_pon.o
 "
 
-pon_1="gatk Mutect2 -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O {sample}_PON.vcf.gz -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+pon_1="gatk Mutect2 -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O {sample}_PON.vcf.gz"
 
 
 printf "$header">jobs/pon/${sample}_pon_3.pbs
