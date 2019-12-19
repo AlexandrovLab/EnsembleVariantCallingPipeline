@@ -26,10 +26,10 @@ sample=$(echo $line|cut -d ' ' -f1)
 tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 type=$(echo $line|cut -d ' ' -f4)
-#~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-#~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownIndels
-#~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownIndels $dbSNP
-#~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
+~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
+~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownIndels
+~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownIndels $dbSNP
+~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
 done
