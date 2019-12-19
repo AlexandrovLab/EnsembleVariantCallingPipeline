@@ -47,7 +47,7 @@ cd ${out}/${sample}/varscan
 echo starting mpileup....
 mpileupS=$SECONDS
 ${mpileup_nt_cmd}
-mpileupT=$(($SECONDS - $mpileupS))
+mpileupT=$(($SECONDS-$mpileupS))
 echo mpileup took $mpileupT seconds
 
 "
