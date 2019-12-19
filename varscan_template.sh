@@ -31,21 +31,19 @@ template="#!/bin/bash
 #PBS -o ${sample}_varscan.o
 
 
-
 #VarScan parameters
 vs_tumor_purity=0.8
 vs_min_converage=10
 vs_min_alt_reads=3
 vs_min_aaf=0.2
-\n
-"
-: <<'END'
+
+
 source ~/.bashrc
 source activate cvc_py3
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
-cd ${out}/${sample}/varscan
-\n
+cd ${out}/${sample}/varscan"
+: <<'END'
 echo starting mpileup....
 mpileupS=$SECONDS
 ${mpileup_nt_cmd}
