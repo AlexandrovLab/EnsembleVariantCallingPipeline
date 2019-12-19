@@ -29,56 +29,55 @@ template="#!/bin/bash
 #PBS -N EVC_varscan_${sample}
 #PBS -e ${sample}_varscan.e
 #PBS -o ${sample}_varscan.o
-
+\n
 #VarScan parameters
 vs_tumor_purity = 0.8 #80% purity (tumor content)
 vs_min_converage = 10
 vs_min_alt_reads = 3
 vs_min_aaf = 0.2
-
-
+\n
 source ~/.bashrc
 source activate cvc_py3
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
 cd ${out}/${sample}/varscan
-
+\n
 echo starting mpileup....
 mpileupS=$SECONDS
 ${mpileup_nt_cmd}
 mpileupT=$(($SECONDS - $mpileupS))
 echo mpileup took $mpileupT seconds
-
+\n
 echo starting varscan vcf....
 varscanvcfS=$SECONDS
 ${varscan_vcf_cmd}
 varscanvcfT=$(($SECONDS - $varscanvcfS))
 echo varscan VCF took $varscanvcfT seconds
-
+\n
 echo starting varscan SNP filtering....
 varscanSNPfilterS=$SECONDS
 ${varscan_filter_snp_cmd}
 varscanSNPfilterT=$(($SECONDS - $varscanSNPfilterS))
 echo SNP filteriing took $varscanSNPfilterT seconds
-
+\n
 echo starting varscan INDEL filteriing....
 varscanINDELfilterS=$SECONDS
 ${varscan_filter_indel_cmd}
 varscanINDELfilterT=$(($SECONDS - $varscanINDELfilterS))
 echo INDEL filteriing took $varscanINDELfilterT seconds
-
+\n
 echo starting varscan SNP processSomatic....
 varscanSNPprocessSomaticS=$SECONDS
 ${varscan_processSomatic_snp_cmd}
 varscanSNPprocessSomaticT=$(($SECONDS - $varscanSNPprocessSomaticS))
 echo SNP processSomatic took $varscanSNPprocessSomaticT seconds
-
+\n
 echo starting varscan INDEL processSomatic....
 varscanINDELprocessSomaticS=$SECONDS
 ${varscan_processSomatic_indel_cmd}
 varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))
 echo INDEL processSomatic took $varscanINDELprocessSomaticT seconds
-
+\n
 echo job finished at $(date)"
 
 printf "$template">jobs/varscan/${sample}_varscan.pbs
