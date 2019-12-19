@@ -77,8 +77,8 @@ varscanINDELprocessSomaticS=$SECONDS
 ${varscan_processSomatic_indel_cmd}
 varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))
 echo INDEL processSomatic took $varscanINDELprocessSomaticT seconds
-\n
-echo job finished at $(date)"
+\n"
+#echo job finished at $(date)"
 
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
