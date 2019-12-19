@@ -16,13 +16,15 @@ header="#!/bin/bash
 #PBS -o ${sample}_pon.o
 "
 
-pon_1="gatk Mutect2 -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O ${sample}_PON.vcf.gz"
+pon_1="gatk Mutect2 --independent-mates -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O ${sample}_PON.vcf.gz"
 
 
 printf "$header">jobs/pon/${sample}_pon_3.pbs
 echo source ~/.bashrc>>jobs/pon/${sample}_pon_3.pbs
 echo source activate cvc_py3>>jobs/pon/${sample}_pon_3.pbs
 echo cd ${out}/${sample}/>>jobs/pon/${sample}_pon_3.pbs
+
+
 
 echo 'echo starting PanelOfNormals at $(date)'>>jobs/pon/${sample}_pon_3.pbs
 echo 'ponS=$SECONDS'>>jobs/pon/${sample}_pon_3.pbs
