@@ -42,7 +42,7 @@ source ~/.bashrc
 source activate cvc_py3
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
-cd ${out}/${sample}/varscan"
+cd ${out}/${sample}/varscan
 
 echo starting mpileup....
 mpileupS=$SECONDS
