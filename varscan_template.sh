@@ -43,47 +43,42 @@ source activate cvc_py3
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
 cd ${out}/${sample}/varscan
-
-echo starting mpileup....
-mpileupS=$SECONDS
-${mpileup_nt_cmd}
-mpileupT=$(($SECONDS-$mpileupS))
-echo mpileup took $mpileupT seconds
-
 "
-
-: <<'END'
-echo starting varscan vcf....
-varscanvcfS=$SECONDS
-${varscan_vcf_cmd}
-varscanvcfT=$(($SECONDS - $varscanvcfS))
-echo varscan VCF took $varscanvcfT seconds
-\n
-echo starting varscan SNP filtering....
-varscanSNPfilterS=$SECONDS
-${varscan_filter_snp_cmd}
-varscanSNPfilterT=$(($SECONDS - $varscanSNPfilterS))
-echo SNP filteriing took $varscanSNPfilterT seconds
-\n
-echo starting varscan INDEL filteriing....
-varscanINDELfilterS=$SECONDS
-${varscan_filter_indel_cmd}
-varscanINDELfilterT=$(($SECONDS - $varscanINDELfilterS))
-echo INDEL filteriing took $varscanINDELfilterT seconds
-\n
-echo starting varscan SNP processSomatic....
-varscanSNPprocessSomaticS=$SECONDS
-${varscan_processSomatic_snp_cmd}
-varscanSNPprocessSomaticT=$(($SECONDS - $varscanSNPprocessSomaticS))
-echo SNP processSomatic took $varscanSNPprocessSomaticT seconds
-\n
-echo starting varscan INDEL processSomatic....
-varscanINDELprocessSomaticS=$SECONDS
-${varscan_processSomatic_indel_cmd}
-varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))
-echo INDEL processSomatic took $varscanINDELprocessSomaticT seconds
-\n"
-#echo job finished at $(date)
-END
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
+echo 'echo starting mpileup....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${mpileup_nt_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'mpileupT=$(($SECONDS-$mpileupS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo mpileup took $mpileupT seconds'>>jobs/varscan/${sample}_varscan.pbs
+
+echo 'echo starting varscan vcf....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanvcfS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${varscan_vcf_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanvcfT=$(($SECONDS - $varscanvcfS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo varscan VCF took $varscanvcfT seconds'>>jobs/varscan/${sample}_varscan.pbs
+
+echo 'echo starting varscan SNP filtering....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanSNPfilterS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${varscan_filter_snp_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanSNPfilterT=$(($SECONDS - $varscanSNPfilterS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo SNP filteriing took $varscanSNPfilterT seconds'>>jobs/varscan/${sample}_varscan.pbs
+
+echo 'echo starting varscan INDEL filteriing....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanINDELfilterS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${varscan_filter_indel_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanINDELfilterT=$(($SECONDS - $varscanINDELfilterS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo INDEL filteriing took $varscanINDELfilterT seconds'>>jobs/varscan/${sample}_varscan.pbs
+
+echo 'echo starting varscan SNP processSomatic....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanSNPprocessSomaticS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${varscan_processSomatic_snp_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanSNPprocessSomaticT=$(($SECONDS - $varscanSNPprocessSomaticS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo SNP processSomatic took $varscanSNPprocessSomaticT seconds'>>jobs/varscan/${sample}_varscan.pbs
+
+echo 'echo starting varscan INDEL processSomatic....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanINDELprocessSomaticS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
+echo ${varscan_processSomatic_indel_cmd}>>jobs/varscan/${sample}_varscan.pbs
+echo 'varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo INDEL processSomatic took $varscanINDELprocessSomaticT seconds'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo job finished at $(date)'>>jobs/varscan/${sample}_varscan.pbs
