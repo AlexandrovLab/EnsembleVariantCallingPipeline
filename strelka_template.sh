@@ -20,7 +20,7 @@ header="#!/bin/bash
 
 strelka_config_exome="configureStrelkaSomaticWorkflow.py --exome --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
 strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
-runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j $(nproc)"
+runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j \$(nproc)"
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
