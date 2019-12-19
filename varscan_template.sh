@@ -29,7 +29,6 @@ template="#!/bin/bash
 #PBS -N EVC_varscan_${sample}
 #PBS -e ${sample}_varscan.e
 #PBS -o ${sample}_varscan.o
-
 #VarScan parameters
 vs_tumor_purity=0.8 #80% purity (tumor content)
 vs_min_converage=10
