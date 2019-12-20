@@ -1,5 +1,5 @@
 #!/bin/bash
-email=phoebehe@eng.ucsd.edu
+email=$4
 ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
 path=$1
 out=$2
@@ -12,7 +12,7 @@ USAGE:\trun.sh \\
 	output/directory \\
 	path/to/sample.txt \\
 	\n\n"
-if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ]
+if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ]
 then printf "$USAGE"
 else
 mkdir -p ${out}/jobs/align
