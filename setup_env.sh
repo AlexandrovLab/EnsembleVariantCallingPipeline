@@ -1,6 +1,5 @@
 #! /bin/bash
-
-# Usage: bash config_cvc.sh 3 OR bash config_cvc.sh 2
+# Usage: bash setup_env.sh 3 OR bash config_cvc.sh 2
 # The 2 or 3 depends on your miniconda version.
 
 if [ $1 == 2 ] || [ $1 == 3 ]
