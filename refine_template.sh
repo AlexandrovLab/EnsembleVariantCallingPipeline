@@ -37,9 +37,9 @@ printf "${Tjobname}">>jobs/refine/${sample}_Trefine_2.pbs
 printf "$header">jobs/refine/${sample}_Nrefine_2.pbs
 printf "${Njobname}">>jobs/refine/${sample}_Nrefine_2.pbs
 echo source ~/.bashrc>>jobs/refine/${sample}_Trefine_2.pbs
-echo source activate evc_py3>>jobs/refine/${sample}_Trefine_2.pbs
+echo source activate evc_gatk3>>jobs/refine/${sample}_Trefine_2.pbs
 echo source ~/.bashrc>>jobs/refine/${sample}_Nrefine_2.pbs
-echo source activate evc_py3>>jobs/refine/${sample}_Nrefine_2.pbs
+echo source activate evc_gatk3>>jobs/refine/${sample}_Nrefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 

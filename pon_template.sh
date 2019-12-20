@@ -21,7 +21,7 @@ pon_1="gatk Mutect2 --independent-mates -R $ref --native-pair-hmm-threads \$(npr
 
 printf "$header">jobs/pon/${sample}_pon_3.pbs
 echo source ~/.bashrc>>jobs/pon/${sample}_pon_3.pbs
-echo source activate cvc_py3>>jobs/pon/${sample}_pon_3.pbs
+echo source activate evc_main>>jobs/pon/${sample}_pon_3.pbs
 echo cd ${out}/${sample}/>>jobs/pon/${sample}_pon_3.pbs
 
 

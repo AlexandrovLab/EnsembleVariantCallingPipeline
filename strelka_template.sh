@@ -24,7 +24,7 @@ runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j \$(nproc
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
-echo source activate cvc_py2>>jobs/strelka/${sample}_strelka.pbs
+echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 

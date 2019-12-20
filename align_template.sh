@@ -44,8 +44,8 @@ printf "$header">jobs/align/${sample}_Nalign_1.pbs
 printf "${Njobname}">>jobs/align/${sample}_Nalign_1.pbs
 echo source ~/.bashrc>>jobs/align/${sample}_Talign_1.pbs
 echo source ~/.bashrc>>jobs/align/${sample}_Nalign_1.pbs
-echo source activate cvc_py3>>jobs/align/${sample}_Talign_1.pbs
-echo source activate cvc_py3>>jobs/align/${sample}_Nalign_1.pbs
+echo source activate evc_main>>jobs/align/${sample}_Talign_1.pbs
+echo source activate evc_main>>jobs/align/${sample}_Nalign_1.pbs
 echo 'echo job starts at $(date)'>>jobs/align/${sample}_Talign_1.pbs
 echo 'echo job starts at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo cd $output>>jobs/align/${sample}_Talign_1.pbs

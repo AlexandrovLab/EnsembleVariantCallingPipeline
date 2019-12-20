@@ -22,7 +22,7 @@ RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sa
 printf "$header">jobs/refine/${sample}_targetInterval.pbs
 
 echo source ~/.bashrc>>jobs/refine/${sample}_targetInterval.pbs
-echo source activate evc_py3>>jobs/refine/${sample}_targetInterval.pbs
+echo source activate evc_gatk3>>jobs/refine/${sample}_targetInterval.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_targetInterval.pbs
 
 echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/refine/${sample}_targetInterval.pbs

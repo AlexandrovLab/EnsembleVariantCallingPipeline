@@ -39,7 +39,7 @@ vs_min_aaf=0.2
 
 
 source ~/.bashrc
-source activate cvc_py3
+source activate evc_main
 mkdir -p ${out}/${sample}/varscan
 mkdir -p ${out}/${sample}/mpileup
 cd ${out}/${sample}/varscan
