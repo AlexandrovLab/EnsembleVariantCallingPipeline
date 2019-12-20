@@ -10,4 +10,4 @@ Please submit jobs step by step, do not move to the next step until the previous
 
 1. Both the *Nalign_1.pbs* and *Talign_1.pbs* under jobs/align/
 2. The *targetInterval.pbs* under jobs/refine/ (when this is finished, the corresponding *Nrefine_2.pbs* and *Trefine_2.pbs* will be submitted automatically)
-3. Scripts under pon/, strelka/ and varscan/ can all be submitted simutaniously at this point.
+3. Scripts under jobs/pon/, jobs/strelka/ and jobs/varscan/ can all be submitted simutaniously at this point.
