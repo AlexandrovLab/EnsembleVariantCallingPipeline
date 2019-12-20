@@ -14,22 +14,23 @@
 if [ $1 == 2 ] || [ $1 == 3 ]
 then
 	#if conda env exists update, else create them
-	if [ -e env_py2.yml ] && [ -e env_py3.yml ]
+	if [ -e strelka_env.yml ] && [ -e main_env.yml ] && [ -e gatk3_env.yml ]
 	then
 		echo "Updating conda environments"
-		conda env update -f env_py2.yml
-		conda env update -f env_py3.yml
+		conda env update -f strelka_env.yml
+		conda env update -f main_env.yml
+		conda env update -f gatk3_env.yml
 	else
 		echo "Creating new conda environments"
-		conda env create -f env_py2.yml
-		conda env create -f env_py3.yml
+		conda env create -f strelka_env.yml
+		conda env create -f main_env.yml
+		conda env create -f gatk3_env.yml
 	fi
 
 	#add scripts to path
-	ln -s $(pwd)/ConVarCaller.py ~/miniconda$1/bin/ConVarCaller.py
-	ln -s $(pwd)/CVC_project_setup.sh ~/miniconda$1/bin/CVC_project_setup
+	ln -s $(pwd)/run_evc.sh ~/miniconda$1/bin/run_evc
 	
-	if [ -e env_py2.yml ] && [ -e env_py3.yml ]
+	if [ -e strelka_env.yml ] && [ -e main_env.yml ] && [ -e gatk3_env.yml ]
 	then
 		echo "Successfully installed three environments: evc_main, evc_strelka and evc_gatk3"
 	else
