@@ -44,3 +44,9 @@ else
 	echo "You have to provide an input"
 	echo "USAGE: bash config_cvc.sh [miniconda version (i.e. 2 or 3)]"
 fi
+
+echo Registering for gatk3...
+conda activate evc_gatk3
+gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+conda deactivate
+echo gatk3 registered, environment set up is finished!
