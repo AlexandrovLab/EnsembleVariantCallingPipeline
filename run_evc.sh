@@ -10,7 +10,7 @@ USAGE="\nMissing input arguments..\n
 USAGE:\trun.sh \\
 	path/to/project \\
 	output/directory \\
-	path/to/sample.txt \\
+	path/to/sample.map \\
 	email for job notification \\
 	\n\n"
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ]
