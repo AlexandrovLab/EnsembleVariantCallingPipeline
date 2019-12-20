@@ -40,4 +40,4 @@ echo 'MfilterS=$SECONDS'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo ${filter_cmd}>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'MfilterT=$(($SECONDS-$MfilterS))'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'echo mutect filter took $MfilterT seconds'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
-echo 'job finished at $date'
+echo 'echo job finished at $date'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
