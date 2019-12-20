@@ -1,14 +1,14 @@
 # EnsembleVaraintCallingPipeline
-*First built in December 2019, EVC is the new bash based version of the previous Consensus Variant Calling pipeline
+*First built in December 2019, EVC is the new bash based version of the previous Consensus Variant Calling pipeline*
 
 
-FIRST TIME SETUP
+**FIRST TIME SETUP**
 
 1. Clone the directory to your home on TSCC
 2. Run the setup_env.sh script.
 
 
-TO RUN THE PIPELINE
+**TO RUN THE PIPELINE**
 ```
 run_env [args]
 ```
