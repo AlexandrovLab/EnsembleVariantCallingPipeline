@@ -2,4 +2,5 @@ name: evc_gatk3
 channels:
   - bioconda
 dependencies:
+  - python=3
   - gatk=3.8=7
