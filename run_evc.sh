@@ -21,6 +21,7 @@ mkdir -p ${out}/jobs/refine
 mkdir -p ${out}/jobs/pon
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
+mkdir -p ${out}/jobs/mutectEASY
 cd $out
 cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
@@ -33,6 +34,7 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
+~/EnsembleVaraintCallingPipeline/easy_mutect_template.sh $email $sample $ref $out $dbSNP
 done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
