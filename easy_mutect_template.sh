@@ -32,15 +32,15 @@ mutect_cmd="gatk Mutect2 --native-pair-hmm-threads $(nproc) --germline-resource 
 filter_cmd="filter_mutect_cmd = 'gatk FilterMutectCalls -V ${sample}_mutect_unfiltered.vcf -O ${sample}_mutect_filtered.vcf'"
 
 
-echo 'echo starting mutect command at $date....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'echo starting mutect command at $(date)....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'mutectS=$SECONDS'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo ${mutect_cmd}>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'mutectT=$(($SECONDS-$mutectS))'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'echo mutect command took $mutectT seconds'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 
-echo 'echo starting mutect filter at $date....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'echo starting mutect filter at $(date)....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'MfilterS=$SECONDS'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo ${filter_cmd}>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'MfilterT=$(($SECONDS-$MfilterS))'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 echo 'echo mutect filter took $MfilterT seconds'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
-echo 'echo job finished at $date'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'echo job finished at $(date)'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
