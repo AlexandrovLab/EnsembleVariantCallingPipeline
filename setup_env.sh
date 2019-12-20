@@ -31,7 +31,7 @@ then
 	
 	if [ -e env_py2.yml ] && [ -e env_py3.yml ]
 	then
-		echo "Successfully installed three environments: evc_main, evc_strelka, evc_gatk3"
+		echo "Successfully installed three environments: evc_main, evc_strelka and evc_gatk3"
 	else
 		echo "Something didn't work. Please check your conda installation."
 	fi
