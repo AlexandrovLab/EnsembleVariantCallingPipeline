@@ -5,7 +5,7 @@
 if [ $1 == 2 ] || [ $1 == 3 ]
 then
 	#conda env update will create an environemnt if it does not exit or update it when exisiting
-	echo "Updating conda environments"
+	echo "Updating/Installing conda environments"
 	conda env update -f strelka_env.yml
 	conda env update -f main_env.yml
 	conda env update -f gatk3_env.yml
