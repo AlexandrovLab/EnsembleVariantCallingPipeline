@@ -3,7 +3,9 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-pon=$5
+dbsnp=$5
+
+pon=/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/oral/olivier_analyzed_oral_benign/PON/PON.vcf.gz
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 template="#!/bin/bash
@@ -13,22 +15,29 @@ template="#!/bin/bash
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V
-#PBS -N EVC_mutect_${sample}
-#PBS -e ${sample}_mutect.e
-#PBS -o ${sample}_mutect.o
+#PBS -N EVC_mutectEASY_${sample}
+#PBS -e ${sample}_mutecttEASY.e
+#PBS -o ${sample}_mutecttEASY.o
 
 source ~/.bashrc
 source activate evc_main
-mkdir -p ${out}/${sample}/mutect
-cd ${out}/${sample}/mutect
+mkdir -p ${out}/${sample}/mutectEASY
+cd ${out}/${sample}/mutectEASY
 "
 
-mutect_cmd="gatk Mutect2 -R $ref -I ${sample}_tumor_final.bam -germline-resource $dbSNP -pon $pon --f1r2-tar-gz ${sample}_f1r2.tar.gz -O ${sample}_unfiltered.vcf"
-   
-mutect_orientation_2="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
+mutect_cmd="gatk Mutect2 --native-pair-hmm-threads $(nproc) --germline-resource $dbsnp --af-of-alleles-not-in-resource 0.00003125 --reference $ref --panel-of-normals $pon --input $normal --tumor-sample ${sample}_tumor_final --input $tumor --normal-sample ${sample}_normal_final --output ${sample}_mutect_unfiltered.vcf"
+filter_cmd="filter_mutect_cmd = 'gatk FilterMutectCalls -V ${sample}_mutect_unfiltered.vcf -O ${sample}_mutect_filtered.vcf'"
 
-mutect_contamin_1="gatk GetPileupSummaries -I ${sample}_tumor_final.bam -V chr17_small_exac_common_3_grch38.vcf.gz -L chr17_small_exac_common_3_grch38.vcf.gz -O ${sample}_getpileupsummaries.table"
 
-mutect_contamin_2="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
+echo 'echo starting mutect command at $date....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'mutectS=$SECONDS'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo ${mutect_cmd}>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'mutectT=$(($SECONDS-$mutectS))'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'echo mutect command took $mutectT seconds'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
 
-mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_filtered.vcf"
+echo 'echo starting mutect filter at $date....'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'MfilterS=$SECONDS'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo ${filter_cmd}>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'MfilterT=$(($SECONDS-$MfilterS))'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'echo mutect filter took $MfilterT seconds'>>jobs/mutectEASY/${sample}_mutectEASY.pbs
+echo 'job finished at $date'
