@@ -46,37 +46,37 @@ cd ${out}/${sample}/varscan
 "
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting mpileup....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${mpileup_nt_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupT=$(($SECONDS-$mpileupS))'>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo mpileup took $mpileupT seconds'>>jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting varscan vcf....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting varscan vcf at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanvcfS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_vcf_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanvcfT=$(($SECONDS - $varscanvcfS))'>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo varscan VCF took $varscanvcfT seconds'>>jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting varscan SNP filtering....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting varscan SNP filtering at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanSNPfilterS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_filter_snp_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanSNPfilterT=$(($SECONDS - $varscanSNPfilterS))'>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo SNP filteriing took $varscanSNPfilterT seconds'>>jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting varscan INDEL filteriing....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting varscan INDEL filteriing at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanINDELfilterS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_filter_indel_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanINDELfilterT=$(($SECONDS - $varscanINDELfilterS))'>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo INDEL filteriing took $varscanINDELfilterT seconds'>>jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting varscan SNP processSomatic....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting varscan SNP processSomatic at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanSNPprocessSomaticS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_processSomatic_snp_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanSNPprocessSomaticT=$(($SECONDS - $varscanSNPprocessSomaticS))'>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo SNP processSomatic took $varscanSNPprocessSomaticT seconds'>>jobs/varscan/${sample}_varscan.pbs
 
-echo 'echo starting varscan INDEL processSomatic....'>>jobs/varscan/${sample}_varscan.pbs
+echo 'echo starting varscan INDEL processSomatic at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanINDELprocessSomaticS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_processSomatic_indel_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanINDELprocessSomaticT=$(($SECONDS - $varscanINDELprocessSomaticS))'>>jobs/varscan/${sample}_varscan.pbs
