@@ -19,7 +19,7 @@ Current arguments are
 run.sh \
 path/to/project \
 output/directory \
-path/to/sample.txt \
+path/to/sample.map \
 email for job notification \
 ```
 This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
