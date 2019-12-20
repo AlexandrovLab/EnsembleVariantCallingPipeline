@@ -1,5 +1,5 @@
 # EnsembleVaraintCallingPipeline
-*First built in December 2019, EVC is the new bash based version of the previous Consensus Variant Calling pipeline*
+*First built in December 2019, EVC is the new bash based version of the previous Consensus Variant Calling pipeline, it is still in development...*
 
 
 **FIRST TIME SETUP**
@@ -13,6 +13,17 @@
 run_env [args]
 ```
 which will create a jobs/ directory in the output directory, the pipeline works through manually submitting the jobs at each stage.
+
+Current arguments are
+```
+run.sh \
+path/to/project \
+output/directory \
+path/to/sample.txt \
+email for job notification \
+```
+This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
+
 
 One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.)
 
