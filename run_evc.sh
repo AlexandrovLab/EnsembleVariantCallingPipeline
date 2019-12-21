@@ -4,8 +4,8 @@ ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d
 path=$1
 out=$2
 sampleF=$3
-known_indels="/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.known_indels.vcf /restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Mills_and_1000G_gold_standard.indels.hg38.vcf"
-base_recalibration="/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.known_indels.vcf /restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Mills_and_1000G_gold_standard.indels.hg38.vcf /restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.dbsnp138.vcf /restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/1000G_phase1.snps.high_confidence.hg38.vcf"
+known_indel_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt
+base_recalibration_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/BaseRecalibration_files.txt
 
 dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 USAGE="\nMissing input arguments..\n
@@ -31,8 +31,8 @@ tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $KI1 $KI2
-~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indels} ${base_recalibration}
+~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
+~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
