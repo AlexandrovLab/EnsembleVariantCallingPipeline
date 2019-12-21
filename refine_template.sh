@@ -107,6 +107,7 @@ cd ${out}/jobs/pon
 qsub ${sample}_pon_3.pbs
 else
 echo 'job finished, waiting for the pair sample to finish for subsequent analysis'
+fi
 "
 printf "$tail">>jobs/refine/${sample}_Trefine_2.pbs
 printf "$tail">>jobs/refine/${sample}_Nrefine_2.pbs
