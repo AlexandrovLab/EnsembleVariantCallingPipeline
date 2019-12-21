@@ -9,14 +9,14 @@ base_recalibration=$6
 KIn=1
 for ki in ${known_indels}
 do  
-KI$KIn=$ki
+KI$KIn=$(echo $ki)
 KIn=$KIn+1
 done
 
 BRn=1
 for br in ${known_indels}
 do  
-BR$BRn=$br
+BR$BRn=$(echo $br)
 BRn=$BRn+1
 done
 
