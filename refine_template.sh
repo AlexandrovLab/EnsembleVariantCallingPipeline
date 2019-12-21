@@ -15,17 +15,17 @@ IR_t="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.
 IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
 
 
-cat ${known_indels}|while read ki;
+while read ki;
 do
 IR_t=$(echo "${IR_t} -known $ki")
 IR_n=$(echo "${IR_n} -known $ki")
-done
+done < <(cat ${known_indels})
 
-cat ${base_recalibration}|while read br;
+while read br;
 do
 BR_t=$(echo "${BR_t} --knownSites $br")
 BR_n=$(echo "${BR_n} --knownSites $br")
-done
+done < <(cat ${base_recalibration})
 
 
 header="#!/bin/bash
