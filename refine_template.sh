@@ -3,12 +3,22 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-KI1=$5
-KI2=$6
-BR1=$7
-BR2=$8
-BR3=$9
-BR4=$10
+known_indels=$5
+base_recalibration=$6
+
+KIn=1
+for ki in ${known_indels}
+do  
+KI$KIn=$ki
+KIn=$KIn+1
+done
+
+BRn=1
+for br in ${known_indels}
+do  
+BR$BRn=$br
+BRn=$BRn+1
+done
 
 
 header="#!/bin/bash
