@@ -3,8 +3,13 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-knownIndels=$5
-dbsnp=$6
+KI1=$5
+KI2=$6
+BR1=$7
+BR2=$8
+BR3=$9
+BR4=$10
+
 
 header="#!/bin/bash
 #PBS -q home-alexandrov
@@ -23,11 +28,11 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 #PBS -o ${sample}_Nrefine_2.o
 "
 
-IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
-IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
+IR_t="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
+IR_n="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
 
-BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx20G"
-BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx20G"
+BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $BR1 --known-sites $BR2 --known-sites $BR3 --known-sites $BR4 -o ${sample}_tumor_bqsr.grp -Xmx20G"
+BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $BR1 --known-sites $BR2 --known-sites $BR3 --known-sites $BR4 -o ${sample}_normal_bqsr.grp -Xmx20G"
 
 PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx20G"
 PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx20G"
