@@ -11,24 +11,18 @@ BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam -o ${sample}
 BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam -o ${sample}_normal_bqsr.grp -Xmx20G"
 
 
-IR_t="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G -known $KI1 -known $KI2 "
-IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G -known $KI1 -known $KI2 "
+IR_t="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
+IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
 
 
-for ki in ${known_indels}
-do  
-echo doing KI....
-echo $ki
-echo ${IR_t}
+cat ${known_indels}|while read ki;
+do
 IR_t="${IR_t} -known $ki"
 IR_n="${IR_n} -known $ki"
 done
 
-for br in ${base_recalibration}
-do  
-echo doing BR....
-echo $br
-echo ${BR_t}
+cat ${base_recalibration}|while read br;
+do
 BR_t="${BR_t} --knownSites $br"
 BR_n="${BR_n} --knownSites $br"
 done
