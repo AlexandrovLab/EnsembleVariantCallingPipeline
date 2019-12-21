@@ -58,6 +58,7 @@ echo source activate evc_gatk3>>jobs/refine/${sample}_Nrefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
 echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
 
+
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
@@ -92,4 +93,18 @@ echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Nrefine_2.pbs
+echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
+echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 
+
+
+
+tail="cd ${out}/jobs/varscan
+qsub ${sample}_varscan.pbs
+cd ${out}/jobs/strelka
+qsub ${sample}_strelka.pbs
+cd ${out}/jobs/pon
+qsub ${sample}_pon_3.pbs
+"
+printf "$tail">jobs/refine/${sample}_Trefine_2.pbs
+printf "$tail">jobs/refine/${sample}_Nrefine_2.pbs
