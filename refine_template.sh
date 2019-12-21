@@ -6,18 +6,20 @@ out=$4
 known_indels=$5
 base_recalibration=$6
 
+
+BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam -o ${sample}_tumor_bqsr.grp -Xmx20G"
+BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam -o ${sample}_normal_bqsr.grp -Xmx20G"
 KIn=1
 for ki in ${known_indels}
 do  
-KI=$(echo $ki)
+KI=$ki
 KIn=$KIn+1
 done
 
-BRn=1
-for br in ${known_indels}
+for br in ${base_recalibration}
 do  
-BR=$(echo $br)
-BRn=$BRn+1
+BR_t="${BR_t} --knownSites $br"
+BR_n="${BR_n} --knownSites $br"
 done
 
 
@@ -41,8 +43,7 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 IR_t="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
 IR_n="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
 
-BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $BR1 --known-sites $BR2 --known-sites $BR3 --known-sites $BR4 -o ${sample}_tumor_bqsr.grp -Xmx20G"
-BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $BR1 --known-sites $BR2 --known-sites $BR3 --known-sites $BR4 -o ${sample}_normal_bqsr.grp -Xmx20G"
+
 
 PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx20G"
 PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx20G"
