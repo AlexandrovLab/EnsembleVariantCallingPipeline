@@ -9,11 +9,16 @@ base_recalibration=$6
 
 BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam -o ${sample}_tumor_bqsr.grp -Xmx20G"
 BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam -o ${sample}_normal_bqsr.grp -Xmx20G"
-KIn=1
+
+
+IR_t="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G -known $KI1 -known $KI2 "
+IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G -known $KI1 -known $KI2 "
+
+
 for ki in ${known_indels}
 do  
-KI=$ki
-KIn=$KIn+1
+IR_t="${IR_t} -known $ki"
+IR_n="${IR_n} -known $ki"
 done
 
 for br in ${base_recalibration}
@@ -39,12 +44,6 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 #PBS -e ${sample}_Nrefine_2.e
 #PBS -o ${sample}_Nrefine_2.o
 "
-
-IR_t="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
-IR_n="gatk3 -T IndelRealigner -R $ref -known $KI1 -known $KI2 -targetIntervals ${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
-
-
-
 PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx20G"
 PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx20G"
 
