@@ -26,7 +26,7 @@ done
 for br in ${base_recalibration}
 do  
 echo $br
-echo {RR_t}
+echo {BR_t}
 BR_t="${BR_t} --knownSites $br"
 BR_n="${BR_n} --knownSites $br"
 done
