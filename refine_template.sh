@@ -18,6 +18,7 @@ IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.
 for ki in ${known_indels}
 do  
 echo $ki
+echo ${IR_t}
 IR_t="${IR_t} -known $ki"
 IR_n="${IR_n} -known $ki"
 done
@@ -25,6 +26,7 @@ done
 for br in ${base_recalibration}
 do  
 echo $br
+echo {RR_t}
 BR_t="${BR_t} --knownSites $br"
 BR_n="${BR_n} --knownSites $br"
 done
