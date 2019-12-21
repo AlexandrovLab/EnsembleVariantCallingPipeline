@@ -4,7 +4,14 @@ ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d
 path=$1
 out=$2
 sampleF=$3
-knownIndels=/restricted/alexandrov-group/shared/Reference_Genomes/known_indels/resources_broad_hg38_v0_Homo_sapiens_assembly38.known_indels.vcf
+
+KI1=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.known_indels.vcf
+KI2=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Mills_and_1000G_gold_standard.indels.hg38.vcf
+BR1=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.known_indels.vcf
+BR2=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Mills_and_1000G_gold_standard.indels.hg38.vcf
+BR3=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/Homo_sapiens_assembly38.dbsnp138.vcf
+BR4=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/1000G_phase1.snps.high_confidence.hg38.vcf
+
 dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 USAGE="\nMissing input arguments..\n
 USAGE:\trun.sh \\
@@ -21,7 +28,7 @@ mkdir -p ${out}/jobs/refine
 mkdir -p ${out}/jobs/pon
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
-mkdir -p ${out}/jobs/mutectEASY
+mkdir -p ${out}/jobs/mutect
 cd $out
 cat $sampleF|tail -n+2|while read line;do
 sample=$(echo $line|cut -d ' ' -f1)
@@ -29,12 +36,12 @@ tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out
-~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $knownIndels
-~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $knownIndels $dbSNP
+~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out $KI1 $KI2
+~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out $KI1 $KI2 $BR1 $BR2 $BR3 $BR4
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/easy_mutect_template.sh $email $sample $ref $out $dbSNP
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $dbSNP $type
 done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
