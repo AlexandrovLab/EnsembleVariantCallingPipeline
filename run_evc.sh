@@ -10,11 +10,10 @@ base_recalibration_list=/restricted/alexandrov-group/shared/Reference_Genomes/al
 dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 USAGE="\nMissing input arguments..\n
 USAGE:\trun_evc \\
-	path/to/project \\
+	path/to/fastq/files \\
 	output/directory \\
 	path/to/sample.map \\
-	email for job notification \\
-	\n\n"
+	email.for@notification \n\n"
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ]
 then printf "$USAGE"
 else
