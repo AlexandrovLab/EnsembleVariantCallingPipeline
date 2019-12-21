@@ -10,13 +10,13 @@
 
 **TO RUN THE PIPELINE**
 ```
-run_env [args]
+run_evc [args]
 ```
 which will create a jobs/ directory in the output directory, the pipeline works through manually submitting the jobs at each stage.
 
 Current arguments are
 ```
-run_env
+run_evc
 path/to/project \
 output/directory \
 path/to/sample.map \
