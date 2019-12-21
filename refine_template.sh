@@ -96,3 +96,17 @@ echo 'echo Printing Reads took $prT seconds'>>jobs/refine/${sample}_Nrefine_2.pb
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
 
+tail="
+if [ -f "${sample}_normal_final.bam" ] && [  -f "${sample}_tumor_final.bam" ]
+then
+cd ${out}/jobs/varscan
+qsub ${sample}_varscan.pbs
+cd ${out}/jobs/strelka
+qsub ${sample}_strelka.pbs
+cd ${out}/jobs/pon
+qsub ${sample}_pon_3.pbs
+else
+echo "job finished, waiting for the pair sample to finish for subsequent analysis"
+"
+printf "$tail">>jobs/refine/${sample}_Trefine_2.pbs
+printf "$tail">>jobs/refine/${sample}_Nrefine_2.pbs
