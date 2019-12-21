@@ -4,6 +4,13 @@ sample=$2
 ref=$3
 out=$4
 pon=$5
+type=$6
+
+# decide --af-of-alleles-not-in-resource based on exome or genome data type
+if [ $type -eq "exome" ]
+then af=0.0000025
+else af=0.00003125
+fi
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
@@ -25,7 +32,7 @@ mkdir -p ${out}/${sample}/mutect
 cd ${out}/${sample}/mutect
 "
 
-mutect_cmd="gatk Mutect2 -R $ref -pon $pon -germline-resource $dbSNP --native-pair-hmm-threads $(nproc) --af-of-alleles-not-in-resource 0.00003125 --f1r2-tar-gz ${sample}_f1r2.tar.gz --input $normal --tumor-sample ${sample}_tumor --input $tumor --normal-sample ${sample}_normal -O ${sample}_unfiltered.vcf"
+mutect_cmd="gatk Mutect2 -R $ref -pon $pon -germline-resource $dbSNP --native-pair-hmm-threads $(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --input $normal --tumor-sample ${sample}_tumor --input $tumor --normal-sample ${sample}_normal -O ${sample}_unfiltered.vcf"
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
