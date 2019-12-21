@@ -17,7 +17,7 @@ which will create a jobs/ directory in the output directory, the pipeline works 
 Current arguments are
 ```
 run_evc
-path/to/project \
+path/to/fastq_files \
 output/directory \
 path/to/sample.map \
 email for job notification \
