@@ -18,15 +18,15 @@ IR_n="gatk3 -T IndelRealigner -R $ref -targetIntervals ${sample}_realign_target.
 cat ${known_indels}|while read ki;
 do
 echo $ki
-let IR_t="${IR_t} -known $ki"
-let IR_n="${IR_n} -known $ki"
+let IR_t=$(echo ${IR_t} -known $ki)
+let IR_n=$(echo ${IR_n} -known $ki)
 done
 
 cat ${base_recalibration}|while read br;
 do
 echo $br
-let BR_t="${BR_t} --knownSites $br"
-let BR_n="${BR_n} --knownSites $br"
+let BR_t=$(echo ${BR_t} --knownSites $br)
+let BR_n=$(echo ${BR_n} --knownSites $br)
 done
 
 
