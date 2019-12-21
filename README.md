@@ -16,7 +16,7 @@ which will create a jobs/ directory in the output directory, the pipeline works 
 
 Current arguments are
 ```
-run.sh \
+run_env
 path/to/project \
 output/directory \
 path/to/sample.map \
