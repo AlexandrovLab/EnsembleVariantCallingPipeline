@@ -21,7 +21,7 @@ header="#!/bin/bash
 RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 while read ki;
 do
-RTC=$(echo "${IR_t} --known $ki")
+RTC=$(echo "${RTC} --known $ki")
 done < <(cat ${known_indels})
 
 printf "$header">jobs/refine/${sample}_targetInterval.pbs
