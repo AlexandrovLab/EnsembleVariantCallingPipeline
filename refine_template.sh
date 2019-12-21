@@ -23,14 +23,14 @@ Njobname="#PBS -N EVC_Nrefine_${sample}
 #PBS -o ${sample}_Nrefine_2.o
 "
 
-IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+IR_t="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_tumor_mkdp.bam -o ${sample}_tumor_idra.bam -Xmx20G"
+IR_n="gatk3 -T IndelRealigner -R $ref -known ${knownIndels} -targetIntervals \$(pwd -P)/${sample}_realign_target.intervals --noOriginalAlignmentTags -I ${sample}_normal_mkdp.bam -o ${sample}_normal_idra.bam -Xmx20G"
 
-BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam --knownSites $dbsnp -o ${sample}_tumor_bqsr.grp -Xmx20G"
+BR_n="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_normal_idra.bam --knownSites $dbsnp -o ${sample}_normal_bqsr.grp -Xmx20G"
 
-PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
-PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx20G"
+PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx20G"
 
 printf "$header">jobs/refine/${sample}_Trefine_2.pbs
 printf "${Tjobname}">>jobs/refine/${sample}_Trefine_2.pbs
