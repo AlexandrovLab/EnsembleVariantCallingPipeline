@@ -20,7 +20,7 @@ run_evc \
 path/to/fastq/files \
 output/directory \
 path/to/sample.map \
-email_for_job@notification \
+email_for_job@notification 
 ```
 This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
 
