@@ -3,8 +3,7 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-KI1=$5
-KI2=$6
+known_indels=$5
 
 header="#!/bin/bash
 #PBS -q home-alexandrov
@@ -19,7 +18,13 @@ header="#!/bin/bash
 "
 
 
-RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam --known $KI1 --known $KI2 -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
+while read ki;
+do
+IR_t=$(echo "${IR_t} --known $ki")
+IR_n=$(echo "${IR_n} --known $ki")
+done < <(cat ${known_indels})
+
 printf "$header">jobs/refine/${sample}_targetInterval.pbs
 
 echo source ~/.bashrc>>jobs/refine/${sample}_targetInterval.pbs
