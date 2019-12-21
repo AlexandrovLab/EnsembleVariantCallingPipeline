@@ -7,7 +7,7 @@ pon=$5
 type=$6
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
-if [ $type -eq "exome" ]
+if [ $type == "exome" ]
 then af=0.0000025
 else af=0.00003125
 fi
