@@ -91,7 +91,7 @@ echo ${PR_t}>>jobs/refine/${sample}_Trefine.pbs
 echo ${PR_n}>>jobs/refine/${sample}_Nrefine.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine.pbs
-echo "echo Printing Reads took \$(echo a|awk '{print '\"\$prT\"'/3600}')hours">>jobs/refine/${sample}_Trefine.pbs
+echo "echo Printing Reads took \$(echo a|awk '{print '\"\$prT\"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
 echo "echo Printing Reads took \$(echo a|awk '{print '\"\$prT\"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
