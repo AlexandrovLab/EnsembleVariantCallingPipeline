@@ -37,7 +37,7 @@ echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/refine/${sample}_ta
 echo 'targetS=$SECONDS'>>jobs/refine/${sample}_targetInterval.pbs
 echo $RTC>>jobs/refine/${sample}_targetInterval.pbs
 echo 'targetT=$(($SECONDS - $targetS))'>>jobs/refine/${sample}_targetInterval.pbs
-echo 'echo target interval creation took $(echo a|awk '{print '"$targetT"'/3600}') hours'>>jobs/refine/${sample}_targetInterval.pbs
+echo "echo target interval creation took $(echo a|awk '{print '"$targetT"'/3600}') hours">>jobs/refine/${sample}_targetInterval.pbs
 
 ## autosubmit the rest of refinement process ##
 echo cd ${out}/jobs/refine/>>jobs/refine/${sample}_targetInterval.pbs
