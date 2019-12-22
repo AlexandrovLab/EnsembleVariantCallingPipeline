@@ -96,6 +96,12 @@ echo "echo Printing Reads took \$(echo a|awk '{print '\"\$prT\"'/3600}') hours">
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
 
+
+submit_pon="
+cd ${out}/jobs/pon
+qsub ${sample}_pon.pbs"
+printf "submit_pon">>jobs/refine/${sample}_Nrefine.pbs
+
 tail="
 if [ -f "${sample}_normal_final.bam" ] && [  -f "${sample}_tumor_final.bam" ]
 then
@@ -103,8 +109,6 @@ cd ${out}/jobs/varscan
 qsub ${sample}_varscan.pbs
 cd ${out}/jobs/strelka
 qsub ${sample}_strelka.pbs
-cd ${out}/jobs/pon
-qsub ${sample}_pon.pbs
 else
 echo 'job finished, waiting for the pair sample to finish for subsequent analysis'
 fi
