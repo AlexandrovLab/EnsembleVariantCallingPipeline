@@ -67,8 +67,8 @@ echo $alignTumor>>jobs/align/${sample}_Talign.pbs
 echo $alignNormal>>jobs/align/${sample}_Nalign.pbs
 echo 'alignT=$(($SECONDS - $alignS))'>>jobs/align/${sample}_Talign.pbs
 echo 'alignT=$(($SECONDS - $alignS))'>>jobs/align/${sample}_Nalign.pbs
-echo 'echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours' >>jobs/align/${sample}_Talign.pbs
-echo 'echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours'>>jobs/align/${sample}_Nalign.pbs
+echo "echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours">>jobs/align/${sample}_Talign.pbs
+echo "echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours">>jobs/align/${sample}_Nalign.pbs
 
 ### MarkDuplicates ###
 echo 'echo starting markDuplicates tumor at $(date)'>>jobs/align/${sample}_Talign.pbs
@@ -79,8 +79,8 @@ echo $mkdpTumor>>jobs/align/${sample}_Talign.pbs
 echo $mkdpNormal>>jobs/align/${sample}_Nalign.pbs
 echo 'mkdpT=$(($SECONDS - $mkdpS))'>>jobs/align/${sample}_Talign.pbs
 echo 'mkdpT=$(($SECONDS - $mkdpS))'>>jobs/align/${sample}_Nalign.pbs
-echo 'echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours' >>jobs/align/${sample}_Talign.pbs
-echo 'echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours'>>jobs/align/${sample}_Nalign.pbs
+echo "echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours">>jobs/align/${sample}_Talign.pbs
+echo "echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours">>jobs/align/${sample}_Nalign.pbs
 
 
 echo 'echo job ends at $(date)'>>jobs/align/${sample}_Talign.pbs
