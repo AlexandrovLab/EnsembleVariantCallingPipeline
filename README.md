@@ -10,17 +10,17 @@
 
 **TO RUN THE PIPELINE**
 ```
-run_env [args]
+run_evc [args]
 ```
 which will create a jobs/ directory in the output directory, the pipeline works through manually submitting the jobs at each stage.
 
 Current arguments are
 ```
-run.sh \
-path/to/project \
+run_evc \
+path/to/fastq/files \
 output/directory \
 path/to/sample.map \
-email for job notification \
+email.for@notification 
 ```
 This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
 

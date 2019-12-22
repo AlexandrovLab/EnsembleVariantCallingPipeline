@@ -6,15 +6,14 @@ out=$2
 sampleF=$3
 known_indel_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt
 base_recalibration_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/BaseRecalibration_files.txt
-
+pon=/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/oral/olivier_analyzed_oral_benign/PON/PON.vcf.gz
 dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 USAGE="\nMissing input arguments..\n
-USAGE:\trun.sh \\
-	path/to/project \\
+USAGE:\trun_evc \\
+	path/to/fastq/files \\
 	output/directory \\
 	path/to/sample.map \\
-	email for job notification \\
-	\n\n"
+	email.for@notification \n\n"
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ]
 then printf "$USAGE"
 else
@@ -36,7 +35,7 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $dbSNP $type
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi

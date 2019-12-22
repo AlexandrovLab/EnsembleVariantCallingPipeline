@@ -9,7 +9,7 @@ tumor=${out}/${sample}/${sample}_tumor_final.bam
 header="#!/bin/bash
 #PBS -q home-alexandrov
 #PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=150:00:00
+#PBS -l walltime=300:00:00
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V
@@ -39,5 +39,5 @@ echo 'echo starting strelka at $(date)'>>jobs/strelka/${sample}_strelka.pbs
 echo 'strelkaS=$SECONDS'>>jobs/strelka/${sample}_strelka.pbs
 echo ${runstrelka}>>jobs/strelka/${sample}_strelka.pbs
 echo 'strelkaT=$(($SECONDS - $strelkaS))'>>jobs/strelka/${sample}_strelka.pbs
-echo 'echo strelka took $strelkaT seconds'>>jobs/strelka/${sample}_strelka.pbs
+echo "echo strelka took \$(echo a|awk '{print '\"\$strelkaT\"'/3600}') hours">>jobs/strelka/${sample}_strelka.pbs
 echo 'gunzip results/variants/*gz'>>jobs/strelka/${sample}_strelka.pbs
