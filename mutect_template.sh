@@ -5,7 +5,7 @@ ref=$3
 out=$4
 pon=$5
 type=$6
-dbsnp=$7
+dbSNP=$7
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
 if [ $type == "exome" ]
@@ -33,15 +33,15 @@ mkdir -p ${out}/${sample}/mutect
 cd ${out}/${sample}/mutect
 "
 
-mutect_cmd="gatk Mutect2 -R $ref -pon $pon -germline-resource $dbSNP --native-pair-hmm-threads $(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --input $normal --tumor-sample ${sample}_tumor --input $tumor --normal-sample ${sample}_normal -O ${sample}_unfiltered.vcf"
+mutect_cmd="gatk Mutect2 -R $ref -pon $pon -germline-resource $dbSNP --native-pair-hmm-threads \$(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --input $normal --tumor-sample ${sample}_tumor --input $tumor --normal-sample ${sample}_normal -O ${sample}_mutect2_unfiltered.vcf"
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries -I ${sample}_tumor_final.bam -V $dbsnp -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries -I ${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
-mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_filtered.vcf"
+mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
 
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
@@ -50,7 +50,7 @@ echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect
 echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
 echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectT=$(($SECONDS-$mutectS))/3600'>>jobs/mutect/${sample}_mutect.pbs
-echo 'echo mutect command took $mutectT hours'>>jobs/mutect/${sample}_mutect.pbs
+echo 'echo mutect command took \$(echo a|awk '{print '\"\$mutectT\"'/3600}') hours'>>jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo starting Read Orientation at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'readorientationtS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
