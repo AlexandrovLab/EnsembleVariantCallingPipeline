@@ -30,4 +30,4 @@ echo 'echo starting PanelOfNormals at $(date)'>>jobs/pon/${sample}_pon.pbs
 echo 'ponS=$SECONDS'>>jobs/pon/${sample}_pon.pbs
 echo ${pon_1}>>jobs/pon/${sample}_pon.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/pon/${sample}_pon.pbs
-echo 'echo generating PON vcf took $ponT seconds'>>jobs/pon/${sample}_pon.pbs
+echo 'echo generating PON vcf took $(echo a|awk '{print '"$ponT"'/3600}')' hours>>jobs/pon/${sample}_pon.pbs
