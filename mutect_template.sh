@@ -45,33 +45,33 @@ mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmen
 
 printf "$template">jobs/mutectEASY/${sample}_mutect.pbs
 
-echo 'echo starting mutect command at $(date)....'>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectS=$SECONDS'>>jobs/mutectEASY/${sample}_mutect.pbs
 echo ${mutect_cmd}>>jobs/mutectEASY/${sample}_mutect.pbs
 echo 'mutectT=$(($SECONDS-$mutectS))/3600'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect command took $mutectT hours'>>jobs/mutect/${sample}_mutect.pbs
 
-echo 'echo starting mutect Read Orientation at $(date)....'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo 'readorientationtS=$SECONDS'>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo starting mutect Read Orientation at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
+echo 'readorientationtS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
 echo ${mutect_orientation}>>jobs/mutectEASY/${sample}_mutect.pbs
 echo 'readorientationtT=$(($SECONDS-$readorientationtS))'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect Read Orientation took $readorientationtT seconds'>>jobs/mutect/${sample}_mutect.pbs
 
-echo 'echo starting mutect contamination part1 at $(date)....'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo 'ct1S=$SECONDS'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo ${mutect_contamin1}>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo starting mutect contamination part1 at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
+echo 'ct1S=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
+echo ${mutect_contamin1}>>jobs/mutect/${sample}_mutect.pbs
 echo 'ct1T=$(($SECONDS-$ct1S))'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect contamination part1 took $ct1T seconds'>>jobs/mutect/${sample}_mutect.pbs
 
-echo 'echo starting mutect contamination part2 at $(date)....'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo 'ct2S=$SECONDS'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo ${mutect_contamin2}>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo starting mutect contamination part2 at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
+echo 'ct2S=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
+echo ${mutect_contamin2}>>jobs/mutect/${sample}_mutect.pbs
 echo 'ct2T=$(($SECONDS-$ct2S))'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect contamination part1 took $ct2T seconds'>>jobs/mutect/${sample}_mutect.pbs
 
-echo 'echo starting mutect filter at $(date)....'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo 'MfilterS=$SECONDS'>>jobs/mutectEASY/${sample}_mutect.pbs
-echo ${mutect_filter}>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo starting mutect filter at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
+echo 'MfilterS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
+echo ${mutect_filter}>>jobs/mutect/${sample}_mutect.pbs
 echo 'MfilterT=$(($SECONDS-$MfilterS))'>>jobs/mutect/${sample}_mutect.pbs
-echo 'echo mutect filter took $MfilterT seconds'>>jobs/mutectEASY/${sample}_mutect.pbs
+echo 'echo mutect filter took $MfilterT seconds'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo job finished at $(date)'>>jobs/mutect/${sample}_mutect.pbs
