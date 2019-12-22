@@ -50,13 +50,13 @@ echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${mpileup_nt_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupT=$(($SECONDS-$mpileupS))'>>jobs/varscan/${sample}_varscan.pbs
-echo "echo mpileup took $(echo a|awk '{print '"$mpileupT"'/3600}') hours">>jobs/varscan/${sample}_varscan.pbs
+echo "echo mpileup took \$(echo a|awk '{print '\"\$mpileupT\"'/3600}') hours">>jobs/varscan/${sample}_varscan.pbs
 
 echo 'echo starting varscan vcf at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanvcfS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${varscan_vcf_cmd}>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanvcfT=$(($SECONDS - $varscanvcfS))'>>jobs/varscan/${sample}_varscan.pbs
-echo "echo varscan took $(echo a|awk '{print '"$varscanvcfT"'/3600}') hours">>jobs/varscan/${sample}_varscan.pbs
+echo "echo varscan took \$(echo a|awk '{print '\"\$varscanvcfT\"'/3600}') hours">>jobs/varscan/${sample}_varscan.pbs
 
 echo 'echo starting varscan SNP filtering at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'varscanSNPfilterS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
