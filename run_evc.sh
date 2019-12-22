@@ -35,7 +35,7 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbsnp
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 done
 #for f in jobs/*align*.pbs;do qsub $f;done
 fi
