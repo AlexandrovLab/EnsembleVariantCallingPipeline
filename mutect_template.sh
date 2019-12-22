@@ -46,8 +46,8 @@ mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmen
 printf "$template">jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
-echo 'mutectS=$SECONDS'>>jobs/85f6ba851ddd0630f1c57e37bcd35815aace52d7/${sample}_mutect.pbs
-echo ${mutect_cmd}>>jobs/85f6ba851ddd0630f1c57e37bcd35815aace52d7/${sample}_mutect.pbs
+echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
+echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectT=$(($SECONDS-$mutectS))/3600'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect command took $mutectT hours'>>jobs/mutect/${sample}_mutect.pbs
 
