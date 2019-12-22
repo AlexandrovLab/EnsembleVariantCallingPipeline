@@ -6,7 +6,7 @@ normal=$4
 ref=$5
 fastq_path=$6
 output=$7
-USAGE="not enough inputs...check script/n"
+USAGE="align_template.sh: not enough inputs...check script/n"
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ] || [ "$5" == "" ] || [ "$6" == "" ] || [ "$7" == "" ]
 then printf "$USAGE"
 else
@@ -46,34 +46,44 @@ echo source ~/.bashrc>>jobs/align/${sample}_Talign_1.pbs
 echo source ~/.bashrc>>jobs/align/${sample}_Nalign_1.pbs
 echo source activate evc_main>>jobs/align/${sample}_Talign_1.pbs
 echo source activate evc_main>>jobs/align/${sample}_Nalign_1.pbs
+
+
 echo 'echo job starts at $(date)'>>jobs/align/${sample}_Talign_1.pbs
 echo 'echo job starts at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
+
 echo cd $output>>jobs/align/${sample}_Talign_1.pbs
 echo cd $output>>jobs/align/${sample}_Nalign_1.pbs
 echo mkdir -p ${sample}>>jobs/align/${sample}_Talign_1.pbs
 echo mkdir -p ${sample}>>jobs/align/${sample}_Nalign_1.pbs
 echo cd ${sample}>>jobs/align/${sample}_Talign_1.pbs
 echo cd ${sample}>>jobs/align/${sample}_Nalign_1.pbs
+
+### bwa alignemnt ###
 echo 'echo starting aligning tumor at $(date)'>>jobs/align/${sample}_Talign_1.pbs
+echo 'echo starting aligning normal at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo 'alignS=$SECONDS'>>jobs/align/${sample}_Talign_1.pbs
 echo 'alignS=$SECONDS'>>jobs/align/${sample}_Nalign_1.pbs
 echo $alignTumor>>jobs/align/${sample}_Talign_1.pbs
-echo 'echo starting aligning normal at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo $alignNormal>>jobs/align/${sample}_Nalign_1.pbs
 echo 'alignT=$(($SECONDS - $alignS))'>>jobs/align/${sample}_Talign_1.pbs
 echo 'alignT=$(($SECONDS - $alignS))'>>jobs/align/${sample}_Nalign_1.pbs
-echo 'echo alignment took $alignT seconds' >>jobs/align/${sample}_Talign_1.pbs
-echo 'echo alignment took $alignT seconds'>>jobs/align/${sample}_Nalign_1.pbs
+echo 'echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours' >>jobs/align/${sample}_Talign_1.pbs
+echo 'echo alignment took $(echo a|awk '{print '"$alignT"'/3600}') hours'>>jobs/align/${sample}_Nalign_1.pbs
+
+### MarkDuplicates ###
 echo 'echo starting markDuplicates tumor at $(date)'>>jobs/align/${sample}_Talign_1.pbs
+echo 'echo starting markDuplicates normal at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo 'mkdpS=$SECONDS'>>jobs/align/${sample}_Talign_1.pbs
 echo 'mkdpS=$SECONDS'>>jobs/align/${sample}_Nalign_1.pbs
 echo $mkdpTumor>>jobs/align/${sample}_Talign_1.pbs
-echo 'echo starting markDuplicates normal at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
 echo $mkdpNormal>>jobs/align/${sample}_Nalign_1.pbs
 echo 'mkdpT=$(($SECONDS - $mkdpS))'>>jobs/align/${sample}_Talign_1.pbs
 echo 'mkdpT=$(($SECONDS - $mkdpS))'>>jobs/align/${sample}_Nalign_1.pbs
-echo 'echo markduplicate took $mkdpT seconds' >>jobs/align/${sample}_Talign_1.pbs
-echo 'echo markduplicate took $mkdpT seconds'>>jobs/align/${sample}_Nalign_1.pbs
+echo 'echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours' >>jobs/align/${sample}_Talign_1.pbs
+echo 'echo markduplicate took $(echo a|awk '{print '"$mkdpT"'/3600}') hours'>>jobs/align/${sample}_Nalign_1.pbs
+
+
 echo 'echo job ends at $(date)'>>jobs/align/${sample}_Talign_1.pbs
 echo 'echo job ends at $(date)'>>jobs/align/${sample}_Nalign_1.pbs
+
 fi
