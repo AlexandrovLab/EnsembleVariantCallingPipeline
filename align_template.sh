@@ -25,12 +25,12 @@ header="#!/bin/bash
 "
 
 Tjobname="#PBS -N EVC_align_${sample}_tumor
-#PBS -o ${sample}_Talign_1.o
-#PBS -e ${sample}_Talign_1.e
+#PBS -o ${sample}_Talign.o
+#PBS -e ${sample}_Talign.e
 "
 Njobname="#PBS -N EVC_align_${sample}_normal
-#PBS -o ${sample}_Nalign_1.o
-#PBS -e ${sample}_Nalign_1.e
+#PBS -o ${sample}_Nalign.o
+#PBS -e ${sample}_Nalign.e
 "
 alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_tumor_raw.bam"
 alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G >${sample}_normal_raw.bam"
