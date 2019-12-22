@@ -24,11 +24,11 @@ header="#!/bin/bash
 #PBS -V 
 "
 
-Tjobname="#PBS -N EVC_align_${sample}_tumor
+Tjobname="#PBS -N EVC_Talign_${sample}
 #PBS -o ${sample}_Talign.o
 #PBS -e ${sample}_Talign.e
 "
-Njobname="#PBS -N EVC_align_${sample}_normal
+Njobname="#PBS -N EVC_Nalign_${sample}
 #PBS -o ${sample}_Nalign.o
 #PBS -e ${sample}_Nalign.e
 "
