@@ -67,8 +67,8 @@ echo ${IR_t}>>jobs/refine/${sample}_Trefine.pbs
 echo ${IR_n}>>jobs/refine/${sample}_Nrefine.pbs
 echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Trefine.pbs
 echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine.pbs
-echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
-echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
+echo "echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
+echo "echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
 
 
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine.pbs
@@ -79,8 +79,8 @@ echo ${BR_t}>>jobs/refine/${sample}_Trefine.pbs
 echo ${BR_n}>>jobs/refine/${sample}_Nrefine.pbs
 echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Trefine.pbs
 echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Nrefine.pbs
-echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
-echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
+echo "echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
+echo "echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
 
 
 echo 'echo starting PrintReads at $(date)'>>jobs/refine/${sample}_Trefine.pbs
@@ -91,8 +91,8 @@ echo ${PR_t}>>jobs/refine/${sample}_Trefine.pbs
 echo ${PR_n}>>jobs/refine/${sample}_Nrefine.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine.pbs
 echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine.pbs
-echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
-echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
+echo "echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
+echo "echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
 
