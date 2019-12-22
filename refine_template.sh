@@ -67,8 +67,8 @@ echo ${IR_t}>>jobs/refine/${sample}_Trefine.pbs
 echo ${IR_n}>>jobs/refine/${sample}_Nrefine.pbs
 echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Trefine.pbs
 echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine.pbs
-echo "echo indel alignemnt took \$(echo a|awk '{print '\"\$idraT\"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
-echo "echo indel alignemnt took \$(echo a|awk '{print '\"\$idraT\"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
+echo "echo Indel Realignemnt took \$(echo a|awk '{print '\"\$idraT\"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
+echo "echo Indel Realignemnt took \$(echo a|awk '{print '\"\$idraT\"'/3600}') hours">>jobs/refine/${sample}_Nrefine.pbs
 
 
 echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine.pbs
