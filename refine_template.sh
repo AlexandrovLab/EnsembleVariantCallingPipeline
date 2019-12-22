@@ -37,64 +37,64 @@ header="#!/bin/bash
 #PBS -V
 "
 Tjobname="#PBS -N EVC_Trefine_${sample}
-#PBS -e ${sample}_Trefine_2.e
-#PBS -o ${sample}_Trefine_2.o
+#PBS -e ${sample}_Trefine.e
+#PBS -o ${sample}_Trefine.o
 "
 Njobname="#PBS -N EVC_Nrefine_${sample}
-#PBS -e ${sample}_Nrefine_2.e
-#PBS -o ${sample}_Nrefine_2.o
+#PBS -e ${sample}_Nrefine.e
+#PBS -o ${sample}_Nrefine.o
 "
 PR_t="gatk3 -T PrintReads -R $ref -I ${sample}_tumor_idra.bam --BQSR ${sample}_tumor_bqsr.grp -o ${sample}_tumor_final.bam -Xmx20G"
 PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_normal_bqsr.grp -o ${sample}_normal_final.bam -Xmx20G"
 
-printf "$header">jobs/refine/${sample}_Trefine_2.pbs
-printf "${Tjobname}">>jobs/refine/${sample}_Trefine_2.pbs
-printf "$header">jobs/refine/${sample}_Nrefine_2.pbs
-printf "${Njobname}">>jobs/refine/${sample}_Nrefine_2.pbs
-echo source ~/.bashrc>>jobs/refine/${sample}_Trefine_2.pbs
-echo source activate evc_gatk3>>jobs/refine/${sample}_Trefine_2.pbs
-echo source ~/.bashrc>>jobs/refine/${sample}_Nrefine_2.pbs
-echo source activate evc_gatk3>>jobs/refine/${sample}_Nrefine_2.pbs
-echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine_2.pbs
-echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine_2.pbs
+printf "$header">jobs/refine/${sample}_Trefine.pbs
+printf "${Tjobname}">>jobs/refine/${sample}_Trefine.pbs
+printf "$header">jobs/refine/${sample}_Nrefine.pbs
+printf "${Njobname}">>jobs/refine/${sample}_Nrefine.pbs
+echo source ~/.bashrc>>jobs/refine/${sample}_Trefine.pbs
+echo source activate evc_gatk3>>jobs/refine/${sample}_Trefine.pbs
+echo source ~/.bashrc>>jobs/refine/${sample}_Nrefine.pbs
+echo source activate evc_gatk3>>jobs/refine/${sample}_Nrefine.pbs
+echo cd ${out}/${sample}/>>jobs/refine/${sample}_Trefine.pbs
+echo cd ${out}/${sample}/>>jobs/refine/${sample}_Nrefine.pbs
 
 
-echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo ${IR_t}>>jobs/refine/${sample}_Trefine_2.pbs
-echo ${IR_n}>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine_2.pbs
+echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo starting IndelRealigner at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Trefine.pbs
+echo 'idraS=$SECONDS'>>jobs/refine/${sample}_Nrefine.pbs
+echo ${IR_t}>>jobs/refine/${sample}_Trefine.pbs
+echo ${IR_n}>>jobs/refine/${sample}_Nrefine.pbs
+echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Trefine.pbs
+echo 'idraT=$(($SECONDS - $idraS))'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo indel alignemnt took $(echo a|awk '{print '"$idraT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
 
 
-echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'barcS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'barcS=$SECONDS'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo ${BR_t}>>jobs/refine/${sample}_Trefine_2.pbs
-echo ${BR_n}>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine_2.pbs
+echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo starting BaseRecalibrator at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'barcS=$SECONDS'>>jobs/refine/${sample}_Trefine.pbs
+echo 'barcS=$SECONDS'>>jobs/refine/${sample}_Nrefine.pbs
+echo ${BR_t}>>jobs/refine/${sample}_Trefine.pbs
+echo ${BR_n}>>jobs/refine/${sample}_Nrefine.pbs
+echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Trefine.pbs
+echo 'barcT=$(($SECONDS - $barcS))'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo Base Recalibration took $(echo a|awk '{print '"$barcT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
 
 
-echo 'echo starting PrintReads at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo starting PrintReads at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'prS=$SECONDS'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'prS=$SECONDS'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo ${PR_t}>>jobs/refine/${sample}_Trefine_2.pbs
-echo ${PR_n}>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine_2.pbs
-echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine_2.pbs
-echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine_2.pbs
+echo 'echo starting PrintReads at $(date)'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo starting PrintReads at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'prS=$SECONDS'>>jobs/refine/${sample}_Trefine.pbs
+echo 'prS=$SECONDS'>>jobs/refine/${sample}_Nrefine.pbs
+echo ${PR_t}>>jobs/refine/${sample}_Trefine.pbs
+echo ${PR_n}>>jobs/refine/${sample}_Nrefine.pbs
+echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine.pbs
+echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo Printing Reads took $(echo a|awk '{print '"$prT"'/3600}') hours'>>jobs/refine/${sample}_Nrefine.pbs
+echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
+echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
 
 tail="
 if [ -f "${sample}_normal_final.bam" ] && [  -f "${sample}_tumor_final.bam" ]
@@ -106,5 +106,5 @@ else
 echo 'job finished, waiting for the pair sample to finish for subsequent analysis'
 fi
 "
-printf "$tail">>jobs/refine/${sample}_Trefine_2.pbs
-printf "$tail">>jobs/refine/${sample}_Nrefine_2.pbs
+printf "$tail">>jobs/refine/${sample}_Trefine.pbs
+printf "$tail">>jobs/refine/${sample}_Nrefine.pbs
