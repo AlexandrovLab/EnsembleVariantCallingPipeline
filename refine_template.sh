@@ -101,7 +101,7 @@ if [ -f "${sample}_normal_final.bam" ] && [  -f "${sample}_tumor_final.bam" ]
 then
 qsub ${out}/jobs/varscan/${sample}_varscan.pbs
 qsub ${out}/jobs/strelka/${sample}_strelka.pbs
-qsub ${out}/jobs/pon/${sample}_pon_3.pbs
+qsub ${out}/jobs/pon/${sample}_pon.pbs
 else
 echo 'job finished, waiting for the pair sample to finish for subsequent analysis'
 fi
