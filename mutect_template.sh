@@ -53,7 +53,7 @@ echo 'echo mutect command took $mutectT hours'>>jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo starting mutect Read Orientation at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'readorientationtS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
-echo ${mutect_orientation}>>jobs/mutectEASY/${sample}_mutect.pbs
+echo ${mutect_orientation}>>jobs/mutect/${sample}_mutect.pbs
 echo 'readorientationtT=$(($SECONDS-$readorientationtS))'>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo mutect Read Orientation took $readorientationtT seconds'>>jobs/mutect/${sample}_mutect.pbs
 
