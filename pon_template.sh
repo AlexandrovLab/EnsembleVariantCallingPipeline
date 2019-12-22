@@ -19,15 +19,15 @@ header="#!/bin/bash
 pon_1="gatk Mutect2 --independent-mates -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O ${sample}_PON.vcf.gz"
 
 
-printf "$header">jobs/pon/${sample}_pon_3.pbs
-echo source ~/.bashrc>>jobs/pon/${sample}_pon_3.pbs
-echo source activate evc_main>>jobs/pon/${sample}_pon_3.pbs
-echo cd ${out}/${sample}/>>jobs/pon/${sample}_pon_3.pbs
+printf "$header">jobs/pon/${sample}_pon.pbs
+echo source ~/.bashrc>>jobs/pon/${sample}_pon.pbs
+echo source activate evc_main>>jobs/pon/${sample}_pon.pbs
+echo cd ${out}/${sample}/>>jobs/pon/${sample}_pon.pbs
 
 
 
-echo 'echo starting PanelOfNormals at $(date)'>>jobs/pon/${sample}_pon_3.pbs
-echo 'ponS=$SECONDS'>>jobs/pon/${sample}_pon_3.pbs
-echo ${pon_1}>>jobs/pon/${sample}_pon_3.pbs
-echo 'ponT=$(($SECONDS - $ponS))'>>jobs/pon/${sample}_pon_3.pbs
-echo 'echo generating PON vcf took $ponT seconds'>>jobs/pon/${sample}_pon_3.pbs
+echo 'echo starting PanelOfNormals at $(date)'>>jobs/pon/${sample}_pon.pbs
+echo 'ponS=$SECONDS'>>jobs/pon/${sample}_pon.pbs
+echo ${pon_1}>>jobs/pon/${sample}_pon.pbs
+echo 'ponT=$(($SECONDS - $ponS))'>>jobs/pon/${sample}_pon.pbs
+echo 'echo generating PON vcf took $ponT seconds'>>jobs/pon/${sample}_pon.pbs
