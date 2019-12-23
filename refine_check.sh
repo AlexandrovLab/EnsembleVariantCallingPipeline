@@ -19,13 +19,21 @@ cd ${project_dir}
 refine_failed_samples=${project_dir}/jobs/check_and_go/refine_$(date|awk '{OFS="-";$1=$1;print}').error
 varscan_script=${project_dir}/jobs/check_and_go/varscan.sh
 strelka_script=${project_dir}/jobs/check_and_go/strelka.sh
+varscan_job_ID=${project_dir}/jobs/check_and_go/varscan_job_IDs.txt
+strelka_job_ID=${project_dir}/jobs/check_and_go/strelka_job_IDs.txt
 
-printf "Check refine was performed at $(date)\n########### ERROR report ##########\n" > ${refine_failed_samples}
-printf "#!/bin/bash
-#Run this after refine is done\n\n" > ${varscan_script}
+printf "Check refine was performed at $(date)
+########### ERROR report ##########\n" > ${refine_failed_samples}
 
 printf "#!/bin/bash
-#Run this after refine is done\n\n" > ${strelka_script}
+#Run this after refine is done\n
+cd ${project_dir}/jobs/varscan/\n\n" > ${varscan_script}
+
+printf "#!/bin/bash
+#Run this after refine is done\n
+cd ${project_dir}/jobs/strelka/\n\n" > ${strelka_script}
+
+chmod 770 ${refine_failed_samples} ${varscan_script} ${strelka_script} ${varscan_job_ID} ${strelka_job_ID}
 
 
 for sample in $(tail -n+2 ${map_file} | cut -f1)
@@ -108,11 +116,9 @@ do
 
 	if [ ${normal_errors} -lt 1 ] && [ ${tumor_errors} -lt 1 ]
 	then
-		echo cd ${project_dir}/jobs/varscan/ >> ${varscan_script}
-		echo qsub ${sample}_varscan.pbs >> ${varscan_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>>${project_dir}/jobs/check_and_go/varscan_job_IDs.txt
+		echo qsub ${sample}_varscan.pbs >> ${varscan_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>> ${varscan_job_ID}
 
-		echo cd ${project_dir}/jobs/strelka/ >> ${strelka_script}
-		echo qsub ${sample}_strelka.pbs >> ${strelka_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>>${project_dir}/jobs/check_and_go/strelka_job_IDs.txt
+		echo qsub ${sample}_strelka.pbs >> ${strelka_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>> ${strelka_job_ID}
 
 	fi	
 done

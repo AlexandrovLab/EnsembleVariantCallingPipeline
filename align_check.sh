@@ -18,11 +18,19 @@ cd ${project_dir}
 
 #create unique report file name and report the time it was run
 align_failed_samples=${project_dir}/jobs/check_and_go/align_$(date|awk '{OFS="-";$1=$1;print}').error
-align_next_script=${project_dir}/jobs/check_and_go/refine.sh
+refine_script=${project_dir}/jobs/check_and_go/refine.sh
+target_interval_job_ids=${project_dir}/jobs/check_and_go/TargetInterval_job_IDs.txt
 
-printf "Check align was performed at $(date)\n########### ERROR report ##########\n" > ${align_failed_samples}
+printf "Check align was performed at $(date)
+########### ERROR report ##########\n" > ${align_failed_samples}
+
 printf "#!/bin/bash
-#Run this after align is done\n\n" > ${align_next_script}
+#Run this after align is done\n
+cd ${project_dir}/jobs/refine/\n\n" > ${refine_script}
+
+printf "" > ${target_interval_job_ids}
+
+chmod 770 ${align_failed_samples} ${refine_script} ${target_interval_job_ids}
 
 for sample in $(tail -n+2 ${map_file} | cut -f1)
 do
@@ -111,7 +119,6 @@ do
 
 	if [ ${normal_errors} -lt 1 ] && [ ${tumor_errors} -lt 1 ]
 	then
-		echo cd ${project_dir}/jobs/refine/ >> ${align_next_script}
-		echo qsub ${sample}_targetInterval.pbs >> ${align_next_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>>${project_dir}/jobs/check_and_go/TargetInterval_job_IDs.txt
-	fi	
+		echo qsub ${sample}_targetInterval.pbs >> ${refine_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>> ${target_interval_job_ids}
+	fi
 done
