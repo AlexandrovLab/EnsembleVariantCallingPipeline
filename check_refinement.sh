@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USAGE="USAGE:\trefine_check.sh \\
+USAGE="USAGE:\tcheck_refinement.sh \\
 		map_file \\
 		full_path_to_project_directory\n\n"
 
