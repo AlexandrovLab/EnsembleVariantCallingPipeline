@@ -30,7 +30,7 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
 cd $out/jobs/check_and_go
-printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${project_dir}/jobs/check/align_job_IDs.txt\n">start_align.sh
+printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${out}/jobs/check/align_job_IDs.txt\n">start_align.sh
 chmod +x start_align.sh
 
 cd $out
@@ -47,5 +47,7 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
+#~/EnsembleVaraintCallingPipeline/align_check_template.sh $sample $out
+#~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sample $out 
 done
 
