@@ -47,5 +47,7 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
+#~/EnsembleVaraintCallingPipeline/align_check_template.sh $sample $out
+#~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sample $out 
 done
 
