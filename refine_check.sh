@@ -17,9 +17,9 @@ fi
 cd ${project_dir}
 mkdir -p ${project_dir}/jobs/check
 refine_failed_samples=${project_dir}/jobs/check/refine_fail.txt
-printf "" > $refine_failed_samples
+printf "" > ${refine_failed_samples}
 
-for sample in $(tail -n+2 $map_file | cut -f1)
+for sample in $(tail -n+2 ${map_file} | cut -f1)
 do
 	#stop when there 
 	tumor_errors=0
@@ -48,15 +48,15 @@ do
 
 
 	#check if mkdp and raw files exist
-	if [ ! -e $tbam_bqsr ] || [ ! -e $tbam_final ] || [ ! -e $tbai_final ] || [ ! -e $tbam_indelra ] || [ ! -e $tbai_indelra ] || [ ! -e $target_intervals ]
+	if [ ! -e ${tbam_bqsr} ] || [ ! -e ${tbam_final} ] || [ ! -e ${tbai_final} ] || [ ! -e ${tbam_indelra} ] || [ ! -e ${tbai_indelra} ] || [ ! -e ${target_intervals} ]
 	then
-		printf "${sample}_tumor\n" >> $refine_failed_samples
+		printf "${sample}_tumor\n" >> ${refine_failed_samples}
 		(( tumor_errors ++ ))
 	fi
 
-	if [ ! -e $nbam_bqsr ] || [ ! -e $nbam_final ] || [ ! -e $nbai_final ] || [ ! -e $nbam_indelra ] || [ ! -e $nbai_indelra ] || [ ! -e $target_intervals ]
+	if [ ! -e ${nbam_bqsr} ] || [ ! -e ${nbam_final} ] || [ ! -e ${nbai_final} ] || [ ! -e ${nbam_indelra} ] || [ ! -e ${nbai_indelra} ] || [ ! -e ${target_intervals} ]
 	then
-		printf "${sample}_normal\n" >> $refine_failed_samples
+		printf "${sample}_normal\n" >> ${refine_failed_samples}
 		(( normal_errors ++ ))
 	fi
 
@@ -68,26 +68,26 @@ do
 	#mkdup too small or either bam <1gb means error
 	if [ ${tumor_errors} -lt 1 ] && [ -e ${tbam_mkdup} ]
 	then
-		tmkdup_size="$(du $tbam_mkdup | cut -f1)"
-		tfinal_size="$(du $tbam_final | cut -f1)"
-		tidra_size="$(du $tbam_indelra | cut -f1)"
+		tmkdup_size="$(du ${tbam_mkdup} | cut -f1)"
+		tfinal_size="$(du ${tbam_final} | cut -f1)"
+		tidra_size="$(du ${tbam_indelra} | cut -f1)"
 		
 		if [ ${tmkdup_size} -gt ${tidra_size} ] || [ ${tfinal_size} -lt ${tidra_size} ] || [ ${tfinal_size} -lt $oneGB ] || [ ${tidra_size} -lt $oneGB ]
 		then
-			printf "${sample}_tumor\n" >> $refine_failed_samples
+			printf "${sample}_tumor\n" >> ${refine_failed_samples}
 			(( tumor_errors ++ ))
 		fi
 	fi
 
 	if [ ${normal_errors} -lt 1 ] && [ -e ${nbam_mkdup} ]
 	then
-		nmkdup_size="$(du $nbam_mkdup | cut -f1)"
-		nfinal_size="$(du $nbam_final | cut -f1)"
-		nidra_size="$(du $nbam_indelra | cut -f1)"
+		nmkdup_size="$(du ${nbam_mkdup} | cut -f1)"
+		nfinal_size="$(du ${nbam_final} | cut -f1)"
+		nidra_size="$(du ${nbam_indelra} | cut -f1)"
 
 		if [ ${nmkdup_size} -gt ${nidra_size} ] || [ ${nfinal_size} -lt ${nidra_size} ] || [ ${nfinal_size} -lt $oneGB ] || [ ${nidra_size} -lt $oneGB ]
 		then
-			printf "${sample}_normal\n" >> $refine_failed_samples
+			printf "${sample}_normal\n" >> ${refine_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi
