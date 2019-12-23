@@ -111,7 +111,7 @@ printf "##########################\n\n\n\n########### Next Step ##########\n" >>
 	if [ ${normal_errors} -lt 1 ] && [ ${tumor_errors} -lt 1 ]
 	then
 		echo cd ${project_dir}/jobs/refine/ >> ${alignment_failed_samples}
-		echo qsub ${sample}_targetInterval.pbs >> ${alignment_failed_samples}
+		echo qsub ${sample}_targetInterval.pbs >> ${alignment_failed_samples}|awk -F"." '{print $1}'>>${project_dir}/jobs/check/TargetInterval_job_IDs.txt
 	fi	
 done
 printf "##########################\n" >> ${alignment_failed_samples}
