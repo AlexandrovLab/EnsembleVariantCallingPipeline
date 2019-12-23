@@ -46,11 +46,10 @@ mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmen
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
 
-echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
-echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
-echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
-echo 'mutectT=$(($SECONDS-$mutectS))/3600'>>jobs/mutect/${sample}_mutect.pbs
-echo 'echo mutect command took \$(echo a|awk '{print '\"\$mutectT\"'/3600}') hours'>>jobs/mutect/${sample}_mutect.pbs
+#echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
+#echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
+#echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
+#echo "echo mutect command took \$(echo a|awk '{print '\"\$mutectT\"'/3600}') hours">>jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo starting Read Orientation at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'readorientationtS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
