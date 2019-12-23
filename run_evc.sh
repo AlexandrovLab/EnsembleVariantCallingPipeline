@@ -32,6 +32,8 @@ mkdir -p ${out}/jobs/check_and_go
 cd $out/jobs/check_and_go
 printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F\".\" '{print \$1}'>>${out}/jobs/check/align_job_IDs.txt\n">start_align.sh
 chmod +x start_align.sh
+~/EnsembleVaraintCallingPipeline/align_check_template.sh $sampleF $out
+~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out 
 
 cd $out
 cat $sampleF|tail -n+2|while read line;
@@ -49,5 +51,4 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 done
 
-~/EnsembleVaraintCallingPipeline/align_check_template.sh $sampleF $out
-~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out 
+
