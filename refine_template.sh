@@ -100,7 +100,7 @@ echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
 submit_pon="
 cd ${out}/jobs/pon
 qsub ${sample}_pon.pbs"
-printf "submit_pon">>jobs/refine/${sample}_Nrefine.pbs
+printf ${submit_pon}>>jobs/refine/${sample}_Nrefine.pbs
 
 tail="
 if [ -f "${sample}_normal_final.bam" ] && [  -f "${sample}_tumor_final.bam" ]
