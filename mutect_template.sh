@@ -33,7 +33,7 @@ mkdir -p ${out}/${sample}/mutect
 cd ${out}/${sample}/mutect
 "
 
-mutect_cmd='gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-pair-hmm-threads \$(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --normal-sample ${sample}_normal --input $normal --tumor-sample ${sample}_tumor --input $tumor -O ${sample}_mutect2_unfiltered.vcf --java-options "-Xmx20G"'
+mutect_cmd="gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-pair-hmm-threads \$(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --normal-sample ${sample}_normal --input $normal --tumor-sample ${sample}_tumor --input $tumor -O ${sample}_mutect2_unfiltered.vcf"
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
