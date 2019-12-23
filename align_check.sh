@@ -15,11 +15,15 @@ then
 fi
 
 cd ${project_dir}
-mkdir -p ${project_dir}/jobs/check
+mkdir -p ${project_dir}/jobs/check_and_go
 
 #create unique report file name and report the time it was run
-alignment_failed_samples=${project_dir}/jobs/check/alignment_report_$(date|awk '{OFS="-";$1=$1;print}').txt
-printf "Check alignment was performed at $(date)\n########### ERROR report ##########\n" > ${alignment_failed_samples}
+align_failed_samples=${project_dir}/jobs/check_and_go/align_$(date|awk '{OFS="-";$1=$1;print}').error
+align_next_script=${project_dir}/jobs/check_and_go/refine.sh
+
+printf "Check align was performed at $(date)\n########### ERROR report ##########\n" > ${align_failed_samples}
+printf "#!/bin/bash
+#Run this after align is done\n\n" > ${align_next_script}
 
 for sample in $(tail -n+2 ${map_file} | cut -f1)
 do
@@ -37,14 +41,14 @@ do
 	#if tumor failed
 	if [ ! -z "$(grep -i error ${tumor_error_file})" ] || [ ! -z "$(grep -i fail ${tumor_error_file})" ]
 	then
-		printf "${sample}_tumor\n" >> ${alignment_failed_samples}
+		printf "${sample}_tumor\n" >> ${align_failed_samples}
 		(( tumor_errors ++ ))
 	fi
 
 	#if normal failed
 	if [ ! -z "$(grep -i error ${normal_error_file})" ] || [ ! -z "$(grep -i fail ${normal_error_file})" ]
 	then
-		printf "${sample}_normal\n" >> ${alignment_failed_samples}
+		printf "${sample}_normal\n" >> ${align_failed_samples}
 		(( normal_errors ++ ))
 	fi
 
@@ -62,13 +66,13 @@ do
 	#check if mkdp and raw files exist
 	if [ ${tumor_errors} -lt 1 ] && ( [ ! -e ${tbam_mkdup} ] || [ ! -e ${tbam_raw} ] )
 	then
-		printf "${sample}_tumor: missing raw or mkdp BAM file\n" >> ${alignment_failed_samples}
+		printf "${sample}_tumor: missing raw or mkdp BAM file\n" >> ${align_failed_samples}
 		(( tumor_errors ++ ))
 	fi
 
 	if [ ${normal_errors} -lt 1 ] && ( [ ! -e ${nbam_mkdup} ] || [ ! -e ${nbam_raw} ] )
 	then
-		printf "${sample}_normal: missing raw or mkdp BAM file\n" >> ${alignment_failed_samples}
+		printf "${sample}_normal: missing raw or mkdp BAM file\n" >> ${align_failed_samples}
 		(( normal_errors ++ ))
 	fi
 
@@ -85,7 +89,7 @@ do
 		
 		if [ ${tmkdup_size} -lt ${traw_size} ] || [ ${tmkdup_size} -lt $oneGB ] || [ ${traw_size} -lt $oneGB ]
 		then
-			printf "${sample}_tumor: One ore more files too small\n" >> ${alignment_failed_samples}
+			printf "${sample}_tumor: One ore more files too small\n" >> ${align_failed_samples}
 			(( tumor_errors ++ ))
 		fi
 	fi
@@ -97,12 +101,10 @@ do
 
 		if [ ${nmkdup_size} -lt ${nraw_size} ] || [ ${nmkdup_size} -lt $oneGB ] || [ ${nraw_size} -lt $oneGB ]
 		then
-			printf "${sample}_normal: One ore more files too small\n" >> ${alignment_failed_samples}
+			printf "${sample}_normal: One ore more files too small\n" >> ${align_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi
-
-printf "##########################\n\n\n\n########### Next Step ##########\n" >> ${alignment_failed_samples}
 
 	####################
 	##Submit next step##
@@ -110,8 +112,7 @@ printf "##########################\n\n\n\n########### Next Step ##########\n" >>
 
 	if [ ${normal_errors} -lt 1 ] && [ ${tumor_errors} -lt 1 ]
 	then
-		echo cd ${project_dir}/jobs/refine/ >> ${alignment_failed_samples}
-		echo qsub ${sample}_targetInterval.pbs >> ${alignment_failed_samples}|awk -F"." '{print $1}'>>${project_dir}/jobs/check/TargetInterval_job_IDs.txt
+		echo cd ${project_dir}/jobs/refine/ >> ${align_next_script}
+		echo qsub ${sample}_targetInterval.pbs >> ${align_next_script} | awk -v samp=$sample -F"." '{print $1"\t"samp}'>>${project_dir}/jobs/check_and_go/TargetInterval_job_IDs.txt
 	fi	
 done
-printf "##########################\n" >> ${alignment_failed_samples}
