@@ -39,8 +39,8 @@ do
 	##Check error file##
 	####################
 
-	tumor_error_file=${project_dir}/jobs/align/\${sample}_Talign_1.e
-	normal_error_file=${project_dir}/jobs/align/\${sample}_Nalign_1.e
+	tumor_error_file=${project_dir}/jobs/align/\${sample}_Talign.e
+	normal_error_file=${project_dir}/jobs/align/\${sample}_Nalign.e
 
 	#if tumor failed
 	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ]
