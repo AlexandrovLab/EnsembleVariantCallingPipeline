@@ -14,9 +14,13 @@ USAGE:\trun_evc \\
 	output/directory \\
 	path/to/sample.map \\
 	email.for@notification \n\n"
-if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ]
-then printf "$USAGE"
-else
+	
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
+then
+	printf "$USAGE"
+	exit 1
+fi
+
 mkdir -p ${out}/jobs/align
 mkdir -p ${out}/jobs/refine
 mkdir -p ${out}/jobs/pon
@@ -25,9 +29,8 @@ mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
-cd $out/jobs/check_and_go
-printf "cd ${out}/jobs/align\n
-for f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${project_dir}/jobs/check/TargetInterval_job_IDs.txt">start_align.sh
+#cd $out/jobs/check_and_go
+#printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${project_dir}/jobs/check/TargetInterval_job_IDs.txt">start_align.sh
 
 cat $sampleF|tail -n+2|while read line;
 do
@@ -43,5 +46,4 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 done
-#for f in jobs/*align*.pbs;do qsub $f;done
-fi
+
