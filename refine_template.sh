@@ -97,9 +97,7 @@ echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
 echo 'echo Refinement finished at $(date)'>>jobs/refine/${sample}_Nrefine.pbs
 
 
-submit_pon="
-cd ${out}/jobs/pon
-qsub ${sample}_pon.pbs"
+submit_pon="cd ${out}/jobs/pon\nqsub ${sample}_pon.pbs\n"
 printf ${submit_pon}>>jobs/refine/${sample}_Nrefine.pbs
 
 tail="
