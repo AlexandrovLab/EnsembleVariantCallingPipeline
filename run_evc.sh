@@ -30,7 +30,7 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
 cd $out/jobs/check_and_go
-printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${project_dir}/jobs/check/align_job_IDs.txt">start_align.sh
+printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F"." '{print $1}'>>${project_dir}/jobs/check/align_job_IDs.txt\n">start_align.sh
 
 cd $out
 cat $sampleF|tail -n+2|while read line;
