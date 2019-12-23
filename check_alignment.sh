@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USAGE="USAGE:\talign_check.sh \\
+USAGE="USAGE:\tcheck_alignment.sh \\
 		map_file \\
 		full_path_to_project_directory\n\n"
 
