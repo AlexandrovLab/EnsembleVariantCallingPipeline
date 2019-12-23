@@ -117,12 +117,11 @@ do
 
 	if [ \${normal_errors} -lt 1 ] && [ \${tumor_errors} -lt 1 ]
 	then
-		echo qsub \${sample}_varscan.pbs >> \${varscan_script} | awk -v samp=\$sample -F\".\" '{print \$1\"\\\t\"samp}'>> \${varscan_job_ID}
+		echo \"qsub \${sample}_varscan.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${varscan_job_ID}\">>\${varscan_script}
 
-		echo qsub \${sample}_strelka.pbs >> \${strelka_script} | awk -v samp=\$sample -F\".\" '{print \$1\"\\\t\"samp}'>> \${strelka_job_ID}
-
+		echo \"qsub \${sample}_strelka.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${strelka_job_ID}\">>\${strelka_script}
 	fi	
 done
-" > ${project_dir}/jobs/check_and_go/refine_check1.sh
+" > ${project_dir}/jobs/check_and_go/refine_check.sh
 
-chmod 770 ${project_dir}/jobs/check_and_go/refine_check1.sh
+chmod 770 ${project_dir}/jobs/check_and_go/refine_check.sh

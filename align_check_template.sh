@@ -45,14 +45,14 @@ do
 	#if tumor failed
 	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ]
 	then
-		printf \"\${sample}_tumor\\\n\" >> \${align_failed_samples}
+		printf \"\${sample}_tumor: error in error file\\\n\" >> \${align_failed_samples}
 		(( tumor_errors ++ ))
 	fi
 
 	#if normal failed
 	if [ ! -z \"\$(grep -i error \${normal_error_file})\" ] || [ ! -z \"\$(grep -i fail \${normal_error_file})\" ]
 	then
-		printf \"\${sample}_normal\\\n\" >> \${align_failed_samples}
+		printf \"\${sample}_normal: error in error file\\\n\" >> \${align_failed_samples}
 		(( normal_errors ++ ))
 	fi
 
@@ -91,7 +91,7 @@ do
 		tmkdup_size=\"\$(du \${tbam_mkdup} | cut -f1)\"
 		traw_size=\"\$(du \${tbam_raw} | cut -f1)\"
 		
-		if [ \${tmkdup_size} -lt \{traw_size} ] || [ \${tmkdup_size} -lt \oneGB ] || [ \${traw_size} -lt \$oneGB ]
+		if [ \${tmkdup_size} -lt \${traw_size} ] || [ \${tmkdup_size} -lt \$oneGB ] || [ \${traw_size} -lt \$oneGB ]
 		then
 			printf \"\${sample}_tumor: One ore more files too small\\\n\" >> \${align_failed_samples}
 			(( tumor_errors ++ ))
@@ -116,9 +116,9 @@ do
 
 	if [ \${normal_errors} -lt 1 ] && [ \${tumor_errors} -lt 1 ]
 	then
-		echo qsub \${sample}_targetInterval.pbs >> \${refine_script} | awk -v samp=\$sample -F\".\" '{print \$1\"\\\t\"samp}'>> \${target_interval_job_ids}
+		echo \"qsub \${sample}_targetInterval.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${target_interval_job_ids}\">>\${refine_script}
 	fi
 done
-" > ${project_dir}/jobs/check_and_go/align_check1.sh
+" > ${project_dir}/jobs/check_and_go/align_check.sh
 
-chmod 770 ${project_dir}/jobs/check_and_go/align_check1.sh
+chmod 770 ${project_dir}/jobs/check_and_go/align_check.sh
