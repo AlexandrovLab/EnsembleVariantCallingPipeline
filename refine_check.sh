@@ -99,7 +99,10 @@ do
 
 	if [ ${normal_errors} -lt 1 ] && [ ${tumor_errors} -lt 1 ]
 	then
-		echo qsub ${project_dir}/jobs/varscan/${sample}_varscan.pbs
-		echo qsub ${project_dir}/jobs/strelka/${sample}_strelka.pbs
+		cd ${project_dir}/jobs/varscan/
+		echo qsub ${sample}_varscan.pbs
+
+		cd ${project_dir}/jobs/strelka/
+		echo qsub ${sample}_strelka.pbs
 	fi	
 done
