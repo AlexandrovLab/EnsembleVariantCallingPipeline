@@ -33,6 +33,9 @@ printf "#!/bin/bash
 #Run this after refine is done\n
 cd ${project_dir}/jobs/strelka/\n\n" > ${strelka_script}
 
+printf "" > ${varscan_job_ID}
+printf "" > ${strelka_job_ID}
+
 chmod 770 ${refine_failed_samples} ${varscan_script} ${strelka_script} ${varscan_job_ID} ${strelka_job_ID}
 
 
