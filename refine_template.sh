@@ -113,5 +113,5 @@ else
 echo 'job finished, waiting for the pair sample to finish for subsequent analysis'
 fi
 "
-printf "$tail">>jobs/refine/${sample}_Trefine.pbs
-printf "$tail">>jobs/refine/${sample}_Nrefine.pbs
+#printf "$tail">>jobs/refine/${sample}_Trefine.pbs
+#printf "$tail">>jobs/refine/${sample}_Nrefine.pbs
