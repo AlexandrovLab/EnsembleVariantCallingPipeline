@@ -15,7 +15,6 @@ then
 fi
 
 cd ${project_dir}
-mkdir -p ${project_dir}/jobs/check_and_go
 
 #create unique report file name and report the time it was run
 align_failed_samples=${project_dir}/jobs/check_and_go/align_$(date|awk '{OFS="-";$1=$1;print}').error

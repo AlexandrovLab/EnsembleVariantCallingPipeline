@@ -15,7 +15,7 @@ then
 fi
 
 cd ${project_dir}
-mkdir -p ${project_dir}/jobs/check
+
 refine_failed_samples=${project_dir}/jobs/check_and_go/refine_$(date|awk '{OFS="-";$1=$1;print}').error
 varscan_script=${project_dir}/jobs/check_and_go/varscan.sh
 strelka_script=${project_dir}/jobs/check_and_go/strelka.sh
