@@ -50,7 +50,7 @@ do
 	fi
 
 	#if normal failed
-	if [ ! -z \"\$(grep -i error \${normal_error_file})\" ] || [ ! -z \"\$(grep -i fail \${normal_error_file})\" ]
+	if [ ! -z \"\$(grep -i error \${normal_error_file})\" ] || [ ! -z \"\$(grep -i fail \${normal_error_file})\" ] || [ ! -z \"\$(grep -i killed \${normal_error_file})\" ] || [ ! -z \"\$(grep -i \"broken pipe\" \${normal_error_file})\" ]
 	then
 		printf \"\${sample}_normal: error in error file\\\n\" >> \${align_failed_samples}
 		(( normal_errors ++ ))
