@@ -43,7 +43,7 @@ do
 	normal_error_file=${project_dir}/jobs/align/\${sample}_Nalign.e
 
 	#if tumor failed
-	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ]
+	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i killed \${normal_error_file})\" ] || [ ! -z \"\$(grep -i \"broken pipe\" \${normal_error_file})\" ]
 	then
 		printf \"\${sample}_tumor: error in error file\\\n\" >> \${align_failed_samples}
 		(( tumor_errors ++ ))
