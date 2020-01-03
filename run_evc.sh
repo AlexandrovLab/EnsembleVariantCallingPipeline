@@ -30,7 +30,7 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
 cd $out/jobs/check_and_go
-printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f;done|awk -F\".\" '{print \$1}'>>${out}/jobs/check_and_go/align_job_IDs.txt\n">start_align.sh
+printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f|awk -v samp=\$f -F\".\" '{print \$1\"\\\t\"samp}'>>${out}/jobs/check_and_go/align_job_IDs.txt;done\n">start_align.sh
 chmod +x start_align.sh
 ~/EnsembleVaraintCallingPipeline/align_check_template.sh $sampleF $out
 ~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out 
