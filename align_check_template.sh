@@ -125,10 +125,14 @@ do
 	if [ \${normal_errors} -lt 1 ] && [ \${tumor_errors} -lt 1 ]
 	then
 		echo \"qsub \${sample}_targetInterval.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${target_interval_job_ids}\">>\${refine_script}
-	elif [ \${tumor_errors} -gt 0 ]
+	fi
+
+	if [ \${tumor_errors} -gt 0 ]
 	then
 		echo \"qsub \${sample}_Talign.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample tumor\\\\\"}'>> \${resubmit_align_job_ids}\">>\${resubmit_align_script}
-	elif [ \${normal_errors} -gt 0 ]
+	fi
+
+	if [ \${normal_errors} -gt 0 ]
 	then
 		echo \"qsub \${sample}_Nalign.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample normal\\\\\"}'>> \${resubmit_align_job_ids}\">>\${resubmit_align_script}
 	fi
