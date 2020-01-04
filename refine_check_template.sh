@@ -86,9 +86,9 @@ do
 	#mkdup too small or either bam <1gb means error
 	if [ \${tumor_errors} -lt 1 ] && [ -e \${tbam_mkdup} ]
 	then
-		tmkdup_size=\"\$(du \${tbam_mkdup} | cut -f1)\"
-		tfinal_size=\"\$(du \${tbam_final} | cut -f1)\"
-		tidra_size=\"\$(du \${tbam_indelra} | cut -f1)\"
+		tmkdup_size=\"\$(du -b \${tbam_mkdup} | cut -f1)\"
+		tfinal_size=\"\$(du -b \${tbam_final} | cut -f1)\"
+		tidra_size=\"\$(du -b \${tbam_indelra} | cut -f1)\"
 		
 		if [ \${tmkdup_size} -gt \${tidra_size} ] || [ \${tfinal_size} -lt \${tidra_size} ] || [ \${tfinal_size} -lt \$oneGB ] || [ \${tidra_size} -lt \$oneGB ]
 		then
@@ -99,9 +99,9 @@ do
 
 	if [ \${normal_errors} -lt 1 ] && [ -e \${nbam_mkdup} ]
 	then
-		nmkdup_size=\"\$(du \${nbam_mkdup} | cut -f1)\"
-		nfinal_size=\"\$(du \${nbam_final} | cut -f1)\"
-		nidra_size=\"\$(du \${nbam_indelra} | cut -f1)\"
+		nmkdup_size=\"\$(du -b \${nbam_mkdup} | cut -f1)\"
+		nfinal_size=\"\$(du -b \${nbam_final} | cut -f1)\"
+		nidra_size=\"\$(du -b \${nbam_indelra} | cut -f1)\"
 
 		if [ \${nmkdup_size} -gt \${nidra_size} ] || [ \${nfinal_size} -lt \${nidra_size} ] || [ \${nfinal_size} -lt \$oneGB ] || [ \${nidra_size} -lt \$oneGB ]
 		then
