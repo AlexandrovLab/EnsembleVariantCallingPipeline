@@ -68,6 +68,7 @@ echo cd ${out}/${sample}/>>jobs/postAlign/${sample}_postAlign.pbs
 
 ## Create target interval ##
 echo '########## Target Interval #########'>>jobs/postAlign/${sample}_postAlign.pbs
+echo 'echo starting analysis on sample ${sample} at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'targetS=$SECONDS'>>jobs/postAlign/${sample}_postAlign.pbs
 echo $RTC>>jobs/postAlign/${sample}_postAlign.pbs
@@ -117,4 +118,4 @@ echo 'echo Tumor refinement finished at $(date)'>>jobs/postAlign/${sample}_postA
 echo '########## Panel of Normals #########'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/postAlign/${sample}_postAlign.pbs
 echo "echo generating PON vcf took \$(echo a|awk '{print '\"\$ponT\"'/3600}') hours">>jobs/postAlign/${sample}_postAlign.pbs
-echo 'echo PON finished at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
+echo 'echo PON finished at $(date)\n'>>jobs/postAlign/${sample}_postAlign.pbs
