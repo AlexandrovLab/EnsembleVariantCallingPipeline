@@ -113,7 +113,6 @@ echo 'prT=$(($SECONDS - $prS))'>>jobs/refine/${sample}_Trefine.pbs
 echo "echo Printing Reads took \$(echo a|awk '{print '\"\$prT\"'/3600}') hours">>jobs/refine/${sample}_Trefine.pbs
 echo 'echo Tumor refinement finished at $(date)'>>jobs/refine/${sample}_Trefine.pbs
 
-
 ## Panel of Normals ##
 echo '########## Panel of Normals #########'>>jobs/refine/${sample}_targetInterval.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/pon/${sample}_pon.pbs
