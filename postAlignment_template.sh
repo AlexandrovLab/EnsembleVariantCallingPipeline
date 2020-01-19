@@ -28,7 +28,6 @@ printf "$header">jobs/postAlign/${sample}_postAlign.pbs
 
 
 #### Define Commands #####
-
 # RealignerTargetCreator
 RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 while read ki;
@@ -62,13 +61,16 @@ PR_n="gatk3 -T PrintReads -R $ref -I ${sample}_normal_idra.bam --BQSR ${sample}_
 pon_cmd="gatk Mutect2 --independent-mates -R $ref --native-pair-hmm-threads \$(nproc) -I ${sample}_normal_final.bam --max-mnp-distance 0 -O ${sample}_PON.vcf.gz"
 ############################
 
+## Prepare Environment
 echo source ~/.bashrc>>jobs/postAlign/${sample}_postAlign.pbs
 echo source activate evc_gatk3>>jobs/postAlign/${sample}_postAlign.pbs
+
+## job starts
+echo 'echo === Starting analysis on sample' ${sample} 'at $(date)==='>>jobs/postAlign/${sample}_postAlign.pbs
 echo cd ${out}/${sample}/>>jobs/postAlign/${sample}_postAlign.pbs
 
 ## Create target interval ##
 echo '########## Target Interval #########'>>jobs/postAlign/${sample}_postAlign.pbs
-echo 'echo starting analysis on sample ${sample} at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'echo starting RealignerTargetCreator at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'targetS=$SECONDS'>>jobs/postAlign/${sample}_postAlign.pbs
 echo $RTC>>jobs/postAlign/${sample}_postAlign.pbs
@@ -116,6 +118,9 @@ echo 'echo Tumor refinement finished at $(date)'>>jobs/postAlign/${sample}_postA
 
 ## Panel of Normals ##
 echo '########## Panel of Normals #########'>>jobs/postAlign/${sample}_postAlign.pbs
+echo 'echo starting PanelOfNormals at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
+echo 'ponS=$SECONDS'>>jobs/postAlign/${sample}_postAlign.pbs
+echo ${pon_cmd}>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/postAlign/${sample}_postAlign.pbs
 echo "echo generating PON vcf took \$(echo a|awk '{print '\"\$ponT\"'/3600}') hours">>jobs/postAlign/${sample}_postAlign.pbs
 echo 'echo PON finished at $(date)\n'>>jobs/postAlign/${sample}_postAlign.pbs
