@@ -1,0 +1,2 @@
+cd /restricted/alexandrov-group/shared/precancer_analysis/new_analysis/oral/dec13_2/jobs/align
+for f in *pbs;do qsub $f;done|awk -F. '{print /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/precancer/OL/paired_end/}'>>/jobs/check/TargetInterval_job_IDs.txt
