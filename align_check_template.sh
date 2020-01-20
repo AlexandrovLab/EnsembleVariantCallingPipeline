@@ -54,7 +54,7 @@ do
 	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ]
 	then
 		printf \"\${sample}_tumor: error in error file\\\n\" >> \${align_failed_samples}
-		printf \"\$(grep -i error \${tumor_error_file})\" >> \${align_failed_samples}
+		printf \"\$(grep -i "error\\\|fail" \${tumor_error_file})\" >> \${align_failed_samples}
 		(( tumor_errors ++ ))
 	fi
 
@@ -62,7 +62,7 @@ do
 	if [ ! -z \"\$(grep -i error \${normal_error_file})\" ] || [ ! -z \"\$(grep -i fail \${normal_error_file})\" ] || [ ! -z \"\$(grep -i killed \${normal_error_file})\" ] || [ ! -z \"\$(grep -i \"broken pipe\" \${normal_error_file})\" ]
 	then
 		printf \"\${sample}_normal: error in error file\\\n\" >> \${align_failed_samples}
-		printf \"\$(grep -i error \${normal_error_file})\" >> \${align_failed_samples}
+		printf \"\$(grep -i "error\\\|fail\\\|killed\\\|broken pipe" \${normal_error_file})\" >> \${align_failed_samples}
 		(( normal_errors ++ ))
 	fi
 
