@@ -16,7 +16,7 @@ fi
 header="#!/bin/bash
 #PBS -q home-alexandrov
 #PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=100:00:00
+#PBS -l walltime=500:00:00
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V
