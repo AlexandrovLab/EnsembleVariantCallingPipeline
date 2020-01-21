@@ -119,6 +119,8 @@ echo 'echo Tumor refinement finished at $(date)'>>jobs/postAlign/${sample}_postA
 ## Panel of Normals ##
 echo '########## Panel of Normals #########'>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'echo starting PanelOfNormals at $(date)'>>jobs/postAlign/${sample}_postAlign.pbs
+echo source ~/.bashrc>>jobs/postAlign/${sample}_postAlign.pbs
+echo source activate evc_main>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'ponS=$SECONDS'>>jobs/postAlign/${sample}_postAlign.pbs
 echo ${pon_cmd}>>jobs/postAlign/${sample}_postAlign.pbs
 echo 'ponT=$(($SECONDS - $ponS))'>>jobs/postAlign/${sample}_postAlign.pbs
