@@ -43,7 +43,6 @@ alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_norma
 
 fi
 
-
 mkdpTumor="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$( free -h|grep Mem|awk '{split(\$4,a,\"G\");print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_tumor_raw.bam O=${sample}_tumor_mkdp.bam M=${sample}_tumor_markDuplicates_Matrix.txt"
 mkdpNormal="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$(free -h|grep Mem|awk '{split(\$4,a,\"G\");print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_normal_raw.bam O=${sample}_normal_mkdp.bam M=${sample}_normal_markDuplicates_Matrix.txt"
 
@@ -56,9 +55,8 @@ echo source ~/.bashrc>>jobs/align/${sample}_Nalign.pbs
 echo source activate evc_main>>jobs/align/${sample}_Talign.pbs
 echo source activate evc_main>>jobs/align/${sample}_Nalign.pbs
 
-
-echo 'echo job starts at $(date)'>>jobs/align/${sample}_Talign.pbs
-echo 'echo job starts at $(date)'>>jobs/align/${sample}_Nalign.pbs
+echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Talign.pbs
+echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Nalign.pbs
 
 echo cd $output>>jobs/align/${sample}_Talign.pbs
 echo cd $output>>jobs/align/${sample}_Nalign.pbs
