@@ -6,6 +6,7 @@ normal=$4
 ref=$5
 fastq_path=$6
 output=$7
+type=$8
 USAGE="align_template.sh: not enough inputs...check script/n"
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ] || [ "$5" == "" ] || [ "$6" == "" ] || [ "$7" == "" ]
 then printf "$USAGE"
@@ -32,8 +33,16 @@ Njobname="#PBS -N EVC_Nalign_${sample}
 #PBS -o ${sample}_Nalign.o
 #PBS -e ${sample}_Nalign.e
 "
-alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G>${sample}_tumor_raw.bam"
-alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G>${sample}_normal_raw.bam"
+if [ $type == "exome" ]
+then 
+alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G > ${sample}_tumor_raw.bam"
+alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) -m 6G > ${sample}_normal_raw.bam"
+else
+alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\tPL:ILLUMINA' $ref ${tumor_r1} ${tumor_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) > ${sample}_tumor_raw.bam"
+alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) > ${sample}_normal_raw.bam"
+
+fi
+
 
 mkdpTumor="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$( free -h|grep Mem|awk '{split(\$4,a,\"G\");print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_tumor_raw.bam O=${sample}_tumor_mkdp.bam M=${sample}_tumor_markDuplicates_Matrix.txt"
 mkdpNormal="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -XX:ParallelGCThreads=\$(nproc) -Xmx\$(free -h|grep Mem|awk '{split(\$4,a,\"G\");print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_normal_raw.bam O=${sample}_normal_mkdp.bam M=${sample}_normal_markDuplicates_Matrix.txt"
