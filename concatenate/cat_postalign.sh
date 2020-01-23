@@ -3,6 +3,7 @@
 precancer=$1
 email=$2
 listofsampleID=$3
+list=$(echo "$listofsampleID" | cut -d '.' -f1)
 
 USAGE="\nMissing input arguments..\n
 must run under postAlign job folder\n
@@ -35,9 +36,9 @@ header_list="#!/bin/bash
 #PBS -m bea
 #PBS -M $email
 #PBS -V 
-#PBS -N ${precancer}_postAlign_list
-#PBS -o ${precancer}_postAlign_list.o
-#PBS -e ${precancer}_postAlign_list.e
+#PBS -N ${precancer}_postAlign_${list}
+#PBS -o ${precancer}_postAlign_${list}.o
+#PBS -e ${precancer}_postAlign_${list}.e
 "
 
 
@@ -49,6 +50,7 @@ fi
 
 if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ]
 then
-	printf "$header_list" > ${precancer}_postAlign_wlist.pbs
-	cat $listofsampleID | while read line; do sed '1,10d' ${line}_postAlign.pbs >> ${precancer}_postAlign_wlist.pbs;done
+	printf "$header_list" > ${precancer}_postAlign_${list}.pbs
+	cat $listofsampleID | while read line; do sed '1,10d' ${line}_postAlign.pbs >> ${precancer}_postAlign_${list}.pbs;done
 fi
+
