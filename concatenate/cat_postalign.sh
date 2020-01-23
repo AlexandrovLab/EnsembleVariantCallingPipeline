@@ -9,7 +9,7 @@ must run under postAlign job folder\n
 USAGE:\cat_postalign.sh \\
 	precancer type \\
 	email.for@notification \\
-	optional: listofsampleID.txt\n\n"
+	optional: listofsampleID.txt(jobname would end with the filename of this list)\n\n"
 
 if [ -z "$1" ] || [ -z "$2" ]
 then
