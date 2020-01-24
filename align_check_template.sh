@@ -72,7 +72,7 @@ do
 	##Check file sizes##
 	####################
 
-	#mkdup too small or either bam <1gb means error
+	#bam <1gb means error
 	if [ \${tumor_errors} -lt 1 ]
 	then
 		tmkdup_size=\"\$(du -b \${tbam_mkdup} | cut -f1)\"
@@ -101,7 +101,7 @@ do
 	##Check file truncated##
 	########################
 
-	#mkdup too small or either bam <1gb means error
+	#quickcheck returns nothing if the file is ok
 	if [ \${tumor_errors} -lt 1 ]
 	then
 		tmkdup_check=\"\$(samtools quickcheck \${tbam_mkdup} | wc -l)\"
