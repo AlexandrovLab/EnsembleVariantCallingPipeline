@@ -37,6 +37,10 @@ cd ${project_dir}/jobs/align/\\\n\\\n\" > \${resubmit_align_script}
 
 chmod 770 \${align_failed_samples} \${refine_script} \${target_interval_job_ids} \${resubmit_align_script} \${resubmit_align_job_ids}
 
+error_file=${project_dir}/jobs/align/*_align.e
+grep -i -n \"error\\\|fail\\\|killed\" \${error_file} >> \${align_failed_samples}
+
+
 for sample in \$(tail -n+2 ${map_file} | cut -f1)
 do
 	#stop when there are errors

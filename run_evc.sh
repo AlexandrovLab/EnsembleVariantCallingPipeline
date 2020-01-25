@@ -14,7 +14,8 @@ USAGE:\trun_evc \\
 	path/to/fastq/files \\
 	output/directory \\
 	path/to/sample.map \\
-	email.for@notification \n\n"
+	email.for@notification \\
+	precancer (optional)\n\n"
 	
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
 then
