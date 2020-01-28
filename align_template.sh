@@ -7,8 +7,10 @@ ref=$5
 fastq_path=$6
 output=$7
 type=$8
+walltime=${9}
+queue=${10}
 USAGE="align_template.sh: not enough inputs...check script/n"
-if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ] || [ "$5" == "" ] || [ "$6" == "" ] || [ "$7" == "" ]
+if [ -z "${10}" ]
 then printf "$USAGE"
 else
 tumor_r1=${fastq_path}/${tumor}_1.fastq.gz
@@ -16,14 +18,27 @@ tumor_r2=${fastq_path}/${tumor}_2.fastq.gz
 normal_r1=${fastq_path}/${normal}_1.fastq.gz
 normal_r2=${fastq_path}/${normal}_2.fastq.gz
 
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=500:00:00
-#PBS -m bea
-#PBS -M ${email}
-#PBS -V 
-"
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+	#PBS -q hotel
+	#PBS -l nodes=1:ppn=8
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+else
+	header="#!/bin/bash
+	#PBS -q home-alexandrov
+	#PBS -l nodes=1:ppn=28:skylake
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+fi
+
 
 Tjobname="#PBS -N EVC_Talign_${sample}
 #PBS -o ${sample}_Talign.o

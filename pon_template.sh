@@ -3,14 +3,33 @@ email=$1
 sample=$2
 ref=$3
 out=$4
+walltime=${5}
+queue=${6}
 
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=50:00:00
-#PBS -m bea
-#PBS -M ${email}
-#PBS -V
+
+
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+	#PBS -q hotel
+	#PBS -l nodes=1:ppn=8
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+else
+	header="#!/bin/bash
+	#PBS -q home-alexandrov
+	#PBS -l nodes=1:ppn=28:skylake
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+fi
+
+header="${header}""
 #PBS -N EVC_pon_${sample}
 #PBS -e ${sample}_pon.e
 #PBS -o ${sample}_pon.o
