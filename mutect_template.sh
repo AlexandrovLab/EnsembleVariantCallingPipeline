@@ -37,7 +37,7 @@ mutect_cmd="gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-p
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries -I ${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
