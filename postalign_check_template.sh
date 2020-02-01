@@ -11,17 +11,26 @@ project_dir=$2
 printf "#!/bin/bash
 
 oneGB=1000000
+oneMB=1000
 
 cd ${project_dir}
 
-refine_failed_samples=${project_dir}/jobs/check_and_go/refine_\$(date|awk '{OFS=\"-\";\$1=\$1;print}').error
+refine_failed_samples=${project_dir}/jobs/check_and_go/postalign_\$(date|awk '{OFS=\"-\";\$1=\$1;print}').error
 varscan_script=${project_dir}/jobs/check_and_go/varscan.sh
 strelka_script=${project_dir}/jobs/check_and_go/strelka.sh
+mutect_script=${project_dir}/jobs/check_and_go/mutect.sh
+resubmit_postalign_script=${project_dir}/jobs/check_and_go/resubmit_postalign.sh
+resubmit_postalign_job_ids=${project_dir}/jobs/check_and_go/resubmit_postalign_job_IDs.txt
 varscan_job_ID=${project_dir}/jobs/check_and_go/varscan_job_IDs.txt
 strelka_job_ID=${project_dir}/jobs/check_and_go/strelka_job_IDs.txt
+mutect_job_ID=${project_dir}/jobs/check_and_go/mutect_job_IDs.txt
 
 printf \"Check refine was performed at \$(date)
 ########### ERROR report ##########\\\n\" > \${refine_failed_samples}
+
+printf \"#!/bin/bash
+#Run this after postAlign is done\\\n
+cd ${project_dir}/jobs/mutect/\\\n\\\n\" > \${mutect_script}
 
 printf \"#!/bin/bash
 #Run this after postAlign is done\\\n
@@ -33,8 +42,13 @@ cd ${project_dir}/jobs/strelka/\\\n\\\n\" > \${strelka_script}
 
 printf \"\" > \${varscan_job_ID}
 printf \"\" > \${strelka_job_ID}
+printf \"\" > \${mutect_job_ID}
 
-chmod 770 \${refine_failed_samples} \${varscan_script} \${strelka_script} \${varscan_job_ID} \${strelka_job_ID}
+printf \"#!/bin/bash
+#Run this after postalign is done\\\n
+cd ${project_dir}/jobs/postAlign/\\\n\\\n\" > \${resubmit_postalign_script}
+
+chmod 770 \${refine_failed_samples} \${resubmit_postalign_script} \${varscan_script} \${strelka_script} \${varscan_job_ID} \${strelka_job_ID}
 
 
 for sample in \$(tail -n+2 ${map_file} | cut -f1)
@@ -96,7 +110,7 @@ do
 	####################
 
 	#mkdup too small or either bam <1gb means error
-	if [ \${tumor_errors} -lt 1 ] && [ -e \${tbam_mkdup} ]
+	if [ \${tumor_errors} -lt 1 ] && [ -e \${tbam_final} ]
 	then
 		tmkdup_size=\"\$(du -b \${tbam_mkdup} | cut -f1)\"
 		tfinal_size=\"\$(du -b \${tbam_final} | cut -f1)\"
@@ -109,7 +123,7 @@ do
 		fi
 	fi
 
-	if [ \${normal_errors} -lt 1 ] && [ -e \${nbam_mkdup} ]
+	if [ \${normal_errors} -lt 1 ] && [ -e \${nbam_final} ]
 	then
 		nmkdup_size=\"\$(du -b \${nbam_mkdup} | cut -f1)\"
 		nfinal_size=\"\$(du -b \${nbam_final} | cut -f1)\"
@@ -118,6 +132,17 @@ do
 		if [ \${nfinal_size} -lt \$oneGB ] || [ \${nidra_size} -lt \$oneGB ]
 		then
 			printf \"\${sample}_normal: one or more bam files are too small\\\n\" >> \${refine_failed_samples}
+			(( normal_errors ++ ))
+		fi
+	fi
+
+	if [ \${normal_errors} -lt 1 ] && [ -e \${pon} ]
+	then
+		pon_size=\"\$(du -b \${pon} | cut -f1)\"
+
+		if [ \${pon_size} -lt \$oneMB ]
+		then
+			printf \"\${sample}_normal: PON is too small\\\n\" >> \${refine_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi
@@ -134,7 +159,7 @@ do
 		
 		if [ \${tfinal_check} -gt 0 ] || [ \${tidra_check} -gt 0 ]
 		then
-			printf \"\${sample}_tumor: Bam file truncated\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_tumor: Bam file truncated\\\n\" >> \${refine_failed_samples}
 			(( tumor_errors ++ ))
 		fi
 	fi
@@ -146,7 +171,7 @@ do
 
 		if [ \${nfinal_check} -gt 0 ] || [ \${nidra_check} -gt 0 ]
 		then
-			printf \"\${sample}_normal: Bam file truncated\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_normal: Bam file truncated\\\n\" >> \${refine_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi
@@ -160,8 +185,16 @@ do
 		echo \"qsub \${sample}_varscan.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${varscan_job_ID}\">>\${varscan_script}
 
 		echo \"qsub \${sample}_strelka.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${strelka_job_ID}\">>\${strelka_script}
-	fi	
-done
-" > ${project_dir}/jobs/check_and_go/refine_check.sh
 
-chmod 770 ${project_dir}/jobs/check_and_go/refine_check.sh
+		echo \"qsub \${sample}_mutect.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample\\\\\"}'>> \${mutect_job_ID}\">>\${mutect_script}
+	fi	
+	
+	if [ \${tumor_errors} -gt 0 ] || [ \${normal_errors} -gt 0 ]
+	then
+		echo \"qsub \${sample}_postAlign.pbs | awk -F"." '{print \\\$1\\\\\"\\\t\$sample tumor\\\\\"}'>> \${resubmit_postalign_job_ids}\">>\${resubmit_postalign_script}
+	fi
+
+done
+" > ${project_dir}/jobs/check_and_go/postAlign_check.sh
+
+chmod 770 ${project_dir}/jobs/check_and_go/postAlign_check.sh
