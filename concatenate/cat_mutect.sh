@@ -46,10 +46,10 @@ then
 	printf "$header" > ${precancer}_mutect.pbs
 	echo source ~/.bashrc >> ${precancer}_mutect.pbs
 	echo source activate evc_main >> ${precancer}_mutect.pbs
-	for file in PCGA*mutect.pbs; do sed '1,12d' $file >> ${precancer}_mutect.pbs;done
+	for file in PCGA*mutect.pbs; do sed '1,13d' $file >> ${precancer}_mutect.pbs;done
 else
 	printf "$header_list" > ${precancer}_mutect_${list}.pbs
 	echo source ~/.bashrc >> ${precancer}_mutect_${list}.pbs
 	echo source activate evc_main >> ${precancer}_mutect_${list}.pbs
-	cat $listofsampleID | while read line; do sed '1,12d' ${line}_mutect.pbs >> ${precancer}_mutect_${list}.pbs;done
+	cat $listofsampleID | while read line; do sed '1,13d' ${line}_mutect.pbs >> ${precancer}_mutect_${list}.pbs;done
 fi

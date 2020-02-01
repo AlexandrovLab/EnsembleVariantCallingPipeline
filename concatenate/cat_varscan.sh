@@ -28,6 +28,13 @@ header="#!/bin/bash
 #PBS -N ${precancer}_varscan
 #PBS -o ${precancer}_varscan.o
 #PBS -e ${precancer}_varscan.e
+
+#VarScan parameters
+vs_tumor_purity=0.8
+vs_min_converage=10
+vs_min_alt_reads=3
+vs_min_aaf=0.2
+
 "
 header_list="#!/bin/bash
 #PBS -q home-alexandrov
@@ -39,6 +46,13 @@ header_list="#!/bin/bash
 #PBS -N ${precancer}_varscan_${list}
 #PBS -o ${precancer}_varscan_${list}.o
 #PBS -e ${precancer}_varscan_${list}.e
+
+#VarScan parameters
+vs_tumor_purity=0.8
+vs_min_converage=10
+vs_min_alt_reads=3
+vs_min_aaf=0.2
+
 "
 
 if [ -z "$3" ]
@@ -46,10 +60,10 @@ then
 	printf "$header" > ${precancer}_varscan.pbs
 	echo source ~/.bashrc >> ${precancer}_varscan.pbs
 	echo source activate evc_main >> ${precancer}_varscan.pbs
-	for file in PCGA*varscan.pbs; do sed '1,12d' $file >> ${precancer}_varscan.pbs;done
+	for file in PCGA*varscan.pbs; do sed '1,21d' $file >> ${precancer}_varscan.pbs;done
 else
 	printf "$header_list" > ${precancer}_varscan_${list}.pbs
 	echo source ~/.bashrc >> ${precancer}_varscan_${list}.pbs
 	echo source activate evc_main >> ${precancer}_varscan_${list}.pbs
-	cat $listofsampleID | while read line; do sed '1,12d' ${line}_varscan.pbs >> ${precancer}_varscan_${list}.pbs;done
+	cat $listofsampleID | while read line; do sed '1,21d' ${line}_varscan.pbs >> ${precancer}_varscan_${list}.pbs;done
 fi
