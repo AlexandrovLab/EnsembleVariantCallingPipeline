@@ -21,9 +21,14 @@ header="#!/bin/bash
 #PBS -o ${sample}_MuSE.o
 "
 
-muse_cmd="MuSE call -O ${out}/${sample}/muse/${sample} -f $ref $normal $tumor"
-muse_sump_cmd="MuSE sump -I ${sample}.MuSE.txt -E -O ${sample}.vcf -D $dbSNP"
+## Defining the commmands
+muse_cmd="MuSE call -O ${out}/${sample}/muse/${sample} -f $ref $tumor $normal"
+if [ $type == "exome" ]
+then muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -E -O ${sample}.vcf -D $dbSNP"
+else muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -G -O ${sample}.vcf -D $dbSNP"
+fi
 
+## Writing the scripts
 printf "$header">jobs/muse/${sample}_muse.pbs
 echo source ~/.bashrc>>jobs/muse/${sample}_muse.pbs
 echo source activate evc_muse>>jobs/muse/${sample}_muse.pbs
