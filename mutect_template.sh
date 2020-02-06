@@ -46,6 +46,7 @@ mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmen
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
 
+echo 'echo === Starting MuTect2 on sample' ${sample} 'at $(date)==='>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
 echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
