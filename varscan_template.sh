@@ -46,6 +46,7 @@ cd ${out}/${sample}/varscan
 "
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
+echo 'echo === Starting varscan on sample' ${sample} 'at $(date)==='>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${mpileup_nt_cmd}>>jobs/varscan/${sample}_varscan.pbs
