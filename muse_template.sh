@@ -1,0 +1,45 @@
+#!/bin/bash
+email=$1
+sample=$2
+ref=$3
+out=$4
+type=$5
+dbSNP=$6
+
+normal=${out}/${sample}/${sample}_normal_final.bam
+tumor=${out}/${sample}/${sample}_tumor_final.bam
+
+header="#!/bin/bash
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=100:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V
+#PBS -N EVC_MuSE_${sample}
+#PBS -e ${sample}_MuSE.e
+#PBS -o ${sample}_MuSE.o
+"
+
+muse_cmd="MuSE call -O ${out}/${sample}/muse/${sample} -f $ref $normal $tumor"
+muse_sump_cmd="MuSE sump -I ${sample}.MuSE.txt -E -O ${sample}.vcf -D $dbSNP"
+
+printf "$header">jobs/muse/${sample}_muse.pbs
+echo source ~/.bashrc>>jobs/muse/${sample}_muse.pbs
+echo source activate evc_strelka>>jobs/muse/${sample}_muse.pbs
+echo mkdir -p ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
+echo cd ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
+
+echo 'echo === Starting MuSE on sample' ${sample} 'at $(date)==='>>jobs/muse/${sample}_muse.pbs
+echo 'echo creating .MuSE.txt file at $(date)'>>jobs/strelka/${sample}_strelka.pbs
+echo 'strelkaS=$SECONDS'>>jobs/strelka/${sample}_strelka.pbs
+echo ${muse_cmd}>>jobs/strelka/${sample}_strelka.pbs
+echo 'strelkaT=$(($SECONDS - $strelkaS))'>>jobs/strelka/${sample}_strelka.pbs
+echo "echo creating .MuSE.txt took \$(echo a|awk '{print '\"\$strelkaT\"'/3600}') hours">>jobs/strelka/${sample}_strelka.pbs
+echo 'echo .MuSE.txt file created at $(date)'>>jobs/strelka/${sample}_strelka.pbs
+
+echo 'echo starting MuSE sump at $(date)'>>jobs/strelka/${sample}_strelka.pbs
+echo 'MuSEsumpS=$SECONDS'>>jobs/strelka/${sample}_strelka.pbs
+echo ${muse_sump_cmd}>>jobs/strelka/${sample}_strelka.pbs
+echo 'MuSEsumpT=$(($SECONDS - $MuSEsumpS))'>>jobs/strelka/${sample}_strelka.pbs
+echo "echo strelka took \$(echo a|awk '{print '\"\$MuSEsumpT\"'/3600}') hours">>jobs/strelka/${sample}_strelka.pbs
