@@ -4,8 +4,11 @@ sample=$2
 ref=$3
 out=$4
 type=$5
-normal=${out}/${sample}/${sample}_normal_final.bam
-tumor=${out}/${sample}/${sample}_tumor_final.bam
+tumor=$6
+normal=$7
+
+normal=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${normal}_final.bam
+tumor=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${tumor}_final.bam
 header="#!/bin/bash
 #PBS -q home-alexandrov
 #PBS -l nodes=1:ppn=28:skylake
@@ -23,6 +26,7 @@ strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref 
 runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j \$(nproc)"
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
+echo 'echo === Starting analysis on sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
 echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs

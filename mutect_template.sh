@@ -6,6 +6,8 @@ out=$4
 pon=$5
 type=$6
 dbSNP=$7
+tumor=$8
+normal=$9
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
 if [ $type == "exome" ]
@@ -13,8 +15,8 @@ then af=0.0000025
 else af=0.00003125
 fi
 
-normal=${out}/${sample}/${sample}_normal_final.bam
-tumor=${out}/${sample}/${sample}_tumor_final.bam
+normal=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${normal}_final.bam
+tumor=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${tumor}_final.bam
 
 template="#!/bin/bash
 #PBS -q home-alexandrov

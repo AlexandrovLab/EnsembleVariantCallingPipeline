@@ -3,9 +3,11 @@ email=$1
 sample=$2
 ref=$3
 out=$4
+tumor=$5
+normal=$6
 
-normal=${out}/${sample}/${sample}_normal_final.bam
-tumor=${out}/${sample}/${sample}_tumor_final.bam
+normal=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${normal}_final.bam
+tumor=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/bam/${tumor}_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
 varscanOutput=${out}/${sample}/varscan
 
@@ -46,6 +48,7 @@ cd ${out}/${sample}/varscan
 "
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
+echo 'echo === Starting analysis on sample' ${sample} 'at $(date)==='>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
 echo ${mpileup_nt_cmd}>>jobs/varscan/${sample}_varscan.pbs

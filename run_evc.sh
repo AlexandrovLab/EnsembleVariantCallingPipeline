@@ -3,8 +3,8 @@ path=$1
 out=$2
 sampleF=$3
 email=$4
-ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
-pon=/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/oral/olivier_analyzed_oral_benign/PON/PON.vcf.gz
+ref=/projects/ps-lalexandrov/shared/Reference_Genomes/hg38/hg38.fa
+pon=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/PON/PON.vcf.gz
 dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 
 known_indel_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt
@@ -52,9 +52,9 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
 ~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
-~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
+~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $tumor $normal
+~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $tumor $normal
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $tumor $normal
 
 if [ $5 == "precancer" ] 
 then
