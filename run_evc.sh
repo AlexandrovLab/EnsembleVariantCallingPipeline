@@ -30,6 +30,7 @@ mkdir -p ${out}/jobs/pon
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
+mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
 
 if [ $5 == "precancer" ]
