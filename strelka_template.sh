@@ -28,6 +28,7 @@ echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 
+echo 'echo === Starting strelka on sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
 echo 'echo creating strelka workflow at $(date)'>>jobs/strelka/${sample}_strelka.pbs
 if [ $type == "exome" ]
 then echo ${strelka_config_exome}>>jobs/strelka/${sample}_strelka.pbs

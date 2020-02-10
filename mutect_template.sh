@@ -37,7 +37,7 @@ mutect_cmd="gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-p
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries -I ${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
@@ -46,9 +46,11 @@ mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmen
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
 
+echo 'echo === Starting MuTect2 on sample' ${sample} 'at $(date)==='>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
 echo ${mutect_cmd}>>jobs/mutect/${sample}_mutect.pbs
+echo 'mutectT=$(($SECONDS-$mutectS))'>>jobs/mutect/${sample}_mutect.pbs
 echo "echo mutect command took \$(echo a|awk '{print '\"\$mutectT\"'/3600}') hours">>jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo starting Read Orientation at $(date)....'>>jobs/mutect/${sample}_mutect.pbs

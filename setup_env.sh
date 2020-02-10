@@ -11,6 +11,8 @@ then
 	conda env update -f gatk3_env.yml
 	echo "Successfully installed three environments: evc_main, evc_strelka and evc_gatk3"
 	ln -s $(pwd)/run_evc.sh ~/miniconda$1/bin/run_evc
+	ln -s $(pwd)/MuSE/MuSE ~/miniconda$1/bin/MuSE
+	cd $(pwd)/MuSE;make;cd -
 
 elif [ $1 -ne 2 ] && [ $1 -ne 3 ]
 then

@@ -37,34 +37,15 @@ cd ${project_dir}/jobs/align/\\\n\\\n\" > \${resubmit_align_script}
 
 chmod 770 \${align_failed_samples} \${refine_script} \${target_interval_job_ids} \${resubmit_align_script} \${resubmit_align_job_ids}
 
+error_file=${project_dir}/jobs/align/*_align.e
+grep -i -n \"error\\\|fail\\\|killed\" \${error_file} >> \${align_failed_samples}
+
+
 for sample in \$(tail -n+2 ${map_file} | cut -f1)
 do
-	#stop when there 
+	#stop when there are errors
 	tumor_errors=0
 	normal_errors=0
-
-	####################
-	##Check error file##
-	####################
-
-	tumor_error_file=${project_dir}/jobs/align/\${sample}_Talign.e
-	normal_error_file=${project_dir}/jobs/align/\${sample}_Nalign.e
-
-	#if tumor failed
-	if [ ! -z \"\$(grep -i error \${tumor_error_file})\" ] || [ ! -z \"\$(grep -i fail \${tumor_error_file})\" ]
-	then
-		printf \"\${sample}_tumor: error in error file\\\n\" >> \${align_failed_samples}
-		printf \"\$(grep -i \"error\\\|fail\" \${tumor_error_file})\" >> \${align_failed_samples}
-		(( tumor_errors ++ ))
-	fi
-
-	#if normal failed
-	if [ ! -z \"\$(grep -i error \${normal_error_file})\" ] || [ ! -z \"\$(grep -i fail \${normal_error_file})\" ] || [ ! -z \"\$(grep -i killed \${normal_error_file})\" ] || [ ! -z \"\$(grep -i \"broken pipe\" \${normal_error_file})\" ]
-	then
-		printf \"\${sample}_normal: error in error file\\\n\" >> \${align_failed_samples}
-		printf \"\$(grep -i \"error\\\|fail\\\|killed\\\|broken\\\ pipe\" \${normal_error_file})\" >> \${align_failed_samples}
-		(( normal_errors ++ ))
-	fi
 
 
 	###################
@@ -95,15 +76,15 @@ do
 	##Check file sizes##
 	####################
 
-	#mkdup too small or either bam <1gb means error
+	#bam <1gb means error
 	if [ \${tumor_errors} -lt 1 ]
 	then
 		tmkdup_size=\"\$(du -b \${tbam_mkdup} | cut -f1)\"
 		traw_size=\"\$(du -b \${tbam_raw} | cut -f1)\"
 		
-		if [ \${tmkdup_size} -lt \${traw_size} ] || [ \${tmkdup_size} -lt \$oneGB ] || [ \${traw_size} -lt \$oneGB ]
+		if [ \${tmkdup_size} -lt \$oneGB ] || [ \${traw_size} -lt \$oneGB ]
 		then
-			printf \"\${sample}_tumor: One ore more files too small\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_tumor: One or more files too small\\\n\" >> \${align_failed_samples}
 			(( tumor_errors ++ ))
 		fi
 	fi
@@ -113,9 +94,38 @@ do
 		nmkdup_size=\"\$(du -b \$nbam_mkdup | cut -f1)\"
 		nraw_size=\"\$(du -b \$nbam_raw | cut -f1)\"
 
-		if [ \${nmkdup_size} -lt \${nraw_size} ] || [ \${nmkdup_size} -lt \$oneGB ] || [ \${nraw_size} -lt \$oneGB ]
+		if [ \${nmkdup_size} -lt \$oneGB ] || [ \${nraw_size} -lt \$oneGB ]
 		then
-			printf \"\${sample}_normal: One ore more files too small\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_normal: One or more files too small\\\n\" >> \${align_failed_samples}
+			(( normal_errors ++ ))
+		fi
+	fi
+
+	########################
+	##Check file truncated##
+	########################
+
+	#quickcheck returns nothing if the file is ok
+	if [ \${tumor_errors} -lt 1 ]
+	then
+		tmkdup_check=\"\$(samtools quickcheck \${tbam_mkdup} | wc -l)\"
+		traw_check=\"\$(samtools quickcheck \${tbam_raw} | wc -l)\"
+		
+		if [ \${tmkdup_check} -gt 0 ] || [ \${traw_check} -gt 0 ]
+		then
+			printf \"\${sample}_tumor: Bam file truncated\\\n\" >> \${align_failed_samples}
+			(( tumor_errors ++ ))
+		fi
+	fi
+
+	if [ \${normal_errors} -lt 1 ]
+	then
+		nmkdup_check=\"\$(samtools quickcheck \${nbam_mkdup} | wc -l)\"
+		nraw_check=\"\$(samtools quickcheck \${nbam_raw} | wc -l)\"
+
+		if [ \${nmkdup_check} -gt 0 ] || [ \${nraw_check} -gt 0 ]
+		then
+			printf \"\${sample}_normal: Bam file truncated\\\n\" >> \${align_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi

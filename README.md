@@ -1,5 +1,5 @@
 # EnsembleVariantCallingPipeline
-*First built in December 2019, EVC is the new bash based version of the previous Consensus Variant Calling pipeline. The mutect and filtering portion is still in development...*
+*The mutect and filtering portion is still in development...*
 
 
 **FIRST TIME SETUP**
