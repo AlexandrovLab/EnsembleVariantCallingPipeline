@@ -16,7 +16,7 @@ USAGE:\trun_evc \\
 	output/directory \\
 	path/to/sample.map \\
 	email.for@notification \\
-	precancer (optional)\n\n"
+	precancer (optional, for precancer)\n\n"
 	
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
 then
@@ -33,9 +33,10 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
 
-if [ $5 == "precancer" ]
-then
+if [ -z "$5" ] then 
+if[ $5 == "precancer" ] then
 	mkdir -p ${out}/jobs/postAlign
+fi
 fi
 
 cd $out/jobs/check_and_go
@@ -61,11 +62,11 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 ~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $MuSEdbSNP
 
-if [ $5 == "precancer" ] 
-then
+
+
+if [ -z "$5" ] then 
+if[ $5 == "precancer" ] then
 	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
 fi
-
-done
-
+fi
 
