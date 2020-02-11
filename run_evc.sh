@@ -65,9 +65,9 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
 ~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out $walltime $queue
-~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
-~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
+~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $queue
+~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $queue
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $queue
 
 if [ -z "${12}" ]
 then
