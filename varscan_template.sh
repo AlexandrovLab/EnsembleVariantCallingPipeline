@@ -3,7 +3,7 @@ email=$1
 sample=$2
 ref=$3
 out=$4
-
+queue=$5
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
@@ -19,31 +19,61 @@ varscan_processSomatic_snp_cmd="varscan processSomatic ${varscanOutput}/${sample
 varscan_processSomatic_indel_cmd="varscan processSomatic ${varscanOutput}/${sample}.indel.vcf"
 
 
-template="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=100:00:00
-#PBS -m bea
-#PBS -M ${email}
-#PBS -V
-#PBS -N EVC_varscan_${sample}
-#PBS -e ${sample}_varscan.e
-#PBS -o ${sample}_varscan.o
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+	#PBS -q hotel
+	#PBS -l nodes=1:ppn=8
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V
+  #PBS -N EVC_varscan_${sample}
+  #PBS -e ${sample}_varscan.e
+  #PBS -o ${sample}_varscan.o
 
 
-#VarScan parameters
-vs_tumor_purity=0.8
-vs_min_converage=10
-vs_min_alt_reads=3
-vs_min_aaf=0.2
+  #VarScan parameters
+  vs_tumor_purity=0.8
+  vs_min_converage=10
+  vs_min_alt_reads=3
+  vs_min_aaf=0.2
 
 
-source ~/.bashrc
-source activate evc_main
-mkdir -p ${out}/${sample}/varscan
-mkdir -p ${out}/${sample}/mpileup
-cd ${out}/${sample}/varscan
-"
+  source ~/.bashrc
+  source activate evc_main
+  mkdir -p ${out}/${sample}/varscan
+  mkdir -p ${out}/${sample}/mpileup
+  cd ${out}/${sample}/varscan
+	"
+else
+	header="#!/bin/bash
+	#PBS -q home-alexandrov
+	#PBS -l nodes=1:ppn=28:skylake
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	  #PBS -N EVC_varscan_${sample}
+  #PBS -e ${sample}_varscan.e
+  #PBS -o ${sample}_varscan.o
+
+
+  #VarScan parameters
+  vs_tumor_purity=0.8
+  vs_min_converage=10
+  vs_min_alt_reads=3
+  vs_min_aaf=0.2
+
+
+  source ~/.bashrc
+  source activate evc_main
+  mkdir -p ${out}/${sample}/varscan
+  mkdir -p ${out}/${sample}/mpileup
+  cd ${out}/${sample}/varscan
+	"
+fi
+
 printf "$template">jobs/varscan/${sample}_varscan.pbs
 
 echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
