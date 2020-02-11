@@ -21,21 +21,21 @@ normal_r2=${fastq_path}/${normal}_2.fastq.gz
 if [ ${queue} == "hotel" ]
 then
 	header="#!/bin/bash
-	#PBS -q hotel
-	#PBS -l nodes=1:ppn=8
-	#PBS -l walltime=${walltime}:00:00
-	#PBS -m bea
-	#PBS -M ${email}
-	#PBS -V 
+#PBS -q hotel
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V 
 	"
 else
 	header="#!/bin/bash
-	#PBS -q home-alexandrov
-	#PBS -l nodes=1:ppn=28:skylake
-	#PBS -l walltime=${walltime}:00:00
-	#PBS -m bea
-	#PBS -M ${email}
-	#PBS -V 
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V 
 	"
 fi
 
