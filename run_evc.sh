@@ -73,6 +73,6 @@ if [ -z "${12}" ]
 then
 	if [ ${optional} == "precancer" ]
 	then	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
-
 	fi
 fi
+done
