@@ -10,7 +10,7 @@ known_indel_list=${8}
 base_recalibration_list=${9}
 walltime=${10}
 queue=${11}
-secret=${12}
+optional=${12}
 
 USAGE="\nMissing input arguments..\n
 USAGE:\trun_evc \\
@@ -41,9 +41,11 @@ mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
-if [ ${secret} == "precancer" ]
+if [ -z "${12}" ]
 then
-	mkdir -p ${out}/jobs/postAlign
+	if [ ${optional} == "precancer" ]
+	then	mkdir -p ${out}/jobs/postAlign
+	fi
 fi
 
 cd $out/jobs/check_and_go
@@ -67,11 +69,10 @@ type=$(echo $line|cut -d ' ' -f4)
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 
-if [ $5 == "precancer" ] 
+if [ -z "${12}" ]
 then
-	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+	if [ ${optional} == "precancer" ]
+	then	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+
+	fi
 fi
-
-done
-
-
