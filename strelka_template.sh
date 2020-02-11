@@ -4,6 +4,7 @@ sample=$2
 ref=$3
 out=$4
 type=$5
+queue=$6
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
