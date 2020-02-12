@@ -18,7 +18,7 @@ USAGE:\trun_evc \\
 	output/directory \\
 	path/to/sample.map \\
 	email.for@notification \\
-	reference_genome \\
+	reference_genome (fasta) \\
 	pon (INTERNAL_PON) \\
 	gnomad_dbSNP \\
 	known_indel_list \\
@@ -41,11 +41,10 @@ mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/check_and_go
 
-if [ -z "${12}" ]
+
+if [ "${optional}" == "precancer" ]
 then
-	if [ ${optional} == "precancer" ]
-	then	mkdir -p ${out}/jobs/postAlign
-	fi
+	mkdir -p ${out}/jobs/postAlign
 fi
 
 cd $out/jobs/check_and_go
@@ -57,22 +56,22 @@ chmod +x start_align.sh
 cd $out
 cat $sampleF|tail -n+2|while read line;
 do
-sample=$(echo $line|cut -d ' ' -f1)
-tumor=$(echo $line|cut -d ' ' -f2)
-normal=$(echo $line|cut -d ' ' -f3)
-type=$(echo $line|cut -d ' ' -f4)
-~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out $type $walltime $queue
-~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
-~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
-~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out $walltime $queue
-~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $queue
-~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $queue
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $queue
+	sample=$(echo $line|cut -d ' ' -f1)
+	tumor=$(echo $line|cut -d ' ' -f2)
+	normal=$(echo $line|cut -d ' ' -f3)
+	type=$(echo $line|cut -d ' ' -f4)
+	~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out $type $walltime $queue
+	~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
+	~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+	~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out $walltime $queue
+	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $queue
+	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $queue
+	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $queue
 
-if [ -z "${12}" ]
-then
-	if [ ${optional} == "precancer" ]
-	then	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+
+	if [ "${optional}" == "precancer" ]
+	then
+		~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
 	fi
-fi
+
 done
