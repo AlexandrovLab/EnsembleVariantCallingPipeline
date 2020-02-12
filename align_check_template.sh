@@ -84,7 +84,7 @@ do
 		
 		if [ \${tmkdup_size} -lt \$oneGB ] || [ \${traw_size} -lt \$oneGB ]
 		then
-			printf \"\${sample}_tumor: One ore more files too small\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_tumor: One or more files too small\\\n\" >> \${align_failed_samples}
 			(( tumor_errors ++ ))
 		fi
 	fi
@@ -96,7 +96,7 @@ do
 
 		if [ \${nmkdup_size} -lt \$oneGB ] || [ \${nraw_size} -lt \$oneGB ]
 		then
-			printf \"\${sample}_normal: One ore more files too small\\\n\" >> \${align_failed_samples}
+			printf \"\${sample}_normal: One or more files too small\\\n\" >> \${align_failed_samples}
 			(( normal_errors ++ ))
 		fi
 	fi

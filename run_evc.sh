@@ -1,4 +1,5 @@
 #!/bin/bash
+
 path=${1}
 out=${2}
 sampleF=${3}
@@ -11,6 +12,7 @@ base_recalibration_list=${9}
 walltime=${10}
 queue=${11}
 optional=${12}
+
 
 USAGE="\nMissing input arguments..\n
 USAGE:\trun_evc \\
@@ -25,7 +27,8 @@ USAGE:\trun_evc \\
 	base_recalibration_list \\
 	max_walltime (hours only) \\
 	queue \\
-	precancer (optional)\n\n"
+	precancer (optional, for precancer)\n\n"
+
 	
 if [ -z "${11}" ]
 then
@@ -39,6 +42,7 @@ mkdir -p ${out}/jobs/pon
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
+mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
 
 
@@ -47,10 +51,12 @@ then
 	mkdir -p ${out}/jobs/postAlign
 fi
 
+
 cd $out/jobs/check_and_go
 printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f|awk -v samp=\$f -F\".\" '{print \$1\"\\\t\"samp}'>>${out}/jobs/check_and_go/align_job_IDs.txt;done\n">start_align.sh
 chmod +x start_align.sh
 ~/EnsembleVaraintCallingPipeline/align_check_template.sh $sampleF $out
+~/EnsembleVaraintCallingPipeline/postalign_check_template.sh $sampleF $out 
 ~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out 
 
 cd $out
@@ -67,11 +73,12 @@ do
 	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $queue
 	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $queue
 	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $queue
-
+  ~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP
 
 	if [ "${optional}" == "precancer" ]
 	then
 		~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
 	fi
+
 
 done
