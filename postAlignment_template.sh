@@ -5,25 +5,35 @@ ref=$3
 out=$4
 known_indels=$5
 base_recalibration=$6
+walltime=${7}
+queue=${8}
 
 USAGE="PostAlignment_template.sh: not enough inputs...check script/n"
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]
+if [ -z "${8}" ]
 then
 	printf "$USAGE"
 	exit 1
 fi
 
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=500:00:00
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+#PBS -q hotel
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
-#PBS -V
-#PBS -N EVC_postAlign_${sample}
-#PBS -e ${sample}_postAlign.e
-#PBS -o ${sample}_postAlign.o
-"
+#PBS -V\n"
+else
+	header="#!/bin/bash
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V\n"
+fi
+
 printf "$header">jobs/postAlign/${sample}_postAlign.pbs
 
 

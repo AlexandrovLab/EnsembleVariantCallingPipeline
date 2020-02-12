@@ -1,24 +1,36 @@
 #!/bin/bash
-path=$1
-out=$2
-sampleF=$3
-email=$4
-ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
-pon=/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/oral/olivier_analyzed_oral_benign/PON/PON.vcf.gz
-dbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
-MuSEdbSNP=/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz
 
-known_indel_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt
-base_recalibration_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/BaseRecalibration_files.txt
+path=${1}
+out=${2}
+sampleF=${3}
+email=${4}
+ref=${5}
+pon=${6}
+dbSNP=${7}
+known_indel_list=${8}
+base_recalibration_list=${9}
+walltime=${10}
+queue=${11}
+optional=${12}
+
+
 USAGE="\nMissing input arguments..\n
 USAGE:\trun_evc \\
 	path/to/fastq/files \\
 	output/directory \\
 	path/to/sample.map \\
 	email.for@notification \\
+	reference_genome (fasta) \\
+	pon (INTERNAL_PON) \\
+	gnomad_dbSNP \\
+	known_indel_list \\
+	base_recalibration_list \\
+	max_walltime (hours only) \\
+	queue \\
 	precancer (optional, for precancer)\n\n"
+
 	
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
+if [ -z "${11}" ]
 then
 	printf "$USAGE"
 	exit 1
@@ -33,11 +45,12 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
 
-if [ -z "$5" ] then 
-if[ $5 == "precancer" ] then
+
+if [ "${optional}" == "precancer" ]
+then
 	mkdir -p ${out}/jobs/postAlign
 fi
-fi
+
 
 cd $out/jobs/check_and_go
 printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f|awk -v samp=\$f -F\".\" '{print \$1\"\\\t\"samp}'>>${out}/jobs/check_and_go/align_job_IDs.txt;done\n">start_align.sh
@@ -49,24 +62,23 @@ chmod +x start_align.sh
 cd $out
 cat $sampleF|tail -n+2|while read line;
 do
-sample=$(echo $line|cut -d ' ' -f1)
-tumor=$(echo $line|cut -d ' ' -f2)
-normal=$(echo $line|cut -d ' ' -f3)
-type=$(echo $line|cut -d ' ' -f4)
-~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out $type
-~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
-~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
-~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
-~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
-~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $MuSEdbSNP
+	sample=$(echo $line|cut -d ' ' -f1)
+	tumor=$(echo $line|cut -d ' ' -f2)
+	normal=$(echo $line|cut -d ' ' -f3)
+	type=$(echo $line|cut -d ' ' -f4)
+	~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out $type $walltime $queue
+	~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
+	~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+	~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out $walltime $queue
+	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $queue
+	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $queue
+	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $queue
+  ~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP
+
+	if [ "${optional}" == "precancer" ]
+	then
+		~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
+	fi
 
 
-
-if [ -z "$5" ] then 
-if[ $5 == "precancer" ] then
-	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
-fi
-fi
-
+done

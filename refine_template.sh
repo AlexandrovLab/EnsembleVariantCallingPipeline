@@ -5,6 +5,8 @@ ref=$3
 out=$4
 known_indels=$5
 base_recalibration=$6
+walltime=${7}
+queue=${8}
 
 
 BR_t="gatk3 -T BaseRecalibrator -R $ref -I ${sample}_tumor_idra.bam -o ${sample}_tumor_bqsr.grp -Xmx20G"
@@ -28,14 +30,28 @@ BR_n=$(echo "${BR_n} --knownSites $br")
 done < <(cat ${base_recalibration})
 
 
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=60:00:00
-#PBS -m bea
-#PBS -M ${email}
-#PBS -V
-"
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+	#PBS -q hotel
+	#PBS -l nodes=1:ppn=8
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+else
+	header="#!/bin/bash
+	#PBS -q home-alexandrov
+	#PBS -l nodes=1:ppn=28:skylake
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+fi
+
+
 Tjobname="#PBS -N EVC_Trefine_${sample}
 #PBS -e ${sample}_Trefine.e
 #PBS -o ${sample}_Trefine.o

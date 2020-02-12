@@ -4,15 +4,31 @@ sample=$2
 ref=$3
 out=$4
 type=$5
+queue=$6
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=100:00:00
-#PBS -m bea
-#PBS -M ${email}
-#PBS -V
+
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+	#PBS -q hotel
+	#PBS -l nodes=1:ppn=8
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+else
+	header="#!/bin/bash
+	#PBS -q home-alexandrov
+	#PBS -l nodes=1:ppn=28:skylake
+	#PBS -l walltime=${walltime}:00:00
+	#PBS -m bea
+	#PBS -M ${email}
+	#PBS -V 
+	"
+fi
+header="${header}""
 #PBS -N EVC_strelka_${sample}
 #PBS -e ${sample}_strelka.e
 #PBS -o ${sample}_strelka.o
