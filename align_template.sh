@@ -26,8 +26,7 @@ then
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
-#PBS -V 
-"
+#PBS -V\n"
 else
 	header="#!/bin/bash
 #PBS -q home-alexandrov
@@ -35,8 +34,7 @@ else
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
-#PBS -V 
-"
+#PBS -V\n"
 fi
 
 

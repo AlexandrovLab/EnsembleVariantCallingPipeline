@@ -22,40 +22,38 @@ tumor=${out}/${sample}/${sample}_tumor_final.bam
 if [ ${queue} == "hotel" ]
 then
 	header="#!/bin/bash
-	#PBS -q hotel
-	#PBS -l nodes=1:ppn=8
-	#PBS -l walltime=${walltime}:00:00
-	#PBS -m bea
-	#PBS -M ${email}
-	#PBS -V
-  #PBS -V
-  #PBS -N EVC_mutect_${sample}
-  #PBS -e ${sample}_mutect.e
-  #PBS -o ${sample}_mutect.o
+#PBS -q hotel
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V
+#PBS -V
+#PBS -N EVC_mutect_${sample}
+#PBS -e ${sample}_mutect.e
+#PBS -o ${sample}_mutect.o
 
-  source ~/.bashrc
-  source activate evc_main
-  mkdir -p ${out}/${sample}/mutect
-  cd ${out}/${sample}/mutect
-	"
+source ~/.bashrc
+source activate evc_main
+mkdir -p ${out}/${sample}/mutect
+cd ${out}/${sample}/mutect\n"
 else
 	header="#!/bin/bash
-	#PBS -q home-alexandrov
-	#PBS -l nodes=1:ppn=28:skylake
-	#PBS -l walltime=${walltime}:00:00
-	#PBS -m bea
-	#PBS -M ${email}
-	#PBS -V
-  #PBS -V
-  #PBS -N EVC_mutect_${sample}
-  #PBS -e ${sample}_mutect.e
-  #PBS -o ${sample}_mutect.o
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V
+#PBS -V
+#PBS -N EVC_mutect_${sample}
+#PBS -e ${sample}_mutect.e
+#PBS -o ${sample}_mutect.o
 
-  source ~/.bashrc
-  source activate evc_main
-  mkdir -p ${out}/${sample}/mutect
-  cd ${out}/${sample}/mutect
-	"
+source ~/.bashrc
+source activate evc_main
+mkdir -p ${out}/${sample}/mutect
+cd ${out}/${sample}/mutect\n"
 fi
 
 mutect_cmd="gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-pair-hmm-threads \$(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --normal-sample ${sample}_normal --input $normal --tumor-sample ${sample}_tumor --input $tumor -O ${sample}_mutect2_unfiltered.vcf"

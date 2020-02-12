@@ -13,13 +13,13 @@ queue="home"
 optional="precancer"
 
 USAGE="\nMissing input arguments..\n
-USAGE:\trun_evc \\
+USAGE:\trun_evc_precancer.sh \\
 	path/to/fastq/files \\
 	output/directory \\
 	path/to/sample.map \\
-	email.for@notification"
+	email.for@notification\n\n"
 	
-if [ -z "${11}" ]
+if [ -z "${4}" ]
 then
 	printf "$USAGE"
 	exit 1
