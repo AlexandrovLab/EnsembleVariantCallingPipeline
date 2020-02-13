@@ -30,8 +30,6 @@ fi
 
 ## Writing the scripts
 printf "$header">jobs/muse/${sample}_muse.pbs
-echo source ~/.bashrc>>jobs/muse/${sample}_muse.pbs
-echo source activate evc_muse>>jobs/muse/${sample}_muse.pbs
 echo mkdir -p ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 echo cd ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 
