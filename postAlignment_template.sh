@@ -23,7 +23,10 @@ then
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
-#PBS -V\n"
+#PBS -V
+#PBS -N EVC_postAlign_${sample}
+#PBS -e ${sample}_postAlign.e
+#PBS -o ${sample}_postAlign.o\n"
 else
 	header="#!/bin/bash
 #PBS -q home-alexandrov
@@ -31,7 +34,10 @@ else
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
-#PBS -V\n"
+#PBS -V
+#PBS -N EVC_postAlign_${sample}
+#PBS -e ${sample}_postAlign.e
+#PBS -o ${sample}_postAlign.o\n"
 fi
 
 printf "$header">jobs/postAlign/${sample}_postAlign.pbs
