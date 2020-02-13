@@ -5,21 +5,38 @@ ref=$3
 out=$4
 type=$5
 dbSNP=$6
+walltime=$7
+queue=$8
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
-header="#!/bin/bash
-#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=100:00:00
+
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+#PBS -q hotel
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V
 #PBS -N EVC_MuSE_${sample}
 #PBS -e ${sample}_MuSE.e
-#PBS -o ${sample}_MuSE.o
-"
+#PBS -o ${sample}_MuSE.o\n"
+else
+	header="#!/bin/bash
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=${walltime}:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V
+#PBS -N EVC_MuSE_${sample}
+#PBS -e ${sample}_MuSE.e
+#PBS -o ${sample}_MuSE.o\n"
+fi
+
 
 ## Defining the commmands
 muse_cmd="MuSE call -O ${out}/${sample}/muse/${sample} -f $ref $tumor $normal"

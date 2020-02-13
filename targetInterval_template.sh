@@ -4,11 +4,29 @@ sample=$2
 ref=$3
 out=$4
 known_indels=$5
+queue=$6
+
 USAGE="align_template.sh: not enough inputs...check script/n"
-if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ] || [ "$5" == "" ]
-then printf "$USAGE"
+if [ -z "$6" ]
+then
+	printf "$USAGE"
+	exit 1
+fi
+
+if [ ${queue} == "hotel" ]
+then
+	header="#!/bin/bash
+#PBS -q hotel
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=20:00:00
+#PBS -m bea
+#PBS -M ${email}
+#PBS -V
+#PBS -N EVC_targetInterval_${sample}
+#PBS -e ${sample}_targetInterval.e
+#PBS -o ${sample}_targetInterval.o\n"
 else
-header="#!/bin/bash
+	header="#!/bin/bash
 #PBS -q home-alexandrov
 #PBS -l nodes=1:ppn=28:skylake
 #PBS -l walltime=20:00:00
@@ -17,8 +35,9 @@ header="#!/bin/bash
 #PBS -V
 #PBS -N EVC_targetInterval_${sample}
 #PBS -e ${sample}_targetInterval.e
-#PBS -o ${sample}_targetInterval.o
-"
+#PBS -o ${sample}_targetInterval.o\n"
+fi
+
 
 RTC="gatk3 -T RealignerTargetCreator -R $ref -I ${sample}_tumor_mkdp.bam -I ${sample}_normal_mkdp.bam -o ${sample}_realign_target.intervals -Xmx\$(free -h| grep Mem | awk '{print \$4}')"
 while read ki;
@@ -43,4 +62,3 @@ echo "echo target interval creation took \$(echo a|awk '{print '\"\$targetT\"'/3
 echo cd ${out}/jobs/refine/>>jobs/refine/${sample}_targetInterval.pbs
 echo qsub ${sample}_Nrefine.pbs>>jobs/refine/${sample}_targetInterval.pbs
 echo qsub ${sample}_Trefine.pbs>>jobs/refine/${sample}_targetInterval.pbs
-fi
