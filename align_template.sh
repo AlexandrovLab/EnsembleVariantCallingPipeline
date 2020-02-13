@@ -57,8 +57,8 @@ echo source activate evc_main>>jobs/align/${sample}_Nalign.pbs
 echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Talign.pbs
 echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Nalign.pbs
 
-echo 'echo === Starting alignment on sample' ${sample} 'at $(date)=== >> &2'>>jobs/align/${sample}_Talign.pbs
-echo 'echo === Starting alignment on sample' ${sample} 'at $(date)=== >> &2'>>jobs/align/${sample}_Nalign.pbs
+echo '>&2 echo "=== Starting alignment on sample' ${sample} 'at $(date)=== "'>>jobs/align/${sample}_Talign.pbs
+echo '>&2 echo "=== Starting alignment on sample' ${sample} 'at $(date)=== "'>>jobs/align/${sample}_Nalign.pbs
 
 echo cd $output>>jobs/align/${sample}_Talign.pbs
 echo cd $output>>jobs/align/${sample}_Nalign.pbs
