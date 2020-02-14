@@ -3,6 +3,7 @@ email=$1
 sample=$2
 ref=$3
 out=$4
+purity=$5
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
@@ -32,7 +33,7 @@ template="#!/bin/bash
 
 
 #VarScan parameters
-vs_tumor_purity=0.8
+vs_tumor_purity=$purity
 vs_min_converage=10
 vs_min_alt_reads=3
 vs_min_aaf=0.2
