@@ -16,11 +16,7 @@ then
 	ln -s $(pwd)/run_evc_precancer.sh ~/miniconda$1/bin/run_evc_precancer
 	
 	#MuSE setup
-	git submodule init
-	git submodule update
-	ln -s $(pwd)/MuSE/MuSE ~/miniconda$1/bin/MuSE
-	cd $(pwd)/MuSE;make;cd -
-
+	$(pwd)/setup_MuSE.sh $1
 
 	echo Registering for gatk3...
 	conda activate evc_gatk3
