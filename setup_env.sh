@@ -10,11 +10,23 @@ then
 	conda env update -f main_env.yml
 	conda env update -f gatk3_env.yml
 	echo "Successfully installed three environments: evc_main, evc_strelka and evc_gatk3"
+
+	#Create links
 	ln -s $(pwd)/run_evc.sh ~/miniconda$1/bin/run_evc
 	ln -s $(pwd)/run_evc_precancer.sh ~/miniconda$1/bin/run_evc_precancer
+	
+	#MuSE setup
+	git submodule init
+	git submodule update
 	ln -s $(pwd)/MuSE/MuSE ~/miniconda$1/bin/MuSE
 	cd $(pwd)/MuSE;make;cd -
 
+
+	echo Registering for gatk3...
+	conda activate evc_gatk3
+	gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar
+	conda deactivate
+	echo gatk3 registered, environment set up is finished!
 
 elif [ $1 -ne 2 ] && [ $1 -ne 3 ]
 then
@@ -25,8 +37,3 @@ else
 	echo "USAGE: bash config_cvc.sh [miniconda version (i.e. 2 or 3)]"
 fi
 
-echo Registering for gatk3...
-conda activate evc_gatk3
-gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar
-conda deactivate
-echo gatk3 registered, environment set up is finished!
