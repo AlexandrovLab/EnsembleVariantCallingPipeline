@@ -31,11 +31,7 @@ mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
-
-if [ $5 == "precancer" ]
-then
-	mkdir -p ${out}/jobs/postAlign
-fi
+mkdir -p ${out}/jobs/postAlign
 
 cd $out/jobs/check_and_go
 printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f|awk -v samp=\$f -F\".\" '{print \$1\"\\\t\"samp}'>>${out}/jobs/check_and_go/align_job_IDs.txt;done\n">start_align.sh
@@ -60,12 +56,7 @@ purity=$(echo $line|cut -d ' ' -f8)
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $purity
 ~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
 ~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP
-
-if [ $5 == "precancer" ] 
-then
-	~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
-fi
-
+~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
 done
 
 
