@@ -60,11 +60,11 @@ mutect_cmd="gatk Mutect2 -R $ref -pon $pon --germline-resource $dbSNP --native-p
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{print \$4}')\" -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -L $dbSNP -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
-mutect_filter="gatk FilterMutectCalls -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
+mutect_filter="gatk FilterMutectCalls -R $ref -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
 
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
