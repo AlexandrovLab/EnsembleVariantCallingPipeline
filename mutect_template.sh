@@ -41,7 +41,7 @@ mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep 
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
-mutect_filter="gatk FilterMutectCalls -R $ref -V ${out}/${sample}/mutect/${sample}_mutect2_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${out}/${sample}/mutect/${sample}_mutect2_filtered.vcf"
+mutect_filter="gatk FilterMutectCalls -R $ref -V ${out}/${sample}/mutect/${sample}_mutect2_unfiltered.vcf --tumor-segmentation ${out}/${sample}/mutect/${sample}_segments.table --contamination-table ${out}/${sample}/mutect/${sample}_calculatecontamination.table --ob-priors ${out}/${sample}/mutect/${sample}_read-orientation-model.tar.gz -O ${out}/${sample}/mutect/${sample}_mutect2_filtered.vcf"
 
 printf "$template">jobs/mutect/${sample}_mutect.pbs
 
