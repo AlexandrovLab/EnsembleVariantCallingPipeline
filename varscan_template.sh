@@ -75,7 +75,7 @@ else
 	"
 fi
 
-printf "$template">jobs/varscan/${sample}_varscan.pbs
+printf "$header">jobs/varscan/${sample}_varscan.pbs
 
 echo 'echo === Starting varscan on sample' ${sample} 'at $(date)==='>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
