@@ -6,7 +6,8 @@ out=$4
 pon=$5
 type=$6
 dbSNP=$7
-queue=$8
+walltime=$8
+queue=$9
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
 if [ $type == "exome" ]
