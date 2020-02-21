@@ -14,6 +14,7 @@ then
 	#Create links
 	ln -s $(pwd)/run_evc.sh ~/miniconda$1/bin/run_evc
 	ln -s $(pwd)/run_evc_precancer.sh ~/miniconda$1/bin/run_evc_precancer
+	ln -s $(pwd)/run_evc_bam.sh ~/miniconda$1/bin/run_evc_bam
 	
 	#MuSE setup
 	$(pwd)/setup_MuSE.sh $1
