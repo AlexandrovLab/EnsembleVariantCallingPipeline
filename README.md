@@ -14,15 +14,44 @@ run_evc [args]
 ```
 which will create a jobs/ directory in the output directory, the pipeline works through manually submitting the jobs at each stage.
 
-Current arguments are
+Arguments:
 ```
 run_evc \
-path/to/fastq/files \
-output/directory \
-path/to/sample.map \
-email.for@notification 
+	path/to/fastq/files \
+	output/directory \
+	path/to/sample.map \
+	email.for@notification \
+	reference_genome (fasta) \
+	pon (INTERNAL_PON) \
+	gnomad_dbSNP \
+	known_indel_list \
+	base_recalibration_list \
+	max_walltime (hours only) \
+	queue (hotel or home)
 ```
-This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
+
+**Running the pipeline starting with a bam file:**
+```
+run_evc_bam [args]
+```
+This works identically to run_evc, except it takes input bam files and only runs variant calling.
+
+Arguments:
+```
+run_evc_bam \
+  path/to/bam/files \
+	output/directory \
+	path/to/sample.map \
+	email.for@notification \
+	reference_genome (fasta) \
+	pon (INTERNAL_PON) \
+	gnomad_dbSNP \
+	known_indel_list \
+	base_recalibration_list \
+	max_walltime (hours only) \
+	queue (hotel or home)
+```
+
 
 
 One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.)
