@@ -39,7 +39,7 @@ This works identically to run_evc, except it takes input bam files and only runs
 Arguments:
 ```
 run_evc_bam \
-  path/to/bam/files \
+	path/to/bam/files \
 	output/directory \
 	path/to/sample.map \
 	email.for@notification \
