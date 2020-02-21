@@ -67,7 +67,7 @@ mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.tab
 mutect_filter="gatk FilterMutectCalls -R $ref -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
 
 
-printf "$template">jobs/mutect/${sample}_mutect.pbs
+printf "$header">jobs/mutect/${sample}_mutect.pbs
 
 echo 'echo === Starting MuTect2 on sample' ${sample} 'at $(date)==='>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
