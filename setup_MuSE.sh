@@ -1,16 +1,10 @@
 #!/bin/bash
 
-USAGE="setup_MuSE.sh [miniconda version]\n\n"
-
-if [ -z "$1" ] || ([ "$1" != 3 ] && [ "$1" != 2 ])
-then
-	printf "$USAGE"
-	exit 1
-fi
+USAGE="setup_MuSE.sh\n\n"
 
 #MuSE setup
 git submodule init
 git submodule update
-ln -s $(pwd)/MuSE/MuSE ~/miniconda$1/bin/MuSE
+printf "\nexport PATH=\"$(pwd)/MuSE/MuSE:\$PATH\"\n"
 cd $(pwd)/MuSE;make;cd -
 
