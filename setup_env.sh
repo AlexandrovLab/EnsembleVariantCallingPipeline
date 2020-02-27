@@ -10,7 +10,7 @@ echo "Successfully installed three environments: evc_main, evc_strelka and evc_g
 
 #Create links
 
-printf "\nexport PATH=\"$(pwd)/run_evc.sh:$(pwd)/run_evc_bam.sh:\$PATH\"\n"
+printf "\nexport PATH=\"$(pwd)/run_evc.sh:$(pwd)/run_evc_bam.sh:\$PATH\"\n" >> ~/.bashrc
 
 #MuSE setup
 $(pwd)/setup_MuSE.sh $1
