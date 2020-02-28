@@ -5,10 +5,17 @@ ref=$3
 out=$4
 walltime=$5
 queue=$6
+file_type=$7
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
 varscanOutput=${out}/${sample}/varscan
+
+if [ $file_type == "bam" ]
+then
+	tumor=${8}
+	normal=${9}
+fi
 
 
 
@@ -76,7 +83,10 @@ cd ${out}/${sample}/varscan
 fi
 
 printf "$header">jobs/varscan/${sample}_varscan.pbs
-
+if [ $file_type == "bam" ]
+then
+	echo mkdir $sample>>jobs/varscan/${sample}_varscan.pbs
+fi
 echo 'echo === Starting varscan on sample' ${sample} 'at $(date)==='>>jobs/varscan/${sample}_varscan.pbs
 echo 'echo starting mpileup at $(date)....'>>jobs/varscan/${sample}_varscan.pbs
 echo 'mpileupS=$SECONDS'>>jobs/varscan/${sample}_varscan.pbs
