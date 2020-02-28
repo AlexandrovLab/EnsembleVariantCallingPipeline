@@ -37,7 +37,6 @@ fi
 
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
-mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/muse
 
 cd $out
@@ -47,9 +46,10 @@ do
 	tumor=$(echo $line|cut -d ' ' -f2)
 	normal=$(echo $line|cut -d ' ' -f3)
 	type=$(echo $line|cut -d ' ' -f4)
+	echo $sample
+	~/EnsembleVaraintCallingPipeline/setup_bam.sh $path $out $sample $tumor $normal
 	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue
 	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue
-	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $walltime $queue
 	~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue
 
 
