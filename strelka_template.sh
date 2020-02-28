@@ -6,8 +6,16 @@ out=$4
 type=$5
 walltime=$6
 queue=$7
+file_type=$8
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
+
+if [ $file_type == "bam" ]
+then
+	tumor=${9}
+	normal=${10}
+	
+fi
 
 if [ ${queue} == "hotel" ]
 then
@@ -40,6 +48,10 @@ strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref 
 runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j \$(nproc)"
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
+if [ $file_type == "bam" ]
+then
+	echo mkdir $sample>>jobs/strelka/${sample}_strelka.pbs
+fi
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
 echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
