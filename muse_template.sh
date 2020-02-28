@@ -7,9 +7,16 @@ type=$5
 dbSNP=$6
 walltime=$7
 queue=$8
+file_type=${9}
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
+
+if [ $file_type == "bam" ]
+then
+	tumor=${10}
+	normal=${11}
+fi
 
 
 if [ ${queue} == "hotel" ]
@@ -47,6 +54,10 @@ fi
 
 ## Writing the scripts
 printf "$header">jobs/muse/${sample}_muse.pbs
+if [ $file_type == "bam" ]
+then
+	echo mkdir $sample>>jobs/muse/${sample}_muse.pbs
+fi
 echo mkdir -p ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 echo cd ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 
