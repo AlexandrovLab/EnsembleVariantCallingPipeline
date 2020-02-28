@@ -16,8 +16,7 @@ printf "\nexport PATH=\"$(pwd)/run_evc.sh:$(pwd)/run_evc_bam.sh:\$PATH\"\n" >> ~
 $(pwd)/setup_MuSE.sh $1
 
 echo Registering for gatk3...
-conda activate evc_gatk3
+source activate evc_gatk3
 gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar
-conda deactivate
+source deactivate
 echo gatk3 registered, environment set up is finished!
-
