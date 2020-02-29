@@ -5,10 +5,17 @@ ref=$3
 out=$4
 walltime=$5
 queue=$6
+refine=$7
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
 varscanOutput=${out}/${sample}/varscan
+
+if [ $refine == "no" ]
+then
+	normal=${out}/${sample}/${sample}_normal_mkdp.bam
+	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
+fi
 
 
 
