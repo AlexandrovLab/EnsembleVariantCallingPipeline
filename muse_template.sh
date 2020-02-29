@@ -11,13 +11,13 @@ refine=$9
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
-if [ $refine == "no" ]
+if [ "$refine" == "no" ]
 then
 	normal=${out}/${sample}/${sample}_normal_mkdp.bam
 	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
 fi
 
-if [ ${queue} == "hotel" ]
+if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
@@ -45,7 +45,7 @@ fi
 
 ## Defining the commmands
 muse_cmd="MuSE call -O ${out}/${sample}/muse/${sample} -f $ref $tumor $normal"
-if [ $type == "exome" ]
+if [ "$type" == "exome" ]
 then muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -E -O ${sample}.vcf -D $dbSNP"
 else muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -G -O ${sample}.vcf -D $dbSNP"
 fi
