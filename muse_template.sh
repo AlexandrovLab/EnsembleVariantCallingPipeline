@@ -7,9 +7,15 @@ type=$5
 dbSNP=$6
 walltime=$7
 queue=$8
+refine=$9
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
+if [ $refine == "no" ]
+then
+	normal=${out}/${sample}/${sample}_normal_mkdp.bam
+	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
+fi
 
 if [ ${queue} == "hotel" ]
 then
