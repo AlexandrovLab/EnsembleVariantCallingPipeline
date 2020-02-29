@@ -8,19 +8,24 @@ type=$6
 dbSNP=$7
 walltime=$8
 queue=$9
+refine=$10
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
-if [ $type == "exome" ]
+if [ "$type" == "exome" ]
 then af=0.0000025
 else af=0.00003125
 fi
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
+if [ "$refine" == "no" ]
+then
+	normal=${out}/${sample}/${sample}_normal_mkdp.bam
+	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
+fi
 
 
-
-if [ ${queue} == "hotel" ]
+if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
