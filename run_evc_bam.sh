@@ -42,15 +42,27 @@ mkdir -p ${out}/jobs/muse
 cd $out
 cat $sampleF|tail -n+2|while read line;
 do
+	if [ -z "$line" ]
+	then
+		exit 0
+	fi
+	
 	sample=$(echo $line|cut -d ' ' -f1)
 	tumor=$(echo $line|cut -d ' ' -f2)
 	normal=$(echo $line|cut -d ' ' -f3)
 	type=$(echo $line|cut -d ' ' -f4)
 	echo $sample
 	
-	mkdir ${out}/${sample}
-	ln -s ${path}/${tumor}.bam ${out}/${sample}/${sample}_tumor_final.bam
-	ln -s ${path}/${normal}.bam ${out}/${sample}/${sample}_normal_final.bam
+	mkdir -p ${out}/${sample}
+	if [ ! -f "${out}/${sample}/${sample}_tumor_final.bam" ]
+	then
+		ln -s ${path}/${tumor}.bam ${out}/${sample}/${sample}_tumor_final.bam
+	fi
+	
+	if [ ! -f "${out}/${sample}/${sample}_normal_final.bam" ]
+	then
+		ln -s ${path}/${normal}.bam ${out}/${sample}/${sample}_normal_final.bam
+	fi
 	
 	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam
 	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue
