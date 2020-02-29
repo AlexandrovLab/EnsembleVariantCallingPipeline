@@ -11,7 +11,7 @@ tumor=${out}/${sample}/${sample}_tumor_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
 varscanOutput=${out}/${sample}/varscan
 
-if [ $refine == "no" ]
+if [ "$refine" == "no" ]
 then
 	normal=${out}/${sample}/${sample}_normal_mkdp.bam
 	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
@@ -27,7 +27,7 @@ varscan_processSomatic_snp_cmd="varscan processSomatic ${varscanOutput}/${sample
 varscan_processSomatic_indel_cmd="varscan processSomatic ${varscanOutput}/${sample}.indel.vcf"
 
 
-if [ ${queue} == "hotel" ]
+if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
