@@ -41,10 +41,16 @@ fi
 Tjobname="#PBS -N EVC_Talign_${sample}
 #PBS -o ${sample}_Talign.o
 #PBS -e ${sample}_Talign.e
+
+source ~/.bashrc
+source activate evc_main
 "
 Njobname="#PBS -N EVC_Nalign_${sample}
 #PBS -o ${sample}_Nalign.o
 #PBS -e ${sample}_Nalign.e
+
+source ~/.bashrc
+source activate evc_main
 "
 if [ $type == "exome" ]
 then 
@@ -62,10 +68,6 @@ printf "$header">jobs/align/${sample}_Talign.pbs
 printf "${Tjobname}">>jobs/align/${sample}_Talign.pbs
 printf "$header">jobs/align/${sample}_Nalign.pbs
 printf "${Njobname}">>jobs/align/${sample}_Nalign.pbs
-echo source ~/.bashrc>>jobs/align/${sample}_Talign.pbs
-echo source ~/.bashrc>>jobs/align/${sample}_Nalign.pbs
-echo source activate evc_main>>jobs/align/${sample}_Talign.pbs
-echo source activate evc_main>>jobs/align/${sample}_Nalign.pbs
 
 echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Talign.pbs
 echo 'echo === Starting alignment on sample' ${sample} 'at $(date)==='>>jobs/align/${sample}_Nalign.pbs
