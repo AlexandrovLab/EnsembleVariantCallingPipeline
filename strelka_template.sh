@@ -10,12 +10,6 @@ file_type=$8
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
-if [ $file_type == "bam" ]
-then
-	tumor=${9}
-	normal=${10}
-	
-fi
 
 if [ ${queue} == "hotel" ]
 then
@@ -43,20 +37,25 @@ header="${header}""
 #PBS -o ${sample}_strelka.o
 "
 
+
+
 strelka_config_exome="configureStrelkaSomaticWorkflow.py --exome --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
 strelka_config_genome="configureStrelkaSomaticWorkflow.py --referenceFasta $ref --normalBam $normal --tumorBam $tumor --runDir ${out}/${sample}/strelka"
 runstrelka="python2 ${out}/${sample}/strelka/runWorkflow.py -m local -j \$(nproc)"
 
 printf "$header">jobs/strelka/${sample}_strelka.pbs
-if [ $file_type == "bam" ]
-then
-	echo mkdir $sample>>jobs/strelka/${sample}_strelka.pbs
-fi
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
 echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
-echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
+if [ $file_type == "bam" ]
+then
+	echo 'echo === Indexing sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
+	echo cd ${out}/${sample}>>jobs/strelka/${sample}_strelka.pbs
+	echo samtools index ${normal}>>jobs/strelka/${sample}_strelka.pbs
+	echo samtools index ${tumor}>>jobs/strelka/${sample}_strelka.pbs
+fi
 
+echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 echo 'echo === Starting strelka on sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
 echo 'echo creating strelka workflow at $(date)'>>jobs/strelka/${sample}_strelka.pbs
 if [ $type == "exome" ]
