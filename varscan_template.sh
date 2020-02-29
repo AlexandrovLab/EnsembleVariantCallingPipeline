@@ -62,7 +62,7 @@ else
 #PBS -m bea
 #PBS -M ${email}
 #PBS -V 
-  #PBS -N EVC_varscan_${sample}
+#PBS -N EVC_varscan_${sample}
 #PBS -e ${sample}_varscan.e
 #PBS -o ${sample}_varscan.o
 
