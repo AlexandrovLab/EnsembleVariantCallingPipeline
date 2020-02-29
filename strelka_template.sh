@@ -7,8 +7,15 @@ type=$5
 walltime=$6
 queue=$7
 file_type=$8
+refine=$9
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
+
+if [ $refine == "no" ]
+then
+	normal=${out}/${sample}/${sample}_normal_mkdp.bam
+	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
+fi
 
 
 if [ ${queue} == "hotel" ]
