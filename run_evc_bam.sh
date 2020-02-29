@@ -47,8 +47,12 @@ do
 	normal=$(echo $line|cut -d ' ' -f3)
 	type=$(echo $line|cut -d ' ' -f4)
 	echo $sample
-	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam $path/$tumor $path/$normal
-	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue bam $path/$tumor $path/$normal
-	~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue bam $path/$tumor $path/$normal
-
+	
+	mkdir ${out}/${sample}
+	ln -s ${path}/${tumor}.bam ${out}/${sample}/${sample}_tumor_final.bam
+	ln -s ${path}/${normal}.bam ${out}/${sample}/${sample}_normal_final.bam
+	
+	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam
+	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue
+	~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue
 done
