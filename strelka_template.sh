@@ -11,14 +11,14 @@ refine=$9
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
 
-if [ $refine == "no" ]
+if [ "$refine" == "no" ]
 then
 	normal=${out}/${sample}/${sample}_normal_mkdp.bam
 	tumor=${out}/${sample}/${sample}_tumor_mkdp.bam
 fi
 
 
-if [ ${queue} == "hotel" ]
+if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
@@ -54,7 +54,7 @@ printf "$header">jobs/strelka/${sample}_strelka.pbs
 echo source ~/.bashrc>>jobs/strelka/${sample}_strelka.pbs
 echo source activate evc_strelka>>jobs/strelka/${sample}_strelka.pbs
 echo mkdir -p ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
-if [ $file_type == "bam" ]
+if [ "$file_type" == "bam" ]
 then
 	echo 'echo === Indexing sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
 	echo cd ${out}/${sample}>>jobs/strelka/${sample}_strelka.pbs
@@ -65,7 +65,7 @@ fi
 echo cd ${out}/${sample}/strelka>>jobs/strelka/${sample}_strelka.pbs
 echo 'echo === Starting strelka on sample' ${sample} 'at $(date)==='>>jobs/strelka/${sample}_strelka.pbs
 echo 'echo creating strelka workflow at $(date)'>>jobs/strelka/${sample}_strelka.pbs
-if [ $type == "exome" ]
+if [ "$type" == "exome" ]
 then echo ${strelka_config_exome}>>jobs/strelka/${sample}_strelka.pbs
 else echo ${strelka_config_genome}>>jobs/strelka/${sample}_strelka.pbs
 fi
