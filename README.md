@@ -46,8 +46,6 @@ run_evc_bam \
 	reference_genome (fasta) \
 	pon (INTERNAL_PON) \
 	gnomad_dbSNP \
-	known_indel_list \
-	base_recalibration_list \
 	max_walltime (hours only) \
 	queue (hotel or home)
 ```
