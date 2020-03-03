@@ -7,8 +7,6 @@ email=${4}
 ref=${5}
 pon=${6}
 dbSNP=${7}
-known_indel_list=${8}
-base_recalibration_list=${9}
 walltime=${10}
 queue=${11}
 
@@ -22,8 +20,6 @@ USAGE:\trun_evc \\
 	reference_genome (fasta) \\
 	pon (INTERNAL_PON) \\
 	gnomad_dbSNP \\
-	known_indel_list \\
-	base_recalibration_list \\
 	max_walltime (hours only) \\
 	queue (hotel or home) \n\n"
 
