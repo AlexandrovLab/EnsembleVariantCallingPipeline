@@ -54,7 +54,7 @@ purity=$(echo $line|cut -d ' ' -f8)
 ~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out
 ~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type
 ~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $purity
-~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP
+~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP ${interval_list}
 ~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP
 ~/EnsembleVaraintCallingPipeline/postAlignment_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
 done
