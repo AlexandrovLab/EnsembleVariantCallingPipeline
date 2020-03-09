@@ -48,6 +48,12 @@ tumor=$(echo $line|cut -d ' ' -f2)
 normal=$(echo $line|cut -d ' ' -f3)
 type=$(echo $line|cut -d ' ' -f4)
 purity=$(echo $line|cut -d ' ' -f8)
+if [ $type == "exome" ]
+then 
+interval_list="/projects/ps-lalexandrov/shared/Reference_Genomes/interval_lists/GRCh38/wxs/whole_exome_illumina_coding_v1.Homo_sapiens_assembly38.targets.interval_list"
+else
+interval_list="/projects/ps-lalexandrov/shared/Reference_Genomes/interval_lists/GRCh38/wgs/wgs_calling_regions.v1.interval_list"
+fi
 ~/EnsembleVaraintCallingPipeline/align_template.sh $email $sample $tumor $normal $ref $path $out $type
 ~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list}
 ~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list}
