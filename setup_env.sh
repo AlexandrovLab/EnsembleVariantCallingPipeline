@@ -10,8 +10,8 @@ echo "Successfully installed three environments: evc_main, evc_strelka and evc_g
 
 #Create links
 
-printf "\nalias run_evc=\"$(pwd)/run_evc.sh\"\n" >> ~/.bashrc
-printf "alias run_evc_bam=\"$(pwd)/run_evc_bam.sh\"\n" >> ~/.bashrc
+printf "\nrun_evc() { $(pwd)/run_evc.sh \"\$*\" }\nexport -f run_evc" >> ~/.bashrc
+printf "\nrun_evc_bam() { $(pwd)/run_evc_bam.sh\"\$*\" }\nexport -f run_evc_bam\n\n" >> ~/.bashrc
 source ~/.bashrc
 
 #MuSE setup
