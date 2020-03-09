@@ -71,7 +71,7 @@ do
 	~/EnsembleVaraintCallingPipeline/pon_template.sh $email $sample $ref $out $walltime $queue
 	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue fastq $refine
 	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue $refine
-	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $walltime $queue $refine $queue
+	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $walltime $queue $refine ${interval_list}
   	~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue $refine
 
 
