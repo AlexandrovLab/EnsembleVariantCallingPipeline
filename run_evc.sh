@@ -11,7 +11,8 @@ known_indel_list=${8}
 base_recalibration_list=${9}
 walltime=${10}
 queue=${11}
-refine=${12}
+interval_list=${12}
+refine=${13}
 
 
 USAGE="\nMissing input arguments..\n
@@ -20,17 +21,18 @@ USAGE:\trun_evc \\
 	output/directory \\
 	path/to/sample.map \\
 	email.for@notification \\
-	reference_genome (fasta) \\
+	path/to/reference_genome (fasta) \\
 	pon (INTERNAL_PON) \\
-	gnomad_dbSNP \\
-	known_indel_list \\
-	base_recalibration_list \\
+	path/to/gnomad_dbSNP \\
+	path/to/known_indel_list \\
+	path/to/base_recalibration_list \\
 	max_walltime (hours only) \\
 	queue \\
+	path/to/interval_list \\
 	run refine? (yes or no)\n\n"
 
 	
-if [ -z "${11}" ]
+if [ -z "${12}" ]
 then
 	printf "$USAGE"
 	exit 1
