@@ -14,8 +14,6 @@ queue=${11}
 interval_list=${12}
 refine=${13}
 
-echo "at run_evc interval_list is ${interval_list}, and the input is also ${12}"
-
 USAGE="\nMissing input arguments..\n
 USAGE:\trun_evc \\
 	path/to/fastq/files \\
