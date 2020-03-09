@@ -11,7 +11,7 @@ queue=$9
 refine=${10}
 intervalList=${11}
 
-echo "intervalList is: $intervalList"
+echo "intervalList is: $intervalList, it is also ${11}"
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
 if [ "$type" == "exome" ]
