@@ -18,11 +18,19 @@ tumor_r2=${fastq_path}/${tumor}_2.fastq.gz
 normal_r1=${fastq_path}/${normal}_1.fastq.gz
 normal_r2=${fastq_path}/${normal}_2.fastq.gz
 
-if [ ${queue} == "hotel" ]
+
+hotelNumNodes=28
+if [ "${type}" == "exome" ]
+then
+	hotelNumNodes=8
+fi
+
+
+if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
-#PBS -l nodes=1:ppn=8
+#PBS -l nodes=1:ppn=${hotelNumNodes}
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
