@@ -27,7 +27,8 @@ run_evc \
 	known_indel_list \
 	base_recalibration_list \
 	max_walltime (hours only) \
-	queue (hotel or home)
+	queue (hotel or home) \
+	interval_list_for_mutect
 ```
 
 **Running the pipeline starting with a bam file:**
