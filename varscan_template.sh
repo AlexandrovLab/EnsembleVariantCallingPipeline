@@ -6,10 +6,11 @@ out=$4
 walltime=$5
 queue=$6
 refine=$7
-normal=${out}/${sample}/${sample}_normal_final.bam
-tumor=${out}/${sample}/${sample}_tumor_final.bam
 mpileup=${out}/${sample}/mpileup/${sample}.mpileup
 varscanOutput=${out}/${sample}/varscan
+
+normal=${out}/${sample}/${sample}_normal_final.bam
+tumor=${out}/${sample}/${sample}_tumor_final.bam
 
 if [ "$refine" == "no" ]
 then

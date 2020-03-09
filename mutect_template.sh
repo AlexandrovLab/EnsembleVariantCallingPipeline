@@ -21,6 +21,7 @@ fi
 
 normal=${out}/${sample}/${sample}_normal_final.bam
 tumor=${out}/${sample}/${sample}_tumor_final.bam
+
 if [ "$refine" == "no" ]
 then
 	normal=${out}/${sample}/${sample}_normal_mkdp.bam

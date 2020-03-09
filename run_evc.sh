@@ -28,7 +28,7 @@ USAGE:\trun_evc \\
 	max_walltime (hours only) \\
 	queue \\
 	path/to/interval_list \\
-	run refine? (yes or no)\n\n"
+	run refine? (yes or no) [default: no]\n\n"
 
 	
 if [ -z "${12}" ]
@@ -38,7 +38,6 @@ then
 fi
 
 mkdir -p ${out}/jobs/align
-mkdir -p ${out}/jobs/refine
 mkdir -p ${out}/jobs/pon
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
@@ -46,12 +45,18 @@ mkdir -p ${out}/jobs/mutect
 mkdir -p ${out}/jobs/muse
 mkdir -p ${out}/jobs/check_and_go
 
+if [ "$refine" == "yes" ]
+then
+	mkdir -p ${out}/jobs/refine
+	~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out
+else
+	refine="no"
+fi
 
 cd $out/jobs/check_and_go
 printf "cd ${out}/jobs/align\nfor f in *pbs;do qsub \$f|awk -v samp=\$f -F\".\" '{print \$1\"\\\t\"samp}'>>${out}/jobs/check_and_go/align_job_IDs.txt;done\n">start_align.sh
 chmod +x start_align.sh
 ~/EnsembleVaraintCallingPipeline/align_check_template.sh $sampleF $out
-~/EnsembleVaraintCallingPipeline/refine_check_template.sh $sampleF $out 
 
 cd $out
 cat $sampleF|tail -n+2|while read line;
