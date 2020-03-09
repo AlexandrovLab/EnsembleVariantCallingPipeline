@@ -9,6 +9,7 @@ dbSNP=$7
 walltime=$8
 queue=$9
 refine=${10}
+intrvalList=${11}
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
 if [ "$type" == "exome" ]
@@ -62,19 +63,19 @@ mkdir -p ${out}/${sample}/mutect
 cd ${out}/${sample}/mutect\n"
 fi
 
+######## Commands ########
 mutect_cmd="gatk Mutect2 -independent-mates -R $ref -pon $pon --germline-resource $dbSNP --native-pair-hmm-threads \$(nproc) --af-of-alleles-not-in-resource $af --f1r2-tar-gz ${sample}_f1r2.tar.gz --normal-sample ${sample}_normal --input $normal --tumor-sample ${sample}_tumor --input $tumor -O ${sample}_mutect2_unfiltered.vcf"
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{split(\$7,a,\"G\");print a[1]-5\"G\"}'\)" -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -L $dbSNP -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{split(\$7,a,\"G\");print a[1]-5\"G\"}')\" -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -L $intrvalList -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
 
 mutect_filter="gatk FilterMutectCalls -R $ref -V ${sample}_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
-
+###########################
 
 printf "$header">jobs/mutect/${sample}_mutect.pbs
-
 echo 'echo === Starting MuTect2 on sample' ${sample} 'at $(date)==='>>jobs/mutect/${sample}_mutect.pbs
 echo 'echo starting mutect command at $(date)....'>>jobs/mutect/${sample}_mutect.pbs
 echo 'mutectS=$SECONDS'>>jobs/mutect/${sample}_mutect.pbs
