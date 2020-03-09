@@ -22,13 +22,14 @@ run_evc \
 	path/to/sample.map \
 	email.for@notification \
 	reference_genome (fasta) \
-	pon (INTERNAL_PON) \
+	pon (INTERNAL_PON or provide a PON for Mutect) \
 	gnomad_dbSNP \
 	known_indel_list \
 	base_recalibration_list \
 	max_walltime (hours only) \
 	queue (hotel or home) \
-	interval_list_for_mutect
+	interval_list_for_mutect \
+	Optional: run refine? (yes or no) [default: no]
 ```
 
 **Running the pipeline starting with a bam file:**
