@@ -8,8 +8,9 @@ type=$6
 dbSNP=$7
 walltime=$8
 queue=$9
-refine=${10}
-intervalList=${11}
+intervalList=${10}
+refine=${11}
+
 
 echo "intervalList is: $intervalList, it is also ${11}"
 
