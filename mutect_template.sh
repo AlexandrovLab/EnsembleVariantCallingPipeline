@@ -72,7 +72,7 @@ mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O $
 
 mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{split(\$7,a,\"G\");print a[1]-5\"G\"}')\" -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -L $intervalList -O ${sample}_getpileupsummaries.table"
 
-mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_calculatecontamination.table"
+mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_contamination.table"
 
 mutect_filter="gatk FilterMutectCalls -R $ref -V ${sample}_mutect2_unfiltered.vcf --tumor-segmentation ${sample}_segments.table --contamination-table ${sample}_contamination.table --ob-priors ${sample}_read-orientation-model.tar.gz -O ${sample}_mutect2_filtered.vcf"
 ###########################
