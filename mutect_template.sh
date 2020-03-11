@@ -32,7 +32,7 @@ if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=7
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
@@ -49,7 +49,7 @@ cd ${out}/${sample}/mutect\n"
 else
 	header="#!/bin/bash
 #PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=1:skylake
+#PBS -l nodes=1:ppn=7:skylake
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
