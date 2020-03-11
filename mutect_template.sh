@@ -19,7 +19,7 @@ tumor=${out}/${sample}/${sample}_tumor_final.bam
 
 template="#!/bin/bash
 #PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=1:skylake
+#PBS -l nodes=1:ppn=7:skylake
 #PBS -l walltime=300:00:00
 #PBS -m bea
 #PBS -M ${email}
