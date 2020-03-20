@@ -39,7 +39,7 @@ mutect_cmd="gatk Mutect2 -independent-mates -R $ref -pon $pon --germline-resourc
   
 mutect_orientation="gatk LearnReadOrientationModel -I ${sample}_f1r2.tar.gz -O ${sample}_read-orientation-model.tar.gz"
 
-mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{split(\$7,a,\"G\");print a[1]-5\"G\"}')\" -I ${out}/${sample}/${sample}_tumor_final.bam -V $dbSNP -L $intervalList -O ${sample}_getpileupsummaries.table"
+mutect_pileupsum="gatk GetPileupSummaries --java-options \"-Xmx\$(free -h| grep Mem | awk '{split(\$7,a,\"G\");print a[1]-5\"G\"}')\" -I $tumor -V $dbSNP -L $intervalList -O ${sample}_getpileupsummaries.table"
 
 mutect_contamin="gatk CalculateContamination -I ${sample}_getpileupsummaries.table -tumor-segmentation ${sample}_segments.table -O ${sample}_contamination.table"
 
