@@ -7,8 +7,8 @@ email=${4}
 ref=${5}
 pon=${6}
 dbSNP=${7}
-walltime=${10}
-queue=${11}
+walltime=${8}
+queue=${9}
 
 
 USAGE="\nMissing input arguments..\n
@@ -24,7 +24,7 @@ USAGE:\trun_evc \\
 	queue (hotel or home) \n\n"
 
 	
-if [ -z "${11}" ]
+if [ -z "${9}" ]
 then
 	printf "$USAGE"
 	exit 1
