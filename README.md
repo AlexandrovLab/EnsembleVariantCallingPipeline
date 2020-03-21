@@ -49,8 +49,7 @@ run_evc_bam \
 	pon (INTERNAL_PON) \
 	gnomad_dbSNP \
 	max_walltime (hours only) \
-	queue (hotel or home) \
-	interval_list_for_mutect
+	queue (hotel or home)
 ```
 
 
