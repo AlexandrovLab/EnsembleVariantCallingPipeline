@@ -22,7 +22,8 @@ USAGE:\trun_evc \\
 	pon (INTERNAL_PON) \\
 	gnomad_dbSNP \\
 	max_walltime (hours only) \\
-	queue (hotel or home) \n\n"
+	queue (hotel or home) \\
+	interval_list_file_for_mutect \n\n"
 
 	
 if [ -z "${9}" ]
