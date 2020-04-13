@@ -1,5 +1,5 @@
 # EnsembleVariantCallingPipeline
-*Can take files in FASTQ or BAM and run through variant calling for all of them*
+*Can take files in FASTQ or BAM and run variant calling from 4 callers
 
 
 **FIRST TIME SETUP**
