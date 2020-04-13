@@ -9,6 +9,7 @@ pon=${6}
 dbSNP=${7}
 walltime=${8}
 queue=${9}
+interval_list=${10}
 
 
 USAGE="\nMissing input arguments..\n
