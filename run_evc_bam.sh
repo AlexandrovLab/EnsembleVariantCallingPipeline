@@ -36,6 +36,7 @@ fi
 mkdir -p ${out}/jobs/strelka
 mkdir -p ${out}/jobs/varscan
 mkdir -p ${out}/jobs/muse
+mkdir -p ${out}/jobs/mutect
 
 cd $out
 cat $sampleF|tail -n+2|while read line;
