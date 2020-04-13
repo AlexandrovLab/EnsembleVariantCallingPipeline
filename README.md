@@ -1,5 +1,5 @@
 # EnsembleVariantCallingPipeline
-*The mutect and filtering portion is still in development...*
+*Can take files in FASTQ or BAM and run through variant calling for all of them*
 
 
 **FIRST TIME SETUP**
