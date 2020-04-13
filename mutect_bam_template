@@ -11,6 +11,8 @@ queue=$9
 intervalList=${10}
 refine=${11}
 bam_path=${12}
+normal=${13}
+tumor=${14}
 
 
 # decide --af-of-alleles-not-in-resource based on exome or genome data type
@@ -19,8 +21,8 @@ then af=0.0000025
 else af=0.00003125
 fi
 
-normal=${out}/${sample}/${sample}_normal_final.bam
-tumor=${out}/${sample}/${sample}_tumor_final.bam
+normal=${bam_path}/${normal).bam
+tumor=${bam_path}/${tumor).bam
 
 if [ "$refine" == "no" ]
 then
