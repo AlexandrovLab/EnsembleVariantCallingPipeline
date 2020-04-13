@@ -56,11 +56,13 @@ do
 	if [ ! -f "${out}/${sample}/${sample}_tumor_final.bam" ]
 	then
 		ln -s ${path}/${tumor}.bam ${out}/${sample}/${sample}_tumor_final.bam
+		ln -s ${path}/${tumor}.bam.bai ${out}/${sample}/${sample}_tumor_final.bam.bai
 	fi
 	
 	if [ ! -f "${out}/${sample}/${sample}_normal_final.bam" ]
 	then
 		ln -s ${path}/${normal}.bam ${out}/${sample}/${sample}_normal_final.bam
+		ln -s ${path}/${normal}.bam.bai ${out}/${sample}/${sample}_normal_final.bam.bai
 	fi
 	
 	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam
