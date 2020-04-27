@@ -13,7 +13,7 @@ interval_list=${10}
 
 
 USAGE="\nMissing input arguments..\n
-USAGE:\trun_evc \\
+USAGE:\trun_evc_bam \\
 	path/to/bam/files \\
 	output/directory \\
 	path/to/sample.map \\
