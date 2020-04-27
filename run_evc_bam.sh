@@ -50,7 +50,6 @@ do
 	tumor=$(echo $line|cut -d ' ' -f2)
 	normal=$(echo $line|cut -d ' ' -f3)
 	type=$(echo $line|cut -d ' ' -f4)
-	echo $sample
 	
 	mkdir -p ${out}/${sample}
 	if [ ! -f "${out}/${sample}/${sample}_tumor_final.bam" ]
