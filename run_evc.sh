@@ -70,6 +70,9 @@ do
 	if [ "$refine" == "yes" ]
 	then
 	echo generating refinement output for the first sample...
+	echo known indel is ${known_indel_list}
+	echo base recalib is ${base_recalibration_list}
+	echo walltime is ${base_recalibration_list} $walltime
 		~/EnsembleVaraintCallingPipeline/targetInterval_template.sh $email $sample $ref $out ${known_indel_list} $queue
 		~/EnsembleVaraintCallingPipeline/refine_template.sh $email $sample $ref $out ${known_indel_list} ${base_recalibration_list} $walltime $queue
 	fi
