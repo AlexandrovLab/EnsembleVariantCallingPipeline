@@ -20,8 +20,10 @@ bash setup_env.sh
 ```
 
 ## Running the pipeline from fastq
+_DO NOT_ move on if the previous step is still running. Each step must finish completely before moving on to the next step.
+
 <ol>
-	<li> <b> Generate project directory structure. (takes <2 minutes)</b> 
+<li><b> Generate project directory structure. (takes <2 minutes)</b> 
 	
 Run `run_evc` to create the `jobs` directory in the output directory. The pipeline will generate `.pbs` files for you to manually submit at each stage.
 
@@ -161,13 +163,14 @@ for pbs_file in *_muse.pbs; do qsub ${pbs_file}; done
 
 </li></ul></li></ol>
 
-**Running the pipeline starting with a bam file:**
-```
-run_evc_bam [args]
-```
-This works identically to run_evc, except it takes input bam files and only runs variant calling.
+## Running the pipeline starting with a bam file
+_DO NOT_ move on if the previous step is still running. Each step must finish completely before moving on to the next step.
 
-Arguments:
+<ol>
+<li><b> Generate project directory structure. (takes <2 minutes)</b>
+
+Run `run_evc_bam` to create the `jobs` directory in the output directory. The pipeline will generate `.pbs` files for you to manually submit at each stage.
+
 ```
 run_evc_bam \
 	path/to/bam/files \
@@ -182,7 +185,11 @@ run_evc_bam \
 	interval_list_for_mutect
 ```
 
+</li>
+<li><b> Follow the "Running from fastq" pipeline starting at step 5: Run variant calling
+</li>
 
+</ol>
 
 One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.)
 
