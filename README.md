@@ -10,8 +10,8 @@ The EnsembleVariantCallingPipeline takes files in FASTQ or BAM format and perfor
 
 1. Clone the directory
 ```
-git clone https://github.com/AlexandrovLab/EnsembleVaraintCallingPipeline.git
-cd EnsembleVaraintCallingPipeline/
+git clone https://github.com/AlexandrovLab/EnsembleVariantCallingPipeline.git
+cd EnsembleVariantCallingPipeline/
 ```
 
 2. Run the setup_env.sh script.
