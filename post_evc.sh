@@ -7,6 +7,12 @@ You can run it anywhere\n
 USAGE:\post_evc.sh \\
         precancer type\n\n"
 
+if [ -z "$1" ]
+then
+        printf "$USAGE"
+        exit 1
+fi
+
 genome=$(echo /projects/ps-lalexandrov/shared/Reference_Genomes/chrom_sizes/hg38.chrom.sizes)
 
 cd /restricted/alexandrov-group/shared/precancer_analysis/new_analysis/${tissue} 
