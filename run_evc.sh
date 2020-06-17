@@ -4,7 +4,7 @@ out=$2
 sampleF=$3
 email=$4
 ref=/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
-pon=/projects/ps-lalexandrov/mzhivagui/POLI_iota_human_clones/POLI_new_human_output1/PON/PON.vcf.gz
+pon=/projects/ps-lalexandrov/shared/Reference_Genomes/TCGA_GDC_files/tumor_normal_PONs/MuTect2.PON.5210.vcf.gz
 dbSNP=/restricted/alexandrov-group/shared/Reference_Genomes/dbSNP/af-only-gnomad.hg38_no_alt.vcf.gz
 
 known_indel_list=/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt
@@ -50,7 +50,7 @@ type=$(echo $line|cut -d ' ' -f4)
 purity=$(echo $line|cut -d ' ' -f8)
 if [ $type == "exome" ]
 then 
-interval_list="/projects/ps-lalexandrov/shared/Reference_Genomes/interval_lists/GRCh38/wxs/whole_exome_illumina_coding_v1.Homo_sapiens_assembly38.targets.interval_list"
+interval_list="/projects/ps-lalexandrov/shared/Reference_Genomes/interval_lists/GRCh38/wxs/whole_exome_illumina_coding_v1.Homo_sapiens_assembly38_canonical.targets.interval_list"
 else
 interval_list="/projects/ps-lalexandrov/shared/Reference_Genomes/interval_lists/GRCh38/wgs/wgs_calling_regions.v1.interval_list"
 fi
