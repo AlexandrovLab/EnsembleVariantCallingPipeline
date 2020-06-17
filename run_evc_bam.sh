@@ -64,8 +64,8 @@ do
 		ln -s ${path}/${normal}.bam.bai ${out}/${sample}/${sample}_normal_final.bam.bai
 	fi
 	
-	~/EnsembleVaraintCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam
-	~/EnsembleVaraintCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue
-	~/EnsembleVaraintCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue
-	~/EnsembleVaraintCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $walltime $queue ${interval_list} $refine
+	~/EnsembleVariantCallingPipeline/strelka_template.sh $email $sample $ref $out $type $walltime $queue bam
+	~/EnsembleVariantCallingPipeline/varscan_template.sh $email $sample $ref $out $walltime $queue
+	~/EnsembleVariantCallingPipeline/muse_template.sh $email $sample $ref $out $type $dbSNP $walltime $queue
+	~/EnsembleVariantCallingPipeline/mutect_template.sh $email $sample $ref $out $pon $type $dbSNP $walltime $queue ${interval_list} $refine
 done
