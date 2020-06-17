@@ -15,7 +15,7 @@ printf "\nfunction run_evc_bam () { $(pwd)/run_evc_bam.sh \$* }\nexport -f run_e
 source ~/.bashrc
 
 #MuSE setup
-$(pwd)/setup_MuSE.sh $1
+$(pwd)/setup_MuSE.sh
 
 echo Registering for gatk3...
 source activate evc_gatk3
