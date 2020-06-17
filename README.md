@@ -1,4 +1,4 @@
-*__Note:__ This pipeline was designed to run on the Triton Shared Compute Cluster (TSCC). Running it elsewhere will require modifying the source code.*
+*__Note:__ This pipeline was designed to run on the Triton Shared Compute Cluster (TSCC) at University of California - San Diego. Running it elsewhere will require modifying the source code.*
 
 # EnsembleVariantCallingPipeline
 The EnsembleVariantCallingPipeline takes files in FASTQ or BAM format and performs SNV variant calling from 4 variant callers ([Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2), [Strelka](https://doi.org/10.1038/s41592-018-0051-x), [Varscan2](http://doi.org/10.1101/gr.129684.111), [MuSE](https://doi.org/10.1186/s13059-016-1029-6)) and indel variant calling from 3 variant callers ([Mutect2](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2), [Strelka](https://doi.org/10.1038/s41592-018-0051-x), [Varscan2](http://doi.org/10.1101/gr.129684.111)).
@@ -186,7 +186,7 @@ run_evc_bam \
 ```
 
 </li>
-<li><b> Follow the "Running from fastq" pipeline starting at step 5: Run variant calling
+<li><b> Follow the "Running from fastq" pipeline starting at step 5: Run variant calling</b>
 </li>
 
 </ol>
