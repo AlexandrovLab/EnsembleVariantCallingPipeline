@@ -1,0 +1,3 @@
+[submodule "MuSE"]
+	path = MuSE
+	url = https://github.com/danielfan/MuSE.git
