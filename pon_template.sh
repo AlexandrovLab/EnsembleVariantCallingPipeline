@@ -6,7 +6,7 @@ out=$4
 
 header="#!/bin/bash
 #PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
+#PBS -l nodes=1:ppn=1:skylake
 #PBS -l walltime=50:00:00
 #PBS -m bea
 #PBS -M ${email}

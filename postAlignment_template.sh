@@ -66,7 +66,8 @@ echo source ~/.bashrc>>jobs/postAlign/${sample}_postAlign.pbs
 echo source activate evc_gatk3>>jobs/postAlign/${sample}_postAlign.pbs
 
 ## job starts
-echo 'echo === Starting analysis on sample' ${sample} 'at $(date)==='>>jobs/postAlign/${sample}_postAlign.pbs
+echo 'echo === Starting postAlignment processing on sample' ${sample} 'at $(date)==='>>jobs/postAlign/${sample}_postAlign.pbs
+echo '>&2 echo "=== Starting postAlignment processing on sample' ${sample} 'at $(date)=== "'>>jobs/postAlign/${sample}_postAlign.pbs
 echo cd ${out}/${sample}/>>jobs/postAlign/${sample}_postAlign.pbs
 
 ## Create target interval ##

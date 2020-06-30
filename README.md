@@ -25,8 +25,8 @@ email.for@notification
 This is the simplified version for conveniently submitting precancer WES jobs aligning to GRCh38. More args will be required in the future.
 
 
-One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.)
+Submit jobs in three steps(sequentially):
 
 1. Both the *Nalign_1.pbs* and *Talign_1.pbs* under jobs/align/
 2. The *targetInterval.pbs* under jobs/refine/ (when this is finished, the corresponding *Nrefine_2.pbs* and *Trefine_2.pbs* will be submitted automatically)
-3. Scripts under jobs/pon/, jobs/strelka/ and jobs/varscan/ can all be submitted simutaniously at this point.
+3. Scripts under jobs/strelka/, jobs/varscan/, jobs/mutect/ and jobs/muse/ can all be submitted simutaniously at this point.

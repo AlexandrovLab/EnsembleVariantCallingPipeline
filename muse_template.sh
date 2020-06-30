@@ -11,7 +11,7 @@ tumor=${out}/${sample}/${sample}_tumor_final.bam
 
 header="#!/bin/bash
 #PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
+#PBS -l nodes=1:ppn=7:skylake
 #PBS -l walltime=100:00:00
 #PBS -m bea
 #PBS -M ${email}
@@ -30,8 +30,6 @@ fi
 
 ## Writing the scripts
 printf "$header">jobs/muse/${sample}_muse.pbs
-echo source ~/.bashrc>>jobs/muse/${sample}_muse.pbs
-echo source activate evc_muse>>jobs/muse/${sample}_muse.pbs
 echo mkdir -p ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 echo cd ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
 
