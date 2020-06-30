@@ -194,4 +194,4 @@ run_evc_bam \
 
 </ol>
 
-One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.)
+One shall submit the jobs at each stage step by step: (DO NOT move to the next step until the previous step is finished and verified.) 
