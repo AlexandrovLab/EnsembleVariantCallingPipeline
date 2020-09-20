@@ -19,6 +19,6 @@ $(pwd)/setup_MuSE.sh
 
 echo Registering for gatk3...
 source activate evc_gatk3
-gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar
+gatk3-register /projects/ps-lalexandrov/shared/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
 source deactivate
 echo gatk3 registered, environment set up is finished!
