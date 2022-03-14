@@ -10,7 +10,7 @@ echo "Successfully installed three environments: evc_main, evc_strelka and evc_g
 
 #Create links
 printf "\n ## EVC setup script shortcuts" >> ./bashrc
-printf "\nalias run_evc=\"$(pwd)/run_evc.sh\"\n" >> ~/.bashrc
+printf "alias run_evc=\"$(pwd)/run_evc.sh\"\n" >> ~/.bashrc
 printf "alias run_evc_bam=\"$(pwd)/run_evc_bam.sh\"\n" >> ~/.bashrc
 
 source ~/.bashrc
