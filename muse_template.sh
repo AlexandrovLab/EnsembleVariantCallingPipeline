@@ -21,7 +21,7 @@ if [ "${queue}" == "hotel" ]
 then
 	header="#!/bin/bash
 #PBS -q hotel
-#PBS -l nodes=1:ppn=8
+#PBS -l nodes=1:ppn=1
 #PBS -l walltime=${walltime}:00:00
 #PBS -m bea
 #PBS -M ${email}
