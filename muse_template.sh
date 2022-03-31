@@ -50,6 +50,7 @@ then muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -E -O 
 else muse_sump_cmd="MuSE sump -I ${out}/${sample}/muse/${sample}.MuSE.txt -G -O ${sample}.vcf -D $dbSNP"
 fi
 
+
 ## Writing the scripts
 printf "$header">jobs/muse/${sample}_muse.pbs
 echo mkdir -p ${out}/${sample}/muse>>jobs/muse/${sample}_muse.pbs
