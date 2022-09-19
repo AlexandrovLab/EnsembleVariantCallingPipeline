@@ -47,6 +47,24 @@ run_evc \
 	Optional: run refine? (yes or no) [default: no]
 ```
 
+An exemplary suggested inputs:
+
+```
+run_evc \
+	path/to/fastq/files \
+	output/directory \
+	path/to/sample.map \
+	email.for@notification \
+	/restricted/alexandrov-group/shared/Reference_Genomes/GRCh38.d1.vd1/GRCh38.d1.vd1.fa \
+	/projects/ps-lalexandrov/shared/Reference_Genomes/TCGA_GDC_files/tumor_normal_PONs/MuTect2.PON.5210.vcf.gz \
+	/restricted/alexandrov-group/shared/Reference_Genomes/dbSNP/af-only-gnomad.hg38_no_alt.vcf.gz \
+	/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/IndelRealignemnt_files.txt \
+	/restricted/alexandrov-group/shared/Reference_Genomes/alignment_refinement/BaseRecalibration_files.txt \
+	500 \
+	home-alexandrov \
+	interval_list_for_mutect \
+	no
+```
 </li>
 <li> <b>Alignment (takes 10 minutes to several hours depending on job queue traffic and the size of your fastq files)</b>
 	
