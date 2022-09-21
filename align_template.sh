@@ -69,8 +69,8 @@ alignTumor="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_tumor\
 alignNormal="bwa mem -T 0 -t \$(nproc) -R '@RG\tID:${sample}\tSM:${sample}_normal\tPL:ILLUMINA' $ref ${normal_r1} ${normal_r2} | samtools view -bh --input-fmt-option nthreads=\$(nproc) | samtools sort -@ \$(nproc) > ${sample}_normal_raw.bam"
 fi
 
-mkdpTumor="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -Djava.io.tmpdir=/oasis/tscc/scratch/heyudou/MarkDuplicate_TMP -XX:ParallelGCThreads=\$(nproc) -Xmx4g;print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_tumor_raw.bam O=${sample}_tumor_mkdp.bam M=${sample}_tumor_markDuplicates_Matrix.txt"
-mkdpNormal="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -Djava.io.tmpdir=/oasis/tscc/scratch/heyudou/MarkDuplicate_TMP -XX:ParallelGCThreads=\$(nproc) -Xmx4g;print a[1]-5\"G\"}') VALIDATION_STRINGENCY=STRICT I=${sample}_normal_raw.bam O=${sample}_normal_mkdp.bam M=${sample}_normal_markDuplicates_Matrix.txt"
+mkdpTumor="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -Djava.io.tmpdir=/oasis/tscc/scratch/heyudou/MarkDuplicate_TMP -XX:ParallelGCThreads=\$(nproc) -Xmx4g VALIDATION_STRINGENCY=STRICT I=${sample}_tumor_raw.bam O=${sample}_tumor_mkdp.bam M=${sample}_tumor_markDuplicates_Matrix.txt"
+mkdpNormal="picard MarkDuplicates ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES=4000 CREATE_INDEX=true -Djava.io.tmpdir=/oasis/tscc/scratch/heyudou/MarkDuplicate_TMP -XX:ParallelGCThreads=\$(nproc) -Xmx4g VALIDATION_STRINGENCY=STRICT I=${sample}_normal_raw.bam O=${sample}_normal_mkdp.bam M=${sample}_normal_markDuplicates_Matrix.txt"
 
 printf "$header">jobs/align/${sample}_Talign.pbs
 printf "${Tjobname}">>jobs/align/${sample}_Talign.pbs
